@@ -370,7 +370,7 @@ export default function AppDevPage() {
             users love.
           </p>
           <Link
-            href="/#contact"
+            href="/main#contact"
             className="inline-flex items-center gap-2 bg-white text-indigo-700 px-8 py-4 rounded-lg font-semibold hover:bg-indigo-50 transition"
           >
             Get Free Consultation →

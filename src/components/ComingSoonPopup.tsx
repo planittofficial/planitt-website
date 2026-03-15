@@ -91,7 +91,7 @@ export default function ComingSoonPopup() {
                   <p className="text-xl sm:text-2xl font-bold text-[#f2d789] mb-1">Launching Soon</p>
                   <p className="text-xs sm:text-sm text-zinc-300">Private beta preview is under development.</p>
                   <Link
-                    href="/in-house-product"
+                    href="/"
                     onClick={() => setOpen(false)}
                     className="mt-3 sm:mt-4 inline-flex items-center justify-center rounded-xl bg-[#b78622]/85 hover:bg-[#b78622] border border-[#f0d996]/30 px-5 sm:px-6 py-2 text-sm sm:text-base font-semibold text-[#fff1ca] transition-colors duration-200"
                   >

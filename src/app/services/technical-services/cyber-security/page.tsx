@@ -133,7 +133,7 @@ export default function CyberSecurityPage() {
           </p>
 
           <Link
-            href="/#contact"
+            href="/main#contact"
             className="inline-flex items-center gap-2 bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition mx-auto"
           >
             Get Free Security Consultation →

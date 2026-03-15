@@ -10,13 +10,13 @@ export const searchIndex: SearchItem[] = [
   {
     title: "Financial Services",
     description: "Explore our range of financial planning and investment services",
-    url: "/#services",
+    url: "/main#services",
     category: "Service",
   },
   {
     title: "Technical Services",
     description: "Modern technical solutions for businesses and individuals",
-    url: "/#services",
+    url: "/main#services",
     category: "Service",
   },
 
@@ -106,13 +106,13 @@ export const searchIndex: SearchItem[] = [
   {
     title: "Home",
     description: "Planitt - Plan Your Dreams with our financial & technical expertise",
-    url: "/",
+    url: "/main",
     category: "Page",
   },
   {
     title: "About Us",
     description: "Learn more about Planitt, our mission, and our expert team",
-    url: "/#about",
+    url: "/main#about",
     category: "Page",
   },
   {
@@ -130,19 +130,19 @@ export const searchIndex: SearchItem[] = [
   {
     title: "Testimonials",
     description: "See what our satisfied clients say about their journey with us",
-    url: "/#testimonials",
+    url: "/main#testimonials",
     category: "Page",
   },
   {
     title: "Contact Us",
     description: "Get in touch for personalized financial and technical consultations",
-    url: "/#contact",
+    url: "/main#contact",
     category: "Page",
   },
   {
     title: "Financial Growth Calculator",
     description: "Calculate your potential returns and plan your wealth growth",
-    url: "/#calculator",
+    url: "/main#calculator",
     category: "Calculator",
   },
 ];

@@ -120,7 +120,7 @@ export default function CloudServicesPage() {
             infrastructure that powers your business growth.
           </p>
           <Link
-            href="/#contact"
+            href="/main#contact"
             className="inline-flex items-center gap-2 bg-white text-blue-700 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition"
           >
             Get Started with Cloud

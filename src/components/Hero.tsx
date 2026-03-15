@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Code2, Cpu, Landmark, Shield, TrendingUp, Users } from 'lucide-react';
@@ -187,7 +187,7 @@ const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
                                                 <ArrowRight className="ml-2 h-5 w-5" />
                                             </Link>
                                             <Link
-                                                href="/#contact"
+                                                href="/main#contact"
                                                 suppressHydrationWarning
                                                 className={`inline-flex items-center justify-center px-8 py-4 bg-linear-to-r ${palette.secondaryBtn} text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl`}
                                             >

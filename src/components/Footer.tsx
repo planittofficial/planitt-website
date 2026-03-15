@@ -103,37 +103,37 @@ const Footer = () => {
             <h4 className="font-heading text-lg font-semibold">Our Services</h4>
             <div className="grid grid-cols-2 gap-2">
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 SIP
               </a>
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 SWP
               </a>
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 Goal Setting
               </a>
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 Insurance
               </a>
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 NPS
               </a>
               <a
-                href="#services"
+                href="/main#services"
                 className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
               >
                 Budgeting
@@ -147,7 +147,7 @@ const Footer = () => {
           <p className="text-gray-400 text-sm">
             &copy; {currentYear} Planitt. All Rights Reserved. | CEO & Financial Distributor:{" "}
             <a
-              href="#about"
+              href="/main#about"
               className="text-gray-400 hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
             >
               Piyush Tembhekar

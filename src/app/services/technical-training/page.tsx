@@ -190,13 +190,13 @@ export default function TechnicalTrainingPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3">
                         <Link
-                            href="/#contact"
+                            href="/main#contact"
                             className="inline-flex items-center justify-center rounded-lg bg-white text-blue-700 px-6 py-3 font-semibold hover:bg-blue-50 transition-colors"
                         >
                             Book Free Counselling
                         </Link>
                         <Link
-                            href="/#services"
+                            href="/main#services"
                             className="inline-flex items-center justify-center rounded-lg border border-white/40 text-white px-6 py-3 font-semibold hover:bg-white/10 transition-colors"
                         >
                             Explore More Services

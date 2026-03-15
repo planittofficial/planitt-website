@@ -13,11 +13,11 @@ const Header = () => {
   const { theme, toggleTheme } = useTheme();
 
   const navItems = [
-    { name: 'Services', href: '/#services' },
-    // { name: 'Blogs', href: '/#blogs' }, // Blog/Insights section hidden on homepage
+    { name: 'Services', href: '/main#services' },
+    // { name: 'Blogs', href: '/main#blogs' }, // Blog/Insights section hidden on homepage
     { name: 'Case Studies', href: '/case-studies' },
-    { name: 'About Us', href: '/#about' },
-    { name: 'Testimonials', href: '/#testimonials' },
+    { name: 'About Us', href: '/main#about' },
+    { name: 'Testimonials', href: '/main#testimonials' },
     { name: 'Join Us', href: '/careers' },
   ];
 
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
 
           {/* Logo */}
-          <Link href="/" aria-label="Planitt Home" className="flex items-center">
+          <Link href="/main" aria-label="Planitt Home" className="flex items-center">
             <Image
               src="/planitt-app-black.png"
               alt="Planitt Logo"

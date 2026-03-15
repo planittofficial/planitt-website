@@ -238,7 +238,7 @@ function CTA() {
       </p>
 
       <Link
-        href="/#contact"
+        href="/main#contact"
         className="
           inline-flex items-center justify-center
           bg-white text-indigo-900
