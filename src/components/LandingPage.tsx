@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Cpu, ShieldCheck, Users } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
+import CandlestickChart from './CandlestickChart';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -71,11 +72,46 @@ export default function LandingPage() {
                       </span>
                     </div>
 
-                    <div className="mt-8 grid gap-4">
-                      <TrendRow label="Stocks" value="+3.8%" />
-                      <TrendRow label="F&O" value="+4.5%" />
-                      <TrendRow label="Crypto" value="+2.1%" />
-                      <TrendRow label="Forex" value="+1.2%" />
+                    <div className="mt-8">
+                      <CandlestickChart width={340} height={210} />
+                    </div>
+
+                    <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div className="flex items-center justify-between rounded-full border border-emerald-400/40 bg-emerald-400/5 px-4 py-3">
+                        <div className="text-xs font-semibold text-emerald-200">Target</div>
+                        <div className="flex items-center gap-2 text-xl font-semibold text-emerald-200">
+                          ₹600
+                          <span className="text-sm font-medium text-emerald-400">↑14%</span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4 text-xs text-white/70">
+                        <div className="space-y-1">
+                          <div className="text-[10px] uppercase tracking-wide text-white/40">Buying range</div>
+                          <div className="text-sm font-semibold text-white">₹500 - ₹520</div>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="text-[10px] uppercase tracking-wide text-white/40">Stop loss</div>
+                          <div className="text-sm font-semibold text-white">₹240</div>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="text-[10px] uppercase tracking-wide text-white/40">Horizon</div>
+                          <div className="text-sm font-semibold text-white">3-12 mo</div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <button className="rounded-full bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-indigo-500">
+                          Buy
+                        </button>
+                        <button className="text-xs font-semibold text-white/70 hover:text-white">
+                          Why this trade?
+                        </button>
+                        <div className="flex items-center gap-2 text-xs text-white/50">
+                          <span className="inline-flex h-3 w-3 rounded-full bg-white/20" />
+                          xx people invested in this trade
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-300 via-sky-300 to-indigo-300" />
@@ -218,23 +254,20 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { label: 'Watchlist', src: '/watchlists.png' },
-              { label: 'History', src: '/history.png' },
-              { label: 'News', src: '/news.png' },
-              { label: 'Login', src: '/login.png' },
-              { label: 'Account created', src: '/account%20created.png' },
-              { label: 'Loading state', src: '/loading.png' },
+              { src: '/screen1.png' },
+              { src: '/screen2.png' },
+              { src: '/screen3.png' },
+              { src: '/screen4.png' },
             ].map((screen) => (
               <div key={screen.src} className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl shadow-black/20">
-                <img
-                  src={screen.src}
-                  alt={screen.label}
-                  className="h-56 w-full object-cover"
-                />
-                <div className="p-4">
-                  <p className="text-sm font-semibold text-white">{screen.label}</p>
+                <div className="aspect-[9/16] w-full bg-black/10">
+                  <img
+                    src={screen.src}
+                    alt="App screen"
+                    className="h-full w-full object-contain"
+                  />
                 </div>
               </div>
             ))}
