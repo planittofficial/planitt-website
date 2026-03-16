@@ -154,7 +154,7 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
     return (
         <section
             id="services"
-            className={`py-20 ${effectiveMode === 'technical' ? 'bg-sky-50 dark:bg-slate-950' : 'bg-gray-50 dark:bg-gray-900'} transition-colors duration-300`}
+            className={`py-12 sm:py-20 ${effectiveMode === 'technical' ? 'bg-sky-50 dark:bg-slate-950' : 'bg-gray-50 dark:bg-gray-900'} transition-colors duration-300`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
@@ -162,12 +162,12 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-12 sm:mb-16"
                 >
-                    <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                    <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Our Solutions
                     </h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                         We deliver financial advisory and technical execution under one roof, so your strategy and implementation stay aligned.
                     </p>
                 </motion.div>

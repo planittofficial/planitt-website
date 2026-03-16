@@ -86,21 +86,21 @@ const About = ({ mode = 'all' }: AboutProps) => {
     });
 
     return (
-        <section id="about" className={`py-20 ${isTechnical ? 'bg-sky-50 dark:bg-slate-950' : 'bg-gray-50 dark:bg-gray-950'} transition-colors duration-300`}>
+        <section id="about" className={`py-12 sm:py-20 ${isTechnical ? 'bg-sky-50 dark:bg-slate-950' : 'bg-gray-50 dark:bg-gray-950'} transition-colors duration-300`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="space-y-10"
+                        className="space-y-8 sm:space-y-10"
                     >
                         <div>
-                            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                                 About Planitt
                             </h2>
-                            <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                                 {isFinancial ? (
                                     <>Planitt provides trusted financial advisory led by <span className={`font-semibold ${palette.leadName}`}>Piyush Tembhekar</span>.</>
                                 ) : isTechnical ? (
@@ -156,9 +156,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
                         <div className="flex flex-col gap-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {!isTechnical && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
+                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
                                         <div className="text-center mb-4">
-                                            <div className="relative w-44 h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
+                                            <div className="relative w-32 h-32 sm:w-44 sm:h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
                                                     src="/CEO_Photo.png"
                                                     alt="Piyush Tembhekar"
@@ -167,26 +167,26 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                                     priority
                                                 />
                                             </div>
-                                            <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white">
+                                            <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                                                 Piyush Tembhekar
                                             </h3>
-                                            <p className="text-gray-900 dark:text-gray-100 text-xs font-semibold">
+                                            <p className="text-gray-900 dark:text-gray-100 text-[10px] sm:text-xs font-semibold">
                                                 ARN - 338883
                                             </p>
-                                            <p className={`${palette.roleText} font-semibold text-sm`}>
+                                            <p className={`${palette.roleText} font-semibold text-xs sm:text-sm`}>
                                                 CEO, Financial Distribution
                                             </p>
                                         </div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 text-center flex-1">
+                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center flex-1">
                                             Leads planning across wealth management, insurance, NPS, and long-term advisory.
                                         </p>
                                     </div>
                                 )}
 
                                 {!isFinancial && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
+                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
                                         <div className="text-center mb-4">
-                                            <div className="relative w-44 h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
+                                            <div className="relative w-32 h-32 sm:w-44 sm:h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
                                                     src="/Parth_shende(Technical_Head).png"
                                                     alt="Parth Shende"
@@ -195,14 +195,14 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                                     priority
                                                 />
                                             </div>
-                                            <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white">
+                                            <h3 className="font-heading text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                                                 Parth Shende
                                             </h3>
-                                            <p className="text-sky-700 dark:text-cyan-300 font-semibold text-sm">
+                                            <p className="text-sky-700 dark:text-cyan-300 font-semibold text-xs sm:text-sm">
                                                 Technical Lead
                                             </p>
                                         </div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 text-center flex-1">
+                                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center flex-1">
                                             Leads technical services delivery across apps, websites, cloud, and automation.
                                         </p>
                                     </div>
@@ -213,8 +213,8 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 mode === 'all'
                                     ? 'from-[#b78622] to-zinc-600'
                                     : palette.impactBg
-                            } rounded-2xl p-8 text-white w-full`}>
-                                <h3 className="font-heading text-2xl font-bold mb-6 text-center">
+                            } rounded-2xl p-6 sm:p-8 text-white w-full`}>
+                                <h3 className="font-heading text-xl sm:text-2xl font-bold mb-6 text-center">
                                     {isFinancial ? 'Financial Impact' : isTechnical ? 'Technical Impact' : 'Our Impact'}
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

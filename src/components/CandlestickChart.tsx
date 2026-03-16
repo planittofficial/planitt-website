@@ -49,7 +49,7 @@ function generateCandles(count: number, startPrice = 100, volatility = 0.025, se
 }
 
 export default function CandlestickChart({
-  width = 360,
+  width: initialWidth,
   height = 240,
   initialData,
 }: {
@@ -57,8 +57,39 @@ export default function CandlestickChart({
   height?: number;
   initialData?: Candle[];
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(initialWidth || 0);
   const padding = 16;
   const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (!initialWidth && containerRef.current) {
+      setWidth(containerRef.current.offsetWidth);
+    }
+  }, [initialWidth]);
+
+  useEffect(() => {
+    if (initialWidth) {
+      setWidth(initialWidth);
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect.width > 0) {
+          setWidth(entry.contentRect.width);
+        }
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [initialWidth]);
+
   const [data, setData] = useState<Candle[]>(() => initialData ?? generateCandles(32, 100, 0.025, 1234));
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
@@ -153,9 +184,9 @@ export default function CandlestickChart({
     return () => window.clearInterval(interval);
   }, [mounted]);
 
-  if (!mounted) {
+  if (!mounted || width === 0) {
     return (
-      <div className="relative inline-block">
+      <div ref={containerRef} className="relative w-full">
         <div className="flex items-center justify-between gap-3 pb-3">
           <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
@@ -163,13 +194,13 @@ export default function CandlestickChart({
           </div>
         </div>
 
-        <div className="h-52 w-[340px] rounded-3xl bg-white/5" />
+        <div className="h-52 w-full rounded-3xl bg-white/5" />
       </div>
     );
   }
 
   return (
-    <div className="relative inline-block">
+    <div ref={containerRef} className="relative w-full">
       <div className="flex items-center justify-between gap-3 pb-3">
         <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
           <span className="h-2 w-2 rounded-full bg-emerald-400" />

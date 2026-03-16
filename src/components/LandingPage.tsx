@@ -20,25 +20,25 @@ export default function LandingPage() {
           <div className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-gradient-to-br from-emerald-400/20 via-sky-400/10 to-transparent blur-3xl" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-32">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6 text-center lg:text-left">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 text-sm font-medium tracking-wide text-white/80 backdrop-blur">
                   <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                   Early access coming soon
                 </div>
 
-                <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight text-white leading-tight break-words">
                   Planitt Multi Asset Recommendations Platform
                 </h1>
 
-                <p className="max-w-xl text-lg text-white/70">
+                <p className="mx-auto lg:mx-0 max-w-xl text-base sm:text-lg text-white/70 leading-relaxed">
                   One unified platform for real-time, explainable signals across stocks, derivatives, mutual funds,
                   forex, and crypto — powered by AI + human analysis.
                 </p>
 
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center justify-center lg:justify-start">
                   <a
                     href="#how-it-works"
                     className="flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-10 py-4 text-sm font-semibold text-white/90 transition hover:bg-white/15"
@@ -64,8 +64,8 @@ export default function LandingPage() {
                       </span>
                     </div>
 
-                    <div className="mx-auto mt-8">
-                      <CandlestickChart width={525} height={210} />
+                    <div className="mx-auto mt-8 w-full">
+                      <CandlestickChart height={210} />
                     </div>
 
                     <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -77,8 +77,8 @@ export default function LandingPage() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 text-xs text-white/70">
-                        <div className="space-y-1">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs text-white/70">
+                        <div className="space-y-1 col-span-2 sm:col-span-1">
                           <div className="text-[10px] uppercase tracking-wide text-white/40">Buying range</div>
                           <div className="text-sm font-semibold text-white">₹500 - ₹520</div>
                         </div>
@@ -92,13 +92,15 @@ export default function LandingPage() {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <button className="rounded-full bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-indigo-500">
-                          Buy
-                        </button>
-                        <button className="text-xs font-semibold text-white/70 hover:text-white">
-                          Why this trade?
-                        </button>
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                          <button className="rounded-full bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-indigo-500">
+                            Buy
+                          </button>
+                          <button className="text-xs font-semibold text-white/70 hover:text-white">
+                            Why this trade?
+                          </button>
+                        </div>
                         <div className="flex items-center gap-2 text-xs text-white/50">
                           <span className="inline-flex h-3 w-3 rounded-full bg-white/20" />
                           120k+ people invested in this trade
@@ -193,7 +195,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-4">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 id: 1,
