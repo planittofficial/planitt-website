@@ -30,8 +30,7 @@ export default function LandingPage() {
                 </div>
 
                 <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  Planitt
-                  <span className="block">Multi‑Asset Recommendations</span>
+                  Planitt Multi Asset Recommendations Platform
                 </h1>
 
                 <p className="max-w-xl text-lg text-white/70">
@@ -42,23 +41,16 @@ export default function LandingPage() {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <a
                     href="#how-it-works"
-                    className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-10 py-4 text-sm font-semibold text-white/90 transition hover:bg-white/15"
+                    className="flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-10 py-4 text-sm font-semibold text-white/90 transition hover:bg-white/15"
                   >
                     How it works
-                  </a>
-                  <a
-                    href="#download"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-10 py-4 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:-translate-y-0.5 hover:shadow-emerald-500/50"
-                  >
-                    Download the PDF
-                    <ArrowRight className="h-5 w-5" />
                   </a>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-6">
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-2 shadow-2xl shadow-black/40 backdrop-blur">
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-1 shadow-2xl shadow-black/40 backdrop-blur">
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950/70 to-slate-900/70">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),transparent_55%)]" />
                   <div className="relative flex h-full flex-col justify-between p-6">
@@ -72,8 +64,8 @@ export default function LandingPage() {
                       </span>
                     </div>
 
-                    <div className="mt-8">
-                      <CandlestickChart width={340} height={210} />
+                    <div className="mx-auto mt-8">
+                      <CandlestickChart width={525} height={210} />
                     </div>
 
                     <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -109,7 +101,7 @@ export default function LandingPage() {
                         </button>
                         <div className="flex items-center gap-2 text-xs text-white/50">
                           <span className="inline-flex h-3 w-3 rounded-full bg-white/20" />
-                          xx people invested in this trade
+                          120k+ people invested in this trade
                         </div>
                       </div>
                     </div>
@@ -276,34 +268,12 @@ export default function LandingPage() {
       </section>
 
       <section id="download" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-14 lg:grid-cols-2 lg:items-start">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Why Planitt?</h2>
-            <p className="text-lg text-white/70">
-              Retail investors are forced to jump between multiple apps and unverified tips. Planitt unifies all major asset classes under one roof with AI-driven signals backed by human research.
-            </p>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 py-5 px-7 shadow-xl shadow-black/20">
-            <h3 className="text-xl font-semibold text-white">Download the PDF</h3>
-            <p className="mt-3 text-white/70">
-              Explore the full Planitt AI product concept and wireframes in the &quot;Planitt AI Multi Asset Stock Recommendation App&quot; PDF.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href="/Planitt_AI_Multi_Asset_Stock_Recommendation_App.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-8 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/30 transition hover:-translate-y-0.5"
-              >
-                View the PDF
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
+        <div className="space-y-4 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl text-white">Why Planitt?</h2>
+          <p className="mx-auto max-w-3xl text-lg text-white/70">
+            Retail investors are forced to jump between multiple apps and unverified tips. Planitt unifies all major asset classes under one roof with AI-driven signals backed by human research.
+          </p>
         </div>
-
 
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           <Callout
@@ -389,14 +359,6 @@ export default function LandingPage() {
               Continue to site
               <ArrowRight className="h-5 w-5" />
             </button>
-            <a
-              href="/Planitt_AI_Multi_Asset_Stock_Recommendation_App.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-10 py-4 text-sm font-semibold text-white/90 transition hover:bg-white/15"
-            >
-              View PDF
-            </a>
           </div>
         </div>
       </section>

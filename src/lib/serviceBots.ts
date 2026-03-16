@@ -7,4 +7,6 @@ export const isFinancialServicesPath = (pathname?: string | null) =>
 export const shouldShowTechnicalFaqBot = (
   pathname?: string | null,
   homeMode?: "financial" | "technical"
-) => isTechnicalServicesPath(pathname) || (pathname === "/" && homeMode === "technical");
+) =>
+  isTechnicalServicesPath(pathname) ||
+  ((pathname === "/" || pathname === "/main") && homeMode === "technical");

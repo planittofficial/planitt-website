@@ -88,13 +88,13 @@ const About = ({ mode = 'all' }: AboutProps) => {
     return (
         <section id="about" className={`py-20 ${isTechnical ? 'bg-sky-50 dark:bg-slate-950' : 'bg-gray-50 dark:bg-gray-950'} transition-colors duration-300`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="space-y-8"
+                        className="space-y-10"
                     >
                         <div>
                             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -153,10 +153,10 @@ const About = ({ mode = 'all' }: AboutProps) => {
                         viewport={{ once: true }}
                         className="space-y-8"
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
-                            <div className="space-y-5 h-full">
+                        <div className="flex flex-col gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {!isTechnical && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col h-full">
+                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
                                         <div className="text-center mb-4">
                                             <div className="relative w-44 h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
@@ -184,11 +184,11 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 )}
 
                                 {!isFinancial && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col h-full">
+                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
                                         <div className="text-center mb-4">
                                             <div className="relative w-44 h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
-                                                    src="/Parth_shende(Technical_Head).jpeg"
+                                                    src="/Parth_shende(Technical_Head).png"
                                                     alt="Parth Shende"
                                                     fill
                                                     className="object-cover"
@@ -209,75 +209,31 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 )}
                             </div>
 
-                            <div className="space-y-5">
-                                <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
-                                    <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-                                        Certifications
-                                    </h3>
-
-                                    <div className="flex flex-col items-center gap-4">
-                                        <a
-                                            href="/private-limited-certification.pdf"
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="group w-full max-w-md"
+                            <div className={`bg-gradient-to-r ${
+                                mode === 'all'
+                                    ? 'from-[#b78622] to-zinc-600'
+                                    : palette.impactBg
+                            } rounded-2xl p-8 text-white w-full`}>
+                                <h3 className="font-heading text-2xl font-bold mb-6 text-center">
+                                    {isFinancial ? 'Financial Impact' : isTechnical ? 'Technical Impact' : 'Our Impact'}
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {visibleAchievements.map((achievement, index) => (
+                                        <motion.div
+                                            key={achievement}
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            transition={{ duration: 0.5, delay: index * 0.08 }}
+                                            viewport={{ once: true }}
+                                            className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3"
                                         >
-<div className="relative w-full h-56 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm group-hover:shadow-md transition">
-                                                <Image
-                                                    src="/DIPP249094_PLANITT_SOLUTIONS_PRIVATE_LIMITED_RECOGNITION_5320703230074383307.jpg"
-                                                    alt="Startup India Certificate of Recognition"
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-
-                                            <div className="mt-3 flex items-center justify-between gap-4">
-                                                <div>
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                                                        Private Limited Company Certificate
-                                                    </p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">
-                                                        Click the image to open the certificate in a new tab.
-                                                    </p>
-                                                </div>
-                                                <span className="inline-flex items-center justify-center h-9 px-3 rounded-lg bg-[#b78622] dark:bg-[#e7c973] text-xs font-semibold text-white dark:text-slate-900">
-                                                    Open
-                                                </span>
-                                            </div>
-                                        </a>
-
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
-                                            Registered Private Limited Company
-                                        </p>
-                                    </div>
+                                            <CheckCircle className={`h-4 w-4 ${palette.impactIcon}`} />
+                                            <p className={`${palette.impactText} text-sm font-medium`}>
+                                                {achievement}
+                                            </p>
+                                        </motion.div>
+                                    ))}
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className={`bg-gradient-to-r ${
-                            mode === 'all'
-                                ? 'from-[#b78622] to-zinc-600'
-                                : palette.impactBg
-                        } rounded-2xl p-8 text-white`}>
-                            <h3 className="font-heading text-2xl font-bold mb-6 text-center">
-                                {isFinancial ? 'Financial Impact' : isTechnical ? 'Technical Impact' : 'Our Impact'}
-                            </h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {visibleAchievements.map((achievement, index) => (
-                                    <motion.div
-                                        key={achievement}
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.5, delay: index * 0.08 }}
-                                        viewport={{ once: true }}
-                                        className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3"
-                                    >
-                                        <CheckCircle className={`h-4 w-4 ${palette.impactIcon}`} />
-                                        <p className={`${palette.impactText} text-sm font-medium`}>
-                                            {achievement}
-                                        </p>
-                                    </motion.div>
-                                ))}
                             </div>
                         </div>
                     </motion.div>

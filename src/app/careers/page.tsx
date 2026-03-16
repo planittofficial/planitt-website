@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     {
         name: 'Parth Shende',
         role: 'CTO (Technical Lead)',
-        image: '/Parth_shende(Technical_Head).jpeg',
+        image: '/Parth_shende(Technical_Head).jpg',
         portfolio: '#',
     },
     {
