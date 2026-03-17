@@ -154,9 +154,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
                         className="space-y-8"
                     >
                         <div className="flex flex-col gap-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className={`grid grid-cols-1 ${!isFinancial && !isTechnical ? 'md:grid-cols-2' : ''} gap-6`}>
                                 {!isTechnical && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
+                                    <div className={`bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col ${isFinancial ? 'max-w-md mx-auto w-full' : ''}`}>
                                         <div className="text-center mb-4">
                                             <div className="relative w-32 h-32 sm:w-44 sm:h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
@@ -184,7 +184,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 )}
 
                                 {!isFinancial && (
-                                    <div className="bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col">
+                                    <div className={`bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300 flex flex-col ${isTechnical ? 'max-w-md mx-auto w-full' : ''}`}>
                                         <div className="text-center mb-4">
                                             <div className="relative w-32 h-32 sm:w-44 sm:h-44 mx-auto mb-4 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-xl border-4 border-white dark:border-gray-800 transition-all duration-300">
                                                 <Image
@@ -209,12 +209,14 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 )}
                             </div>
 
-                            <div className={`bg-gradient-to-r ${
+                            <div className={`bg-gradient-to-br ${
                                 mode === 'all'
                                     ? 'from-[#b78622] to-zinc-600'
                                     : palette.impactBg
-                            } rounded-2xl p-6 sm:p-8 text-white w-full`}>
-                                <h3 className="font-heading text-xl sm:text-2xl font-bold mb-6 text-center">
+                            } rounded-2xl p-5 sm:p-6 lg:p-7 text-white shadow-lg border border-white/10 ${
+                                mode !== 'all' ? 'max-w-md mx-auto w-full' : 'w-full'
+                            }`}>
+                                <h3 className="font-heading text-xl sm:text-2xl font-bold mb-5 text-center">
                                     {isFinancial ? 'Financial Impact' : isTechnical ? 'Technical Impact' : 'Our Impact'}
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -225,10 +227,14 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             transition={{ duration: 0.5, delay: index * 0.08 }}
                                             viewport={{ once: true }}
-                                            className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3"
+                                            className={`flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3.5 border border-white/5 hover:bg-white/15 transition-colors ${
+                                                visibleAchievements.length % 2 !== 0 && index === visibleAchievements.length - 1
+                                                    ? 'sm:col-span-2'
+                                                    : ''
+                                            }`}
                                         >
-                                            <CheckCircle className={`h-4 w-4 ${palette.impactIcon}`} />
-                                            <p className={`${palette.impactText} text-sm font-medium`}>
+                                            <CheckCircle className={`h-5 w-5 ${palette.impactIcon} shrink-0`} />
+                                            <p className={`${palette.impactText} text-sm sm:text-base font-semibold leading-tight`}>
                                                 {achievement}
                                             </p>
                                         </motion.div>

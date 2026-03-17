@@ -343,27 +343,16 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      <section className="border-t border-white/10 py-16">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:px-6 lg:flex-row lg:px-8">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-white/50">Ready to explore?</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Get started with Planitt
-            </h2>
-          </div>
-          <div className="flex flex-col items-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={goToSite}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-10 py-4 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:-translate-y-0.5"
-            >
-              Continue to site
-              <ArrowRight className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      </section>
+      <div className="fixed bottom-6 right-6 z-[100] sm:bottom-10 sm:right-10">
+        <button
+          type="button"
+          onClick={goToSite}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-6 py-3 sm:px-10 sm:py-4 text-sm font-bold text-slate-950 shadow-2xl shadow-emerald-500/50 transition hover:-translate-y-1 hover:scale-105 active:scale-95"
+        >
+          Continue to site
+          <ArrowRight className="h-5 w-5" />
+        </button>
+      </div>
     </main>
   );
 }
