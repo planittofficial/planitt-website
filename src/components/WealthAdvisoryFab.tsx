@@ -74,11 +74,7 @@ export default function WealthAdvisoryFab() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(183,134,34,0.26),transparent_32%),radial-gradient(circle_at_left,rgba(255,255,255,0.06),transparent_26%)]" />
                 <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-start gap-3 sm:items-center">
-                      <div className="relative mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d8b66a] via-[#b78622] to-[#8f651a] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] sm:mt-0">
-                        <Bot className="h-5 w-5" />
-                        <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-2 border-[#111318] bg-emerald-400" />
-                      </div>
+                    <div className="flex items-start sm:items-center">
                       <div className="min-w-0">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/45 sm:text-[11px] sm:tracking-[0.28em]">AI Wealth Desk</p>
                         <span className="block text-base font-semibold leading-tight text-white sm:text-lg">Wealth Advisory</span>
@@ -123,32 +119,34 @@ export default function WealthAdvisoryFab() {
         ) : null}
       </AnimatePresence>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className="fixed bottom-4 right-4 z-[100] sm:bottom-6 sm:right-6 lg:right-8"
-      >
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Open Wealth Advisory Bot"
-          className="group inline-flex items-center gap-3 rounded-[1.75rem] border border-white/60 bg-[linear-gradient(135deg,rgba(8,11,18,0.98),rgba(17,23,33,0.98))] px-3.5 py-3 text-left text-white shadow-[0_24px_60px_-24px_rgba(15,17,23,0.7)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-24px_rgba(15,17,23,0.8)] dark:border-[#243047] dark:bg-[linear-gradient(135deg,rgba(5,10,18,0.98),rgba(11,20,35,0.98))]"
+      {!open ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="fixed bottom-4 right-4 z-[100] sm:bottom-6 sm:right-6 lg:right-8"
         >
-          <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ddb866] via-[#b78622] to-[#8f651a] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]">
-            <Bot className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-[#111318] bg-emerald-400" />
-          </span>
-          <span className="hidden sm:block">
-            <span className="block text-[10px] uppercase tracking-[0.28em] text-white/45">AI Wealth Desk</span>
-            <span className="mt-0.5 block text-sm font-semibold">Wealth Advisory</span>
-            <span className="mt-0.5 block text-xs text-white/60">Ask about SIP, lumpsum, and fund ideas</span>
-          </span>
-          <span className="hidden h-9 items-center rounded-full border border-white/10 bg-white/5 px-3 text-[11px] font-semibold text-[#f2d789] sm:inline-flex">
-            Open
-          </span>
-        </button>
-      </motion.div>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open Wealth Advisory Bot"
+            className="group inline-flex items-center gap-3 rounded-[1.75rem] border border-white/60 bg-[linear-gradient(135deg,rgba(8,11,18,0.98),rgba(17,23,33,0.98))] px-3.5 py-3 text-left text-white shadow-[0_24px_60px_-24px_rgba(15,17,23,0.7)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-24px_rgba(15,17,23,0.8)] dark:border-[#243047] dark:bg-[linear-gradient(135deg,rgba(5,10,18,0.98),rgba(11,20,35,0.98))]"
+          >
+            <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ddb866] via-[#b78622] to-[#8f651a] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]">
+              <Bot className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-[#111318] bg-emerald-400" />
+            </span>
+            <span className="hidden sm:block">
+              <span className="block text-[10px] uppercase tracking-[0.28em] text-white/45">AI Wealth Desk</span>
+              <span className="mt-0.5 block text-sm font-semibold">Wealth Advisory</span>
+              <span className="mt-0.5 block text-xs text-white/60">Ask about SIP, lumpsum, and fund ideas</span>
+            </span>
+            <span className="hidden h-9 items-center rounded-full border border-white/10 bg-white/5 px-3 text-[11px] font-semibold text-[#f2d789] sm:inline-flex">
+              Open
+            </span>
+          </button>
+        </motion.div>
+      ) : null}
     </>
   );
 }

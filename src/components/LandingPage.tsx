@@ -250,17 +250,23 @@ export default function LandingPage() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { src: '/screen1.png' },
-              { src: '/screen2.png' },
-              { src: '/screen3.png' },
-              { src: '/screen4.png' },
+              { src: '/dark-watchlist-screen.png', alt: 'Dark watchlist screen' },
+              { src: '/dark-news-screen.png', alt: 'Dark news screen' },
+              { src: '/dark-history-screen.png', alt: 'Dark history screen' },
+              { src: '/dark-home-subscribed-screen.png', alt: 'Dark subscribed home screen' },
             ].map((screen) => (
-              <div key={screen.src} className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-xl shadow-black/20">
-                <div className="aspect-[9/16] w-full bg-black/10">
+              <div
+                key={screen.src}
+                className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(10,14,24,0.98))] p-3 shadow-[0_26px_70px_-32px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:-translate-y-1"
+              >
+                <div className="absolute -left-8 top-10 h-36 w-36 rounded-full bg-emerald-400/30 blur-3xl transition-all duration-500 group-hover:scale-125 group-hover:bg-emerald-300/40" />
+                <div className="absolute -right-10 bottom-12 h-40 w-40 rounded-full bg-sky-400/28 blur-3xl transition-all duration-500 group-hover:scale-125 group-hover:bg-sky-300/38" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_42%)] opacity-60 transition-opacity duration-300 group-hover:opacity-90" />
+                <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,#0a0a0a_0%,#050505_100%)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                   <img
                     src={screen.src}
-                    alt="App screen"
-                    className="h-full w-full object-contain"
+                    alt={screen.alt}
+                    className="h-full w-full rounded-[1.1rem] object-contain object-center"
                   />
                 </div>
               </div>
@@ -352,11 +358,11 @@ export default function LandingPage() {
               Get started with Planitt
             </h2>
           </div>
-          <div className="flex flex-col items-center gap-3 sm:flex-row">
+          <div className="fixed bottom-6 right-4 z-[90] flex flex-col items-center gap-3 sm:right-6 sm:flex-row lg:right-8">
             <button
               type="button"
               onClick={goToSite}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-10 py-4 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 px-10 py-4 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:shadow-emerald-500/50"
             >
               Continue to site
               <ArrowRight className="h-5 w-5" />
