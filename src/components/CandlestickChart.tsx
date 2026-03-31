@@ -123,9 +123,9 @@ export default function CandlestickChart({
       const curr = data[i];
 
       // simple signal: buy if price breaks to new high; sell if it breaks to new low
-      if (curr.close > prev.high * 1.005) {
+      if (curr.close > prev.high * 1.01) {
         list.push({ index: i, type: 'buy', price: curr.close });
-      } else if (curr.close < prev.low * 0.995) {
+      } else if (curr.close < prev.low * 0.99) {
         list.push({ index: i, type: 'sell', price: curr.close });
       }
     }
@@ -263,19 +263,19 @@ export default function CandlestickChart({
 
         {signals.map((signal) => {
           const xCenter = signal.index * step + step / 2;
-          const y = signal.type === 'buy' ? padding + 12 : padding + innerHeight - 12;
+          const y = signal.type === 'buy' ? innerHeight - 12 : 12;
           const color = signal.type === 'buy' ? '#2EE67C' : '#F33F5B';
           const points =
             signal.type === 'buy'
-              ? `${xCenter},${y} ${xCenter - 6},${y + 10} ${xCenter + 6},${y + 10}`
-              : `${xCenter},${y} ${xCenter - 6},${y - 10} ${xCenter + 6},${y - 10}`;
+              ? `${xCenter},${y - 10} ${xCenter - 6},${y} ${xCenter + 6},${y}`
+              : `${xCenter},${y + 10} ${xCenter - 6},${y} ${xCenter + 6},${y}`;
 
           return (
             <g key={`${signal.type}-${signal.index}`}>
               <polygon points={points} fill={color} opacity={0.85} />
               <text
                 x={xCenter}
-                y={signal.type === 'buy' ? y + 26 : y - 14}
+                y={signal.type === 'buy' ? y + 14 : y - 6}
                 textAnchor="middle"
                 fill="rgba(255,255,255,0.75)"
                 fontSize="9"
