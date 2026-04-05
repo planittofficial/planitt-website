@@ -250,10 +250,10 @@ export default function LandingPage() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { src: '/dark-watchlist-screen.png', alt: 'Dark watchlist screen' },
-              { src: '/dark-news-screen.png', alt: 'Dark news screen' },
-              { src: '/dark-history-screen.png', alt: 'Dark history screen' },
               { src: '/dark-home-subscribed-screen.png', alt: 'Dark subscribed home screen' },
+              { src: '/dark-watchlist-screen.png', alt: 'Dark watchlist screen' },
+              { src: '/dark-history-screen.png', alt: 'Dark history screen' },
+              { src: '/dark-news-screen.png', alt: 'Dark news screen' },
             ].map((screen) => (
               <div
                 key={screen.src}
