@@ -149,9 +149,8 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className={`rounded-xl border border-transparent bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 ${
-                                        values.length % 2 === 1 && index === values.length - 1 ? 'sm:col-span-2 sm:max-w-[calc(50%-0.75rem)]' : ''
-                                    }`}
+                                    className={`rounded-xl border border-transparent bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 ${values.length % 2 === 1 && index === values.length - 1 ? 'sm:col-span-2 sm:max-w-[calc(50%-0.75rem)]' : ''
+                                        }`}
                                 >
                                     <div className="flex items-start space-x-4">
                                         <div className={`rounded-lg p-3 ${iconWrap}`}>
@@ -215,9 +214,8 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             transition={{ duration: 0.5, delay: index * 0.08 }}
                                             viewport={{ once: true }}
-                                            className={`flex items-center gap-3 rounded-xl border border-white/5 bg-white/10 px-4 py-3.5 transition-colors hover:bg-white/15 ${
-                                                index === achievements.length - 1 ? 'sm:col-span-2' : ''
-                                            }`}
+                                            className={`flex items-center gap-3 rounded-xl border border-white/5 bg-white/10 px-4 py-3.5 transition-colors hover:bg-white/15 ${index === achievements.length - 1 ? 'sm:col-span-2' : ''
+                                                }`}
                                         >
                                             <CheckCircle className={`h-5 w-5 shrink-0 ${impactIconClass}`} />
                                             <p className={`text-sm font-semibold leading-tight sm:text-base ${impactTextClass}`}>{achievement}</p>

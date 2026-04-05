@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     {
         name: 'Parth Shende',
         role: 'CTO (Technical Lead)',
-        image: '/Parth_shende(Technical_Head).jpg',
+        image: '/Parth_shende(Technical_Head).png',
         portfolio: '#',
     },
     {
@@ -62,7 +62,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         name: 'Shivam Badade',
-        role: 'Software Developer', 
+        role: 'Software Developer',
         image: '/shivam_profile.jpg', // Default image as requested
         portfolio: 'https://dev.netlify.app/',
     },
@@ -326,7 +326,7 @@ Thank You.`;
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{member.name}</h3>
                                 <p className="text-[#b78622] dark:text-[#e7c973] font-semibold text-sm mb-6">{member.role}</p>
-                                
+
                                 {member.portfolio && member.portfolio !== '#' && (
                                     <a
                                         href={member.portfolio}

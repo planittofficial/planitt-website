@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Code2, Cpu, Landmark, Shield, TrendingUp, Users } from 'lucide-react';
 import Link from 'next/link';
 
-type HomeMode = 'financial' | 'technical';
+type HomeMode = 'technical' | 'financial';
 
 type HeroProps = {
     mode?: HomeMode;
@@ -80,11 +80,10 @@ const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
                             <button
                                 onClick={() => onModeChange?.('financial')}
                                 suppressHydrationWarning
-                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
-                                    !isTechnical
-                                        ? 'text-white'
-                                        : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
-                                }`}
+                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${!isTechnical
+                                    ? 'text-white'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
+                                    }`}
                             >
                                 <Landmark className="h-4 w-4" />
                                 Financial
@@ -92,11 +91,10 @@ const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
                             <button
                                 onClick={() => onModeChange?.('technical')}
                                 suppressHydrationWarning
-                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
-                                    isTechnical
-                                        ? 'text-white'
-                                        : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
-                                }`}
+                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${isTechnical
+                                    ? 'text-white'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
+                                    }`}
                             >
                                 <Cpu className="h-4 w-4" />
                                 Technical

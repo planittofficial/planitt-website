@@ -16,6 +16,7 @@ const Header = () => {
     { name: 'Services', href: '/main#services' },
     // { name: 'Blogs', href: '/main#blogs' }, // Blog/Insights section hidden on homepage
     { name: 'Case Studies', href: '/case-studies' },
+    { name: 'Portfolio', href: '/main#portfolio' },
     { name: 'About Us', href: '/main#about' },
     { name: 'Testimonials', href: '/main#testimonials' },
     { name: 'Join Us', href: '/careers' },
@@ -24,7 +25,7 @@ const Header = () => {
   return (
     <header
       className="
-        sticky top-0 z-50
+        fixed top-0 z-50 w-full
         backdrop-blur-xl
         bg-white/80 dark:bg-black/70
         border-b border-gray-200 dark:border-gray-800

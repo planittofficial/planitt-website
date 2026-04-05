@@ -56,16 +56,16 @@ export default function ProjectSection({
             >
               {/* Image */}
               <Image
-  src={project.image}
-  alt={project.title}
-  fill
-  sizes="(max-width: 768px) 100vw, 33vw"
-  className={`transition-transform duration-500
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className={`transition-transform duration-500
     ${project.imageFit === "contain"
-      ? "object-contain p-6"
-      : "object-cover group-hover:scale-105"}
+                    ? "object-contain p-6"
+                    : "object-cover group-hover:scale-105"}
   `}
-/>
+              />
 
 
               {/* Hover Overlay */}

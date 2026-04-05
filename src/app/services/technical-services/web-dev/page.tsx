@@ -28,41 +28,41 @@ export default function WebDevPage() {
           </p>
         </div>
 
-{/* Key Features */}
-<section className="mb-20">
-  <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8">
-    <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white text-center">
-      Key Features
-    </h2>
+        {/* Key Features */}
+        <section className="mb-20">
+          <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white text-center">
+              Key Features
+            </h2>
 
-    <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700 dark:text-gray-300">
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        Modern frameworks (Next.js & React)
-      </li>
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        High performance & fast load times
-      </li>
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        Secure & reliable architecture
-      </li>
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        Fully responsive across all devices
-      </li>
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        Clean, maintainable codebase
-      </li>
-      <li className="flex items-start gap-3">
-        <span className="text-indigo-600 font-bold">•</span>
-        Scalable, future-ready structure
-      </li>
-    </ul>
-  </div>
-</section>
+            <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700 dark:text-gray-300">
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                Modern frameworks (Next.js & React)
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                High performance & fast load times
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                Secure & reliable architecture
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                Fully responsive across all devices
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                Clean, maintainable codebase
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-indigo-600 font-bold">•</span>
+                Scalable, future-ready structure
+              </li>
+            </ul>
+          </div>
+        </section>
 
         {/* Technologies */}
         <div className="mb-20">
@@ -138,7 +138,7 @@ export default function WebDevPage() {
           accentColor="blue"
           projects={[
             {
-              title: "ZeyNix",
+              title: "ZeyNix Website",
               description:
                 "A premium e-commerce platform for fashion enthusiasts, featuring a seamless shopping experience and responsive design.",
               image: "/Zeynix.png",
@@ -146,7 +146,7 @@ export default function WebDevPage() {
               tags: ["E-commerce", "React", "Next.js"],
             },
             {
-              title: "Krypsm",
+              title: "Krypsm Website",
               description:
                 "A secure and intuitive cryptocurrency trading platform dashboard with real-time data visualization.",
               image: "/Krypsm.png",
@@ -154,7 +154,7 @@ export default function WebDevPage() {
               tags: ["Web App", "Fintech", "Dashboard"],
             },
             {
-              title: "Sawarnaratna",
+              title: "Sawarnaratna Website",
               description:
                 "A dry fruit gifting website where customers can build their own custom gift hampers for friends and family through a simple, responsive shopping flow.",
               image: "/sawarnaratna.png",
@@ -162,12 +162,20 @@ export default function WebDevPage() {
               tags: ["E-commerce", "Gift Hampers", "Custom Orders"],
             },
             {
-              title: "Capita Prime LLC",
+              title: "Capita Prime LLC Website",
               description:
                 "A real estate website built for Dubai customers, focused on presenting land-selling opportunities with a professional layout and lead-oriented experience.",
               image: "/CapitaPrime.png",
               liveLink: "https://capitaprimellc.netlify.app/",
               tags: ["Real Estate", "Dubai Market", "Lead Generation"],
+            },
+            {
+              title: "Coffee Culture Website",
+              description:
+                "A coffee shop website designed to showcase products, services, and events while providing an easy-to-use online ordering system.",
+              image: "/Coffee-Culture.jpg",
+              liveLink: "https://coffeeculturenagpur.com/",
+              tags: ["Food & Beverage", "Online Ordering", "Event Management"],
             },
           ]}
         />
@@ -259,71 +267,71 @@ export default function WebDevPage() {
           </div>
         </section>
 
-      {/* Important Terms & Conditions */}
-<section className="mb-24">
-  {/* Header */}
-  <div className="text-center mb-10">
-    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-      Important Terms & Conditions
-    </h2>
-    <p className="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-      Please review the following terms carefully to ensure clarity and
-      transparency throughout the project lifecycle.
-    </p>
-  </div>
+        {/* Important Terms & Conditions */}
+        <section className="mb-24">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Important Terms & Conditions
+            </h2>
+            <p className="mt-3 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Please review the following terms carefully to ensure clarity and
+              transparency throughout the project lifecycle.
+            </p>
+          </div>
 
-  {/* Content Box */}
-  <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:hover:bg-gray-700 hover:border-indigo-500 rounded-2xl p-6 space-y-4">
-    {/* Item */}
-    <div className="group rounded-xl border border-transparent p-4 transition">
-      <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
-        📄 Project Scope
-      </h3>
-      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-        The quoted price includes complete website development with backend
-        and database integration. Hosting and publishing services are included;
-        however, domain purchases or app store subscriptions must be handled
-        separately.
-      </p>
-    </div>
+          {/* Content Box */}
+          <div className="max-w-5xl mx-auto bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:hover:bg-gray-700 hover:border-indigo-500 rounded-2xl p-6 space-y-4">
+            {/* Item */}
+            <div className="group rounded-xl border border-transparent p-4 transition">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                📄 Project Scope
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                The quoted price includes complete website development with backend
+                and database integration. Hosting and publishing services are included;
+                however, domain purchases or app store subscriptions must be handled
+                separately.
+              </p>
+            </div>
 
-    {/* Item */}
-    <div className="group rounded-xl border border-transparent p-4 transition">
-      <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
-        ⏱ Revision Policy
-      </h3>
-      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-        Changes requested within the first month after project completion are
-        included at no additional cost. After one month, further changes may
-        be charged based on complexity and time required.
-      </p>
-    </div>
+            {/* Item */}
+            <div className="group rounded-xl border border-transparent p-4 transition">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                ⏱ Revision Policy
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Changes requested within the first month after project completion are
+                included at no additional cost. After one month, further changes may
+                be charged based on complexity and time required.
+              </p>
+            </div>
 
-    {/* Item */}
-    <div className="group rounded-xl border border-transparent p-4 transition">
-      <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
-        🛠 Maintenance Scope
-      </h3>
-      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-        Maintenance plans cover bug fixes, feature additions, and incremental
-        improvements only. Major redevelopment or architectural changes are
-        not included and will be quoted separately.
-      </p>
-    </div>
+            {/* Item */}
+            <div className="group rounded-xl border border-transparent p-4 transition">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                🛠 Maintenance Scope
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Maintenance plans cover bug fixes, feature additions, and incremental
+                improvements only. Major redevelopment or architectural changes are
+                not included and will be quoted separately.
+              </p>
+            </div>
 
-    {/* Item */}
-    <div className="group rounded-xl border border-transparent p-4 transition">
-      <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
-        📝 Agreements
-      </h3>
-      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-        Separate agreements will be signed for project development, monthly
-        maintenance, and annual maintenance. All terms must be finalized and
-        approved before work begins.
-      </p>
-    </div>
-  </div>
-</section>
+            {/* Item */}
+            <div className="group rounded-xl border border-transparent p-4 transition">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                📝 Agreements
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Separate agreements will be signed for project development, monthly
+                maintenance, and annual maintenance. All terms must be finalized and
+                approved before work begins.
+              </p>
+            </div>
+          </div>
+        </section>
 
 
         {/* CTA */}
