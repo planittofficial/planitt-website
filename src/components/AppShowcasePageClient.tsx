@@ -45,7 +45,7 @@ export default function AppShowcasePageClient() {
   return (
     <main className="bg-black text-white">
       <HorizontalScreensSection
-        title="Panoramic Reel"
+        title="App Screens Showcase"
         images={[
           '/screens/screen1.png',
           '/screens/screen2.png',

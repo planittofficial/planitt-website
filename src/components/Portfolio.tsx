@@ -39,8 +39,8 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                     <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400">
                         Real product and platform implementations across web and app delivery.
                     </p>
-                    <div className="mx-auto mb-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
-                        <div className="rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900/70">
+                    <div className="mb-8 grid w-full gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900/70 ">
                             <p className={`font-semibold ${accentClass}`}>Web Projects</p>
                             <p className="text-gray-600 dark:text-gray-400">E-commerce, dashboards, lead-gen</p>
                         </div>
