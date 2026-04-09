@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "python scripts/extract-mf-xlsx.py",
+    "generate:mf-data": "python scripts/extract-mf-xlsx.py",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"

@@ -374,7 +374,7 @@ const createQuoteReply = (message: string): TechnicalFaqMatch | null => {
     };
   }
 
-  const selectedServices = ctx.services.length > 0 ? ctx.services : ["website"];
+  const selectedServices: QuoteContext["services"] = ctx.services.length > 0 ? ctx.services : ["website"];
   let estimateMin = 0;
   let estimateMax = 0;
 
