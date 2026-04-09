@@ -189,6 +189,9 @@ const Contact = ({ mode = 'all' }: ContactProps) => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
+                    <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.24em] ${mode === 'technical' ? 'text-sky-700 dark:text-cyan-300' : mode === 'financial' ? 'text-[#a9781e] dark:text-[#e7c973]' : 'text-blue-700 dark:text-blue-300'}`}>
+                        Let&apos;s Connect
+                    </p>
                     <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Get In Touch
                     </h2>
@@ -198,6 +201,9 @@ const Contact = ({ mode = 'all' }: ContactProps) => {
                             : mode === 'technical'
                                 ? 'Ready to build your product or platform? Contact us for technical consultation and delivery planning.'
                                 : 'Ready to grow with finance and technology support? Contact us for a free consultation.'}
+                    </p>
+                    <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        Share your requirement and we&apos;ll guide you with the right next step.
                     </p>
                 </motion.div>
 
@@ -211,6 +217,11 @@ const Contact = ({ mode = 'all' }: ContactProps) => {
                     >
                         {/* Centered Contact Form */}
                         <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-transparent dark:border-gray-800 transition-colors duration-300">
+                            <div className="mb-5 grid grid-cols-3 gap-2 text-center">
+                                <div className="rounded-lg border border-gray-200 bg-gray-50 px-2 py-2 text-[11px] font-semibold text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Quick Reply</div>
+                                <div className="rounded-lg border border-gray-200 bg-gray-50 px-2 py-2 text-[11px] font-semibold text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Direct WhatsApp</div>
+                                <div className="rounded-lg border border-gray-200 bg-gray-50 px-2 py-2 text-[11px] font-semibold text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Guided Support</div>
+                            </div>
                             <h4 className="font-heading text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
                                 {mode === 'financial'
                                     ? 'Send Financial Inquiry'

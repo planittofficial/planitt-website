@@ -131,6 +131,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
                         className="space-y-8 sm:space-y-10"
                     >
                         <div>
+                            <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.24em] ${accentText}`}>
+                                Who We Are
+                            </p>
                             <h2 className="mb-6 font-heading text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">
                                 About Planitt
                             </h2>
@@ -149,7 +152,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className={`rounded-xl border border-transparent bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 ${values.length % 2 === 1 && index === values.length - 1 ? 'sm:col-span-2 sm:max-w-[calc(50%-0.75rem)]' : ''
+                                    className={`rounded-xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 ${values.length % 2 === 1 && index === values.length - 1 ? 'sm:col-span-2 sm:max-w-[calc(50%-0.75rem)]' : ''
                                         }`}
                                 >
                                     <div className="flex items-start space-x-4">
@@ -206,6 +209,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
 
                             <div className={`mx-auto w-full max-w-md rounded-2xl border border-white/10 p-5 text-white shadow-lg sm:p-6 lg:p-7 ${impactCardClass}`}>
                                 <h3 className="mb-5 text-center font-heading text-xl font-bold sm:text-2xl">{impactTitle}</h3>
+                                <p className="mb-5 text-center text-xs uppercase tracking-[0.2em] text-white/75">
+                                    Snapshot
+                                </p>
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     {achievements.map((achievement, index) => (
                                         <motion.div

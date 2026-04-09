@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, Cpu, ShieldCheck, Users } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import CandlestickChart from './CandlestickChart';
+import HorizontalScreensSection from './HorizontalScreensSection';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -239,40 +240,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="screens" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="space-y-10">
-          <div className="space-y-4 text-center">
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">App screens</h2>
-            <p className="mx-auto max-w-2xl text-lg text-white/70">
-              Preview the clean, dark-mode experience for watchlists, news, history, and account setup.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              { src: '/dark-home-subscribed-screen.png', alt: 'Dark subscribed home screen' },
-              { src: '/dark-watchlist-screen.png', alt: 'Dark watchlist screen' },
-              { src: '/dark-history-screen.png', alt: 'Dark history screen' },
-              { src: '/dark-news-screen.png', alt: 'Dark news screen' },
-            ].map((screen) => (
-              <div
-                key={screen.src}
-                className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(10,14,24,0.98))] p-3 shadow-[0_26px_70px_-32px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="absolute -left-8 top-10 h-36 w-36 rounded-full bg-emerald-400/30 blur-3xl transition-all duration-500 group-hover:scale-125 group-hover:bg-emerald-300/40" />
-                <div className="absolute -right-10 bottom-12 h-40 w-40 rounded-full bg-sky-400/28 blur-3xl transition-all duration-500 group-hover:scale-125 group-hover:bg-sky-300/38" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_42%)] opacity-60 transition-opacity duration-300 group-hover:opacity-90" />
-                <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,#0a0a0a_0%,#050505_100%)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-                  <img
-                    src={screen.src}
-                    alt={screen.alt}
-                    className="h-full w-full rounded-[1.1rem] object-contain object-center"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section id="screens" className="mx-auto w-full px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <HorizontalScreensSection
+          title="Panoramic Reel"
+          images={[
+            '/screens/screen1.png',
+            '/screens/screen2.png',
+            '/screens/screen3.png',
+            '/screens/screen4.png',
+            '/screens/screen5.png',
+          ]}
+        />
       </section>
 
       <section id="download" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
@@ -371,15 +349,6 @@ export default function LandingPage() {
         </div>
       </section>
     </main>
-  );
-}
-
-function TrendRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3">
-      <span className="text-sm font-medium text-white/80">{label}</span>
-      <span className="text-sm font-semibold text-white">{value}</span>
-    </div>
   );
 }
 

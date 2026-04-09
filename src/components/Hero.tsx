@@ -56,6 +56,17 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
     const description = isTechnical
         ? 'We deliver modern web, app, cloud, and automation solutions to help your business ship faster and scale reliably.'
         : 'We provide strategic financial planning, insurance, SIP, and retirement advisory to help you build long-term wealth securely.';
+    const proofStats = isTechnical
+        ? [
+            { label: 'Projects Delivered', value: '30+' },
+            { label: 'Core Domains', value: 'Web, App, Cloud' },
+            { label: 'Support Model', value: 'Build + Maintain' },
+        ]
+        : [
+            { label: 'Clients Guided', value: '50+' },
+            { label: 'AUM Tracked', value: 'Rs 50L+' },
+            { label: 'Advisory Focus', value: 'SIP + Protection' },
+        ];
 
     return (
         <section className={`relative bg-linear-to-br ${palette.bg} overflow-hidden transition-colors duration-300`}>
@@ -119,6 +130,9 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
                                 transition={{ duration: 0.32 }}
                                 className="space-y-5"
                             >
+                                <div className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm dark:border-gray-700 dark:bg-gray-900/70 dark:text-gray-300">
+                                    {isTechnical ? 'Technical Growth Partner' : 'Financial Growth Partner'}
+                                </div>
                                 <h1 className="font-heading text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
                                     Your Trusted
                                     <span className={`block text-transparent bg-clip-text bg-linear-to-r ${palette.heading}`}>
@@ -150,6 +164,17 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
                                         <Users className={`h-6 w-6 ${palette.people}`} />
                                         <span className="text-gray-700 dark:text-gray-300 font-medium">Expert-Led Team</span>
                                     </div>
+                                </div>
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                                    {proofStats.map((stat) => (
+                                        <div
+                                            key={stat.label}
+                                            className="rounded-xl border border-white/50 bg-white/70 px-4 py-3 shadow-sm backdrop-blur dark:border-gray-700/80 dark:bg-gray-900/50"
+                                        >
+                                            <p className={`text-sm font-semibold ${palette.cardLabel}`}>{stat.value}</p>
+                                            <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">{stat.label}</p>
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row gap-4">

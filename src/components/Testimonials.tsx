@@ -134,6 +134,9 @@ const Testimonials = ({ mode = 'all' }: TestimonialsProps) => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
+                    <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.24em] ${mode === 'technical' ? 'text-sky-700 dark:text-cyan-300' : 'text-[#a9781e] dark:text-[#e7c973]'}`}>
+                        Social Proof
+                    </p>
                     <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         {mode === 'financial' ? 'Financial Client Feedback' : mode === 'technical' ? 'Technical Client Feedback' : 'What Our Clients Say'}
                     </h2>
@@ -142,7 +145,10 @@ const Testimonials = ({ mode = 'all' }: TestimonialsProps) => {
                             ? 'Feedback from clients who used our planning, protection, and wealth advisory services.'
                             : mode === 'technical'
                                 ? 'Feedback from clients who partnered with us for product delivery, cloud, and automation.'
-                                : 'Client outcomes across both financial advisory and technical services.'}
+                            : 'Client outcomes across both financial advisory and technical services.'}
+                    </p>
+                    <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        Verified experiences from active clients and delivery partners.
                     </p>
                 </motion.div>
 
@@ -233,19 +239,19 @@ const Testimonials = ({ mode = 'all' }: TestimonialsProps) => {
                     viewport={{ once: true }}
                     className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-8"
                 >
-                    <div className="text-center">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <div className={`text-4xl font-bold ${palette.statA} mb-2`}>50+</div>
                         <div className="text-gray-600 dark:text-gray-400">Happy Clients</div>
                     </div>
-                    <div className="text-center">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <div className={`text-4xl font-bold ${palette.statB} mb-2`}>{mode === 'technical' ? '30+' : 'Rs 50L+'}</div>
                         <div className="text-gray-600 dark:text-gray-400">{mode === 'technical' ? 'Tech Deliveries' : 'Financial Portfolio Managed'}</div>
                     </div>
-                    <div className="text-center">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <div className={`text-4xl font-bold ${palette.statC} mb-2`}>{currentYear - startYear}+</div>
                         <div className="text-gray-600 dark:text-gray-400">Years Experience</div>
                     </div>
-                    <div className="text-center">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         <div className={`text-4xl font-bold ${palette.statD} mb-2`}>100%</div>
                         <div className="text-gray-600 dark:text-gray-400">Client Satisfaction</div>
                     </div>

@@ -1,9 +1,6 @@
 'use client';
-import Link from "next/link";
 import ProjectSection from "@/components/ProjectSection";
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { Award, CheckCircle, Code2, Shield, Target } from 'lucide-react';
 
 type HomeMode = 'all' | 'financial' | 'technical';
 
@@ -12,8 +9,19 @@ type PortfolioProps = {
 };
 
 const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
+    const isTechnical = mode === 'technical';
+    const isFinancial = mode === 'financial';
+    const sectionClass = isTechnical
+        ? 'bg-sky-50 dark:bg-slate-950'
+        : isFinancial
+            ? 'bg-[#fffbef] dark:bg-[#2a2111]'
+            : 'bg-gray-50 dark:bg-gray-950';
+    const accentClass = isTechnical
+        ? 'text-sky-700 dark:text-cyan-300'
+        : 'text-[#a9781e] dark:text-[#e7c973]';
+
     return (
-        <section id="portfolio" className={"py-12 transition-colors duration-300 sm:py-20 sm:pb-0"}>
+        <section id="portfolio" className={`py-12 transition-colors duration-300 sm:py-20 sm:pb-0 ${sectionClass}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -22,9 +30,29 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                     viewport={{ once: true }}
                     className="text-center sm:mb-16"
                 >
+                    <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.24em] ${accentClass}`}>
+                        Delivery Proof
+                    </p>
                     <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Our Portfolio
                     </h2>
+                    <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400">
+                        Real product and platform implementations across web and app delivery.
+                    </p>
+                    <div className="mx-auto mb-8 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900/70">
+                            <p className={`font-semibold ${accentClass}`}>Web Projects</p>
+                            <p className="text-gray-600 dark:text-gray-400">E-commerce, dashboards, lead-gen</p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900/70">
+                            <p className={`font-semibold ${accentClass}`}>App Projects</p>
+                            <p className="text-gray-600 dark:text-gray-400">In-house and client builds</p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900/70">
+                            <p className={`font-semibold ${accentClass}`}>Focus</p>
+                            <p className="text-gray-600 dark:text-gray-400">Performance, UX, scalability</p>
+                        </div>
+                    </div>
                     <ProjectSection
                         title="Web Development Projects"
                         subtitle="A showcase of our high-performance websites and mobile applications."

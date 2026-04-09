@@ -150,6 +150,7 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
             : effectiveMode === 'financial'
                 ? financialServices
                 : technicalServices;
+    const sectionTag = effectiveMode === 'technical' ? 'Technical Solutions' : effectiveMode === 'financial' ? 'Financial Solutions' : 'Unified Solutions';
 
     return (
         <section
@@ -164,11 +165,17 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
                     viewport={{ once: true }}
                     className="text-center mb-12 sm:mb-16"
                 >
+                    <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.24em] ${effectiveMode === 'technical' ? 'text-sky-700 dark:text-cyan-300' : 'text-[#a9781e] dark:text-[#e7c973]'}`}>
+                        {sectionTag}
+                    </p>
                     <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Our Solutions
                     </h2>
                     <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                         We deliver financial advisory and technical execution under one roof, so your strategy and implementation stay aligned.
+                    </p>
+                    <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        {visibleServices.length} services available
                     </p>
                 </motion.div>
 
@@ -262,6 +269,7 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
                                     </p>
 
                                     <div className="pt-4 flex justify-end">
+                                        <span className={`mr-2 text-sm font-medium ${arrowColor}`}>Explore</span>
                                         <ArrowRight
                                             className={`h-5 w-5 ${arrowColor} group-hover:translate-x-1 transition-transform duration-200`}
                                         />
