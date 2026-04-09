@@ -11,7 +11,7 @@ type HeroProps = {
     onModeChange?: (mode: HomeMode) => void;
 };
 
-const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
+const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
     const isTechnical = mode === 'technical';
     const palette = isTechnical
         ? {
@@ -73,21 +73,10 @@ const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
                     <div className={`relative rounded-2xl border ${palette.toggleBorder} bg-white/80 dark:bg-gray-900/70 backdrop-blur-xl p-1.5 ${palette.toggleShadow}`}>
                         <motion.div
                             className={`absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] rounded-xl bg-gradient-to-r ${palette.toggleActive} shadow-lg`}
-                            animate={{ x: isTechnical ? '100%' : 0 }}
+                            animate={{ x: isTechnical ? 0 : '100%' }}
                             transition={{ type: 'spring', stiffness: 360, damping: 32 }}
                         />
                         <div className="relative grid grid-cols-2 gap-1">
-                            <button
-                                onClick={() => onModeChange?.('financial')}
-                                suppressHydrationWarning
-                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${!isTechnical
-                                    ? 'text-white'
-                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
-                                    }`}
-                            >
-                                <Landmark className="h-4 w-4" />
-                                Financial
-                            </button>
                             <button
                                 onClick={() => onModeChange?.('technical')}
                                 suppressHydrationWarning
@@ -98,6 +87,17 @@ const Hero = ({ mode = 'financial', onModeChange }: HeroProps) => {
                             >
                                 <Cpu className="h-4 w-4" />
                                 Technical
+                            </button>
+                            <button
+                                onClick={() => onModeChange?.('financial')}
+                                suppressHydrationWarning
+                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${!isTechnical
+                                    ? 'text-white'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
+                                    }`}
+                            >
+                                <Landmark className="h-4 w-4" />
+                                Financial
                             </button>
                         </div>
                     </div>

@@ -41,7 +41,7 @@ const caseStudies: CaseStudy[] = [
 ];
 
 export default function CaseStudiesPage() {
-  const [mode, setMode] = useState<StudyDomain>("financial");
+  const [mode, setMode] = useState<StudyDomain>("technical");
 
   const isFinancial = mode === "financial";
 
@@ -92,16 +92,6 @@ export default function CaseStudiesPage() {
         <div className="max-w-md mx-auto mb-10">
           <div className="bg-white/80 dark:bg-gray-900/70 rounded-2xl p-1.5 border border-gray-200 dark:border-gray-700 grid grid-cols-2 gap-1">
             <button
-              onClick={() => setMode("financial")}
-              className={`h-11 rounded-xl font-semibold transition-all duration-200 ${
-                isFinancial
-                  ? `bg-gradient-to-r ${palette.tabActive}`
-                  : palette.tabIdle
-              }`}
-            >
-              Financial
-            </button>
-            <button
               onClick={() => setMode("technical")}
               className={`h-11 rounded-xl font-semibold transition-all duration-200 ${
                 !isFinancial
@@ -110,6 +100,16 @@ export default function CaseStudiesPage() {
               }`}
             >
               Technical
+            </button>
+            <button
+              onClick={() => setMode("financial")}
+              className={`h-11 rounded-xl font-semibold transition-all duration-200 ${
+                isFinancial
+                  ? `bg-gradient-to-r ${palette.tabActive}`
+                  : palette.tabIdle
+              }`}
+            >
+              Financial
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -14,9 +14,11 @@ import {
 import { technicalFaqPrompts } from "@/lib/technicalFaq";
 
 type Msg = { id: string; role: "user" | "bot"; text: string };
+type ChatState = Record<string, unknown>;
 
 type TechnicalFaqResponse = {
   reply: string;
+  state?: ChatState;
   suggestions?: string[];
   ctoPromotion?: {
     title: string;
@@ -44,10 +46,10 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useState<ChatState>({});
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>(technicalFaqPrompts.slice(0, 6));
   const [ctoPromotion, setCtoPromotion] = useState<{ title: string; lines: string[] } | null>(null);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const canSend = useMemo(() => input.trim().length > 0 && !loading, [input, loading]);
   const hasConversation = messages.length > 0 || loading;
@@ -59,13 +61,14 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
     setSelectedPrompt(null);
     setSuggestions(technicalFaqPrompts.slice(0, 6));
     setCtoPromotion(null);
+    setState({});
   };
 
   const callApi = async (message: string) => {
     const res = await fetch("/api/technical-faq", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message, pathname }),
+      body: JSON.stringify({ message, pathname, state }),
     });
     const data = (await res.json()) as TechnicalFaqResponse;
     if (!res.ok || data.error) throw new Error(data.error || `Request failed (${res.status}).`);
@@ -83,6 +86,7 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
 
     try {
       const data = await callApi(text);
+      setState(data.state ?? {});
       setMessages((prev) => [...prev, { id: uid(), role: "bot", text: data.reply }]);
       if (data.suggestions?.length) setSuggestions(data.suggestions);
       if (data.ctoPromotion) setCtoPromotion(data.ctoPromotion);
@@ -95,10 +99,6 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading, ctoPromotion]);
 
   const starterSection = (
     <div className="space-y-3">
@@ -138,6 +138,12 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
           </motion.button>
         ))}
       </div>
+    </div>
+  );
+
+  const helperLine = (
+    <div className="rounded-xl border border-gray-200/80 bg-white/80 px-3 py-2 text-xs text-gray-600 shadow-sm dark:border-[#243047] dark:bg-[#0f1726]/80 dark:text-gray-300">
+      Ask about pricing, scope, maintenance, timelines, or technical services.
     </div>
   );
 
@@ -225,7 +231,6 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
             </div>
           ) : null}
 
-          <div ref={bottomRef} />
         </div>
       </div>
     </div>
@@ -264,6 +269,7 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
     return (
       <div className="flex h-full min-h-0 flex-col gap-3 bg-[radial-gradient(circle_at_10%_0%,rgba(79,124,255,0.14),transparent_30%),linear-gradient(180deg,#f5f8ff_0%,#ffffff_44%,#ffffff_100%)] p-3 dark:bg-[radial-gradient(circle_at_top,rgba(79,124,255,0.2),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(28,64,122,0.3),transparent_28%),linear-gradient(180deg,#050b14_0%,#08111f_48%,#0b1320_100%)] sm:p-4">
         {hasConversation ? activeSessionBar : starterSection}
+        {hasConversation ? helperLine : null}
         {chatThread}
         {composer}
       </div>
@@ -293,6 +299,7 @@ export default function TechnicalFaqChatClient({ embedded = false }: TechnicalFa
       <div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="flex min-h-[70vh] flex-col gap-4">
           {hasConversation ? activeSessionBar : starterSection}
+          {hasConversation ? helperLine : null}
           {chatThread}
           {composer}
         </div>

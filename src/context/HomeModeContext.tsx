@@ -12,7 +12,7 @@ type HomeModeContextType = {
 const HomeModeContext = createContext<HomeModeContextType | undefined>(undefined);
 
 export function HomeModeProvider({ children }: { children: React.ReactNode }) {
-  const [homeMode, setHomeMode] = useState<HomeMode>("financial");
+  const [homeMode, setHomeMode] = useState<HomeMode>("technical");
 
   return (
     <HomeModeContext.Provider value={{ homeMode, setHomeMode }}>
