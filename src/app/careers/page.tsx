@@ -38,7 +38,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         name: 'Parth Shende',
-        role: 'CTO (Technical Lead)',
+        role: 'CTO, Technical Delivery',
         image: '/Parth_shende(Technical_Head).png',
         portfolio: '#',
     },
@@ -246,10 +246,10 @@ Thank You.`;
         <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-[#b78622] to-zinc-600 text-white py-20">
+            <section className="relative bg-gradient-to-r from-[#ffdc40] to-zinc-900 text-white py-20 pt-28">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Our Team</h1>
+                        <h1 className="text-4xl md:text-5xl font-bold my-10">Join Our Team</h1>
                         <p className="text-xl md:text-2xl max-w-3xl mx-auto">
                             Help us shape the future of financial planning and make a difference in people&apos;s lives.
                         </p>

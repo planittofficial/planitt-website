@@ -97,7 +97,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
             alt: 'Parth Shende',
             name: 'Parth Shende',
             meta: '',
-            role: 'Technical Lead',
+            role: 'CTO',
             roleClass: 'text-[#0b6cb8] dark:text-[#8fd3ff]',
             description: 'Leads technical services delivery across apps, websites, cloud, and automation.',
         }
@@ -114,13 +114,13 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const impactTitle = isTechnical ? 'Technical Impact' : isFinancial ? 'Financial Impact' : 'Planitt Impact';
 
     const achievements = isTechnical
-        ? ['50+ Happy Clients', '6+ Years of Advisory Experience', 'Web, App, Cloud Delivery Capability']
+        ? ['18+ Happy Clients', '30+ Tech Deliveries', '4+ Years of Industry Experience']
         : isFinancial
             ? ['50+ Happy Clients', 'Rs 50+ Lakhs AUM', '6+ Years of Advisory Experience']
-            : ['50+ Happy Clients', 'Rs 50+ Lakhs AUM', 'Web, App, Cloud Delivery Capability'];
+            : ['8+ Happy Clients', 'Rs 50+ Lakhs AUM', 'Web, App, Cloud Delivery Capability'];
 
     return (
-        <section id="about" className={`py-12 transition-colors duration-300 sm:py-20 ${sectionClass}`}>
+        <section id="about" className={`py-22 transition-colors duration-300 sm:py-22 ${sectionClass}`}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
                     <motion.div

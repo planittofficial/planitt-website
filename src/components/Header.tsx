@@ -38,12 +38,13 @@ const Header = () => {
           {/* Logo */}
           <Link href="/main" aria-label="Planitt Home" className="flex items-center">
             <Image
-              src="/planitt-app-black.png"
+              src={theme === "dark" ? "/planitt-app-silver.png" : "/planitt-app-black.png"}
+
               alt="Planitt Logo"
               width={120}
               height={40}
               priority
-              className="h-10 w-auto transition-transform duration-200 hover:scale-105 drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]"
+              className="h-10 w-auto transition-transform duration-200 hover:scale-105"
             />
           </Link>
 

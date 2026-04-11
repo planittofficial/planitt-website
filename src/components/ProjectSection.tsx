@@ -33,9 +33,9 @@ export default function ProjectSection({
   }[accentColor];
 
   return (
-    <section className="mb-24">
+    <section>
       {/* Header */}
-      <div className="mb-12 text-center">
+      <div className="mb-5 text-center">
         <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{title}</h2>
         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{subtitle}</p>
       </div>
@@ -70,21 +70,21 @@ export default function ProjectSection({
 
               {/* Hover Overlay */}
               <div
-                className="absolute inset-0 bg-black/70 backdrop-blur-sm
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm
                            opacity-0 group-hover:opacity-100
                            transition-opacity duration-300
                            flex flex-col justify-end p-6"
               >
-                <h3 className="text-white text-xl font-semibold mb-2">
+                <h3 className="text-white text-xl text-left font-semibold mb-2">
                   {project.title}
                 </h3>
 
-                <p className="text-gray-200 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-200 text-left text-sm mb-4 line-clamp-3">
                   {project.description}
                 </p>
 
                 {project.tags && (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 items-start">
                     {project.tags.map((tag, i) => (
                       <span
                         key={i}
