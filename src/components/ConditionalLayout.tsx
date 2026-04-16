@@ -12,7 +12,7 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
 
   return (
     <>
-      {!isLandingPage && <Header />}
+      <Header variant={isLandingPage ? 'landing' : 'main'} />
       {children}
       {!isLandingPage && <Footer />}
       {!isLandingPage && <WealthAdvisoryFab />}
