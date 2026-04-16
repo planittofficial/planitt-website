@@ -29,17 +29,6 @@ const letterVariants: Variants = {
     scale: 0.98,
   },
   visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: 'spring',
-      stiffness: 260,
-      damping: 22,
-      mass: 0.8,
-    },
-  },
-  visible: {
     y: 0,
     scale: 1,
     opacity: 1,

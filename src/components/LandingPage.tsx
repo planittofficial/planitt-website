@@ -46,11 +46,16 @@ const buttonHover = { scale: 1.03, filter: 'brightness(1.06)' };
 const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14)' };
 const microTransition = { duration: 0.24, ease: 'easeOut' as const };
 
-const liveSignals = [
+const liveSignals: Array<{
+  asset: string;
+  action: 'Buy' | 'Sell' | 'Hold';
+  confidence: number;
+  risk: 'Low' | 'Medium' | 'High';
+}> = [
   { asset: 'BTC', action: 'Buy', confidence: 88, risk: 'Medium' },
   { asset: 'NIFTY', action: 'Buy', confidence: 91, risk: 'Low' },
   { asset: 'RELIANCE', action: 'Hold', confidence: 76, risk: 'High' },
-] as const;
+];
 
 const whyTradeExample = {
   asset: 'NIFTY',
