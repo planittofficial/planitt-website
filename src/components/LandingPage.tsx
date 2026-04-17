@@ -6,8 +6,6 @@ import {
   ArrowRight,
   BrainCircuit,
   CandlestickChart,
-  ChevronLeft,
-  ChevronRight,
   Layers3,
   Phone,
   ShieldCheck,
@@ -92,9 +90,24 @@ const dashboardMetrics = [
 ];
 
 const steps = [
-  { id: '01', title: 'AI scans markets', icon: <BrainCircuit className="h-5 w-5" /> },
-  { id: '02', title: 'Generates signals', icon: <CandlestickChart className="h-5 w-5" /> },
-  { id: '03', title: 'You take decisions', icon: <Target className="h-5 w-5" /> },
+  {
+    id: '01',
+    title: 'AI scans markets',
+    description: 'PLANITT reads multi-market data, sentiment, and technical pressure in the background.',
+    icon: <BrainCircuit className="h-5 w-5" />,
+  },
+  {
+    id: '02',
+    title: 'Generates signals',
+    description: 'The engine converts market context into confidence-scored, risk-aware opportunities.',
+    icon: <CandlestickChart className="h-5 w-5" />,
+  },
+  {
+    id: '03',
+    title: 'You take decisions',
+    description: 'You get the setup, reasoning, and invalidation so every action starts from clarity.',
+    icon: <Target className="h-5 w-5" />,
+  },
 ];
 
 const features = [
@@ -103,64 +116,6 @@ const features = [
   { title: 'Risk management', description: 'Stops and confidence stay visible.', icon: <ShieldCheck className="h-5 w-5" /> },
   { title: 'Real-time insights', description: 'Live signals update as markets move.', icon: <Sparkles className="h-5 w-5" /> },
 ];
-
-const carouselItems = [
-  {
-    title: 'Signals Board',
-    eyebrow: 'Live setup',
-    description: 'Multi-asset signal stream with live scores and entries.',
-    accent: 'from-[#7C5CFF]/30 via-transparent to-transparent',
-    image: '/screens/screen1.png',
-    metricLabel: 'Active signals',
-    metricValue: '128',
-    statA: 'BTC +2.8%',
-    statB: 'NIFTY 91/100',
-  },
-  {
-    title: 'Market Analytics',
-    eyebrow: 'Realtime analytics',
-    description: 'Grounded visual analytics that feel like the real product.',
-    accent: 'from-cyan-300/25 via-transparent to-transparent',
-    image: '/screens/screen2.png',
-    metricLabel: 'Live P/L',
-    metricValue: '+18.4%',
-    statA: 'Win rate 74%',
-    statB: 'Latency 240ms',
-  },
-  {
-    title: 'Portfolio View',
-    eyebrow: 'Allocation',
-    description: 'P/L, exposures, and rebalancing in one operating screen.',
-    accent: 'from-emerald-300/25 via-transparent to-transparent',
-    image: '/screens/screen3.png',
-    metricLabel: 'Portfolio',
-    metricValue: '$248K',
-    statA: 'Equity 44%',
-    statB: 'Crypto 28%',
-  },
-  {
-    title: 'AI Insight Feed',
-    eyebrow: 'Realtime',
-    description: 'Compact explainability layered directly over the app UI.',
-    accent: 'from-violet-300/25 via-transparent to-transparent',
-    image: '/screens/screen4.png',
-    metricLabel: 'AI confidence',
-    metricValue: '84%',
-    statA: 'Risk-first',
-    statB: 'SEBI aligned',
-  },
-  {
-    title: 'Execution Snapshot',
-    eyebrow: 'Decision-ready',
-    description: 'Clear setups, clean data, and confidence before action.',
-    accent: 'from-amber-300/25 via-transparent to-transparent',
-    image: '/screens/screen5.png',
-    metricLabel: 'Tracked markets',
-    metricValue: '5',
-    statA: 'Forex active',
-    statB: 'F&O mapped',
-  },
-] as const;
 
 const trustCredentials = [
   {
@@ -189,7 +144,6 @@ export default function LandingPage() {
   const heroRef = useRef<HTMLElement | null>(null);
   const dashboardRef = useRef<HTMLElement | null>(null);
   const showcaseRef = useRef<HTMLElement | null>(null);
-  const carouselRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -225,17 +179,6 @@ export default function LandingPage() {
   const heroGlowClass = isAmberTheme ? 'bg-[#f5b544]/16' : 'bg-[#7C5CFF]/16';
 
   const goToSite = () => router.push('/main');
-  const scrollCarousel = (direction: 'left' | 'right') => {
-    if (!carouselRef.current) {
-      return;
-    }
-
-    const cardWidth = carouselRef.current.clientWidth * 0.82;
-    carouselRef.current.scrollBy({
-      left: direction === 'right' ? cardWidth : -cardWidth,
-      behavior: 'smooth',
-    });
-  };
 
   useEffect(() => {
     const applyAccentTheme = (value: string | null) => {
@@ -301,7 +244,7 @@ export default function LandingPage() {
     const getRandomInterval = () => Math.random() * (7200000 - 3600000) + 3600000;
     
     let timeoutId: NodeJS.Timeout | null = null;
-    let intervalId: NodeJS.Timeout | null = null;
+    const intervalId: NodeJS.Timeout | null = null;
 
     const scheduleNextUpdate = () => {
       const delay = getRandomInterval();
@@ -794,38 +737,75 @@ export default function LandingPage() {
           </motion.div>
         </motion.section>
 
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <motion.div variants={revealItem} className="mx-auto max-w-3xl text-center">
-            <p className={sectionHeader}>How It Works</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Three steps.</h2>
-          </motion.div>
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
+          <div className={`pointer-events-none absolute left-1/2 top-24 h-[420px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${
+              isAmberTheme ? 'bg-[#f5b544]/12' : 'bg-[#7C5CFF]/12'
+            }`} />
 
-          <motion.div variants={revealSection} className="mt-8 grid gap-4 md:grid-cols-3">
-            {steps.map((step) => (
-              <motion.div
-                key={step.id}
-                variants={revealItem}
-                whileHover={cardHover}
-                transition={microTransition}
-                className={`${glassCard} ${softHover} flex items-center gap-4 rounded-2xl p-5`}
-              >
-                <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-                  {step.icon}
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">{step.id}</p>
-                  <h3 className="mt-1 text-lg font-semibold tracking-[-0.02em] text-white">{step.title}</h3>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.section>
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={revealSection}
+              className="mb-12 text-center"
+            >
+              <motion.p variants={revealItem} className={sectionHeader}>How It Works</motion.p>
+              <motion.h2 variants={revealItem} className="mt-3 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
+                How PLANITT generates signals
+              </motion.h2>
+              <motion.p variants={revealItem} className="mt-4 text-base leading-6 text-slate-300 sm:text-lg">
+                PLANITT moves from market scanning to explainable recommendations, then hands you the context to act with confidence.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={revealSection}
+              className="grid gap-6 lg:grid-cols-3"
+            >
+              {steps.map((step, index) => (
+                <motion.div
+                  key={step.id}
+                  variants={revealItem}
+                  className={`${glassCard} ${softHover} overflow-hidden p-6 sm:p-8`}
+                >
+                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
+                  <div className="relative">
+                    <div className="flex items-center gap-4">
+                      <div className={`flex h-14 w-14 flex-none items-center justify-center rounded-2xl ${
+                        isAmberTheme ? 'bg-[#f5b544]/12 text-[#ffd27a]' : 'bg-[#7C5CFF]/10 text-[#c9bcff]'
+                      }`}>
+                        {step.icon}
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">{step.id}</p>
+                        <h3 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-white">{step.title}</h3>
+                      </div>
+                    </div>
+
+                    <p className="mt-6 text-sm leading-6 text-slate-300">{step.description}</p>
+
+                    <div className="mt-6 grid gap-3">
+                      {[
+                        ['Input', index === 0 ? 'Market data' : index === 1 ? 'AI model' : 'Signal card'],
+                        ['Focus', index === 0 ? 'Scanning' : index === 1 ? 'Scoring' : 'Decision'],
+                        ['Output', index === 0 ? 'Context' : index === 1 ? 'Setup' : 'Action'],
+                      ].map(([label, value]) => (
+                        <div key={label} className="rounded-2xl border border-white/10 bg-black/20 p-3">
+                          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                          <p className="mt-1 text-sm font-semibold text-white">{value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
 
         <motion.section
           initial="hidden"
@@ -938,61 +918,21 @@ export default function LandingPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
-                      <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">Scroll the product stack.</h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => scrollCarousel('left')}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition duration-300 hover:scale-105 hover:border-[#7C5CFF]/30 hover:bg-white/10"
-                        aria-label="Scroll carousel left"
-                      >
-                        <ChevronLeft className="h-5 w-5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollCarousel('right')}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition duration-300 hover:scale-105 hover:border-[#7C5CFF]/30 hover:bg-white/10"
-                        aria-label="Scroll carousel right"
-                      >
-                        <ChevronRight className="h-5 w-5" />
-                      </button>
+                      <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">Experience the product in action.</h3>
                     </div>
                   </div>
 
-                  <div
-                    ref={carouselRef}
-                    className="mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                  >
-                    {carouselItems.map((item) => (
-                      <motion.div
-                        key={item.title}
-                        whileHover={{ y: -6, scale: 1.01 }}
-                        transition={microTransition}
-                        className="group relative min-w-[68%] snap-center rounded-[24px] border border-white/10 bg-[#0B0F19] p-3 sm:min-w-[44%]"
-                      >
-                        <div className="relative aspect-[9/19] overflow-hidden rounded-[20px] border border-white/10 bg-black">
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
-                            sizes="(max-width: 640px) 60vw, 24vw"
-                          />
-                          <div className="absolute inset-x-2 top-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-2 backdrop-blur-md">
-                            <p className="text-[10px] uppercase tracking-[0.18em] text-white/60">{item.eyebrow}</p>
-                            <p className="mt-1 text-xs font-semibold text-white">{item.title}</p>
-                          </div>
-                          <div className="absolute inset-x-2 bottom-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-2 backdrop-blur-md">
-                            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-400">
-                              <span>{item.metricLabel}</span>
-                              <span className="text-white">{item.metricValue}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <p className="mt-3 text-sm font-medium text-white">{item.description}</p>
-                      </motion.div>
-                    ))}
+                  <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
+                    <div className="relative aspect-[16/11.5]">
+                      <video
+                        src="/Create_a_premium_202604171446.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -1133,8 +1073,8 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-            <motion.div variants={revealItem} className="max-w-2xl">
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <motion.div variants={revealItem} className="max-w-xl">
               <p className={sectionHeader}>Academy</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Learn through the real app experience.</h2>
               <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
@@ -1142,12 +1082,16 @@ export default function LandingPage() {
               </p>
             </motion.div>
 
-            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} overflow-hidden rounded-[20px] p-2 sm:p-4`}>
-              <MobileShowcase
-                src="/Learning.png"
-                alt="Planitt academy learning screen"
-                className="rounded-[26px]"
-              />
+            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} overflow-hidden rounded-[24px] p-2 sm:p-3 shadow-xl`}>
+              <div className="relative overflow-hidden rounded-[18px]">
+                <Image
+                  src="/Learning.png"
+                  alt="Planitt academy learning screen"
+                  width={1200}
+                  height={800}
+                  className="h-auto w-full"
+                />
+              </div>
             </motion.div>
           </div>
         </motion.section>
