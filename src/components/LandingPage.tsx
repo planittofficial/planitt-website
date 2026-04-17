@@ -183,6 +183,9 @@ const trustCredentials = [
 export default function LandingPage() {
   const router = useRouter();
   const [accentTheme, setAccentTheme] = useState<'violet' | 'amber'>('violet');
+  const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
+  const [confidence, setConfidence] = useState(74);
+  const [momentumPath, setMomentumPath] = useState('M10 82 C34 78, 50 66, 74 54 C96 43, 118 44, 138 36 C158 29, 180 30, 198 24 C216 18, 234 22, 250 16');
   const heroRef = useRef<HTMLElement | null>(null);
   const dashboardRef = useRef<HTMLElement | null>(null);
   const showcaseRef = useRef<HTMLElement | null>(null);
@@ -248,6 +251,72 @@ export default function LandingPage() {
 
     window.addEventListener('planitt-landing-accent-change', handleAccentChange);
     return () => window.removeEventListener('planitt-landing-accent-change', handleAccentChange);
+  }, []);
+
+  const generateRandomMomentumPath = () => {
+    // Generate a random but realistic momentum tape path
+    const points = [
+      { x: 10, y: 82 },
+      { x: 34, y: Math.random() * 20 + 70 },
+      { x: 50, y: Math.random() * 25 + 60 },
+      { x: 74, y: Math.random() * 30 + 40 },
+      { x: 96, y: Math.random() * 15 + 35 },
+      { x: 118, y: Math.random() * 20 + 35 },
+      { x: 138, y: Math.random() * 25 + 25 },
+      { x: 158, y: Math.random() * 15 + 20 },
+      { x: 180, y: Math.random() * 18 + 15 },
+      { x: 198, y: Math.random() * 12 + 10 },
+      { x: 216, y: Math.random() * 10 + 5 },
+      { x: 234, y: Math.random() * 15 + 10 },
+      { x: 250, y: Math.random() * 8 + 5 },
+    ];
+    
+    let pathStr = `M${points[0].x} ${points[0].y}`;
+    for (let i = 1; i < points.length; i++) {
+      const curr = points[i];
+      const prev = points[i - 1];
+      const nextIdx = i + 1;
+      const next = nextIdx < points.length ? points[nextIdx] : curr;
+      
+      const cp1x = prev.x + (curr.x - prev.x) / 3;
+      const cp1y = prev.y + (curr.y - prev.y) / 3;
+      const cp2x = curr.x - (next.x - curr.x) / 3;
+      const cp2y = curr.y - (next.y - curr.y) / 3;
+      
+      pathStr += ` C${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`;
+    }
+    return pathStr;
+  };
+
+  useEffect(() => {
+    const biasOptions: Array<'Bullish' | 'Bearish' | 'Neutral'> = ['Bullish', 'Bearish', 'Neutral'];
+    
+    const updateData = () => {
+      setBias(biasOptions[Math.floor(Math.random() * biasOptions.length)]);
+      setConfidence(Math.floor(Math.random() * (95 - 65 + 1) + 65));
+      setMomentumPath(generateRandomMomentumPath());
+    };
+
+    // Generate random interval between 1-2 hours (in milliseconds)
+    const getRandomInterval = () => Math.random() * (7200000 - 3600000) + 3600000;
+    
+    let timeoutId: NodeJS.Timeout | null = null;
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const scheduleNextUpdate = () => {
+      const delay = getRandomInterval();
+      timeoutId = setTimeout(() => {
+        updateData();
+        scheduleNextUpdate();
+      }, delay);
+    };
+
+    scheduleNextUpdate();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -493,6 +562,8 @@ export default function LandingPage() {
                 One trade. Clear reasons. Easy to trust.
               </p>
             </motion.div>
+
+            
 
             <motion.div variants={revealSection} className="grid gap-3">
               {whyTradeExample.reasons.map((reason) => {
@@ -830,7 +901,7 @@ export default function LandingPage() {
                       alt="Planitt forecast dashboard"
                       fill
                       className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 45vw"
+                      sizes="(max-width: 1024px, max-height: 600px) 200vw, 45vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                     <motion.div
@@ -931,40 +1002,124 @@ export default function LandingPage() {
           <motion.div
             variants={revealItem}
             style={{ y: showcaseCardThreeY }}
-            className="mt-5 grid gap-4 sm:grid-cols-2"
+            className="mt-5 grid gap-4 lg:grid-cols-2"
           >
-            <div className={`${glassCard} rounded-[28px] p-5`}>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Trust Layer</p>
-              <h3 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-white">SEBI Registered. Research Analyst. Mutual Fund Advisory.</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {['SEBI Registered', 'Research Analyst', 'Mutual Fund Advisory'].map((item) => (
-                  <span key={item} className="rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1.5 text-xs font-medium text-amber-100">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(28,16,22,0.96),rgba(17,11,18,0.98))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)] lg:col-span-2">
+              <div className={`absolute inset-0 ${isAmberTheme ? 'bg-[radial-gradient(circle_at_16%_18%,rgba(255,210,122,0.14),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(251,191,36,0.08),transparent_26%)]' : 'bg-[radial-gradient(circle_at_16%_18%,rgba(124,92,255,0.16),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(56,189,248,0.10),transparent_26%)]'}`} />
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:30px_30px] opacity-40" />
 
-            <div className={`${glassCard} rounded-[28px] p-5`}>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Realtime analytics</p>
-              <div className="mt-4 h-20 overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-3">
-                <svg viewBox="0 0 260 80" className="h-full w-full">
-                  <motion.path
-                    d="M0 56 C26 52, 48 28, 72 30 C98 32, 120 18, 146 20 C174 22, 194 8, 220 12 C236 14, 248 10, 260 8"
-                    fill="none"
-                    stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    viewport={{ once: true, amount: 0.7 }}
-                    transition={{ duration: 1.4, ease: 'easeOut' }}
-                  />
-                </svg>
-              </div>
-              <div className="mt-4 flex items-center justify-between text-sm text-slate-300">
-                <span>Win rate 74%</span>
-                <span>Risk-first output</span>
+              <div className="relative">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] ${isAmberTheme ? 'border-[#ffd27a]/25 bg-[#ffd27a]/10 text-[#ffe4ad]' : 'border-[#8b7bff]/25 bg-[#8b7bff]/10 text-[#d4ccff]'}`}>
+                      <span className={`h-2 w-2 rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-cyan-300'}`} />
+                      Realtime analytics
+                    </div>
+                    <h4 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">High-conviction market view.</h4>
+                    <p className="mt-2 max-w-xs text-sm leading-6 text-slate-400">Momentum, stability, and execution risk surfaced in one compact signal block.</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-3 py-2">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Bias</p>
+                      <motion.p 
+                        key={bias}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-1 text-sm font-semibold text-white"
+                      >
+                        {bias}
+                      </motion.p>
+                    </div>
+                    <div className={`rounded-2xl border px-3 py-2 ${isAmberTheme ? 'border-[#ffd27a]/20 bg-[#ffd27a]/10' : 'border-emerald-400/20 bg-emerald-400/10'}`}>
+                      <p className={`text-[10px] uppercase tracking-[0.18em] ${isAmberTheme ? 'text-[#ffe4ad]/80' : 'text-emerald-300/80'}`}>Confidence</p>
+                      <motion.p 
+                        key={confidence}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-1 text-sm font-semibold text-white"
+                      >
+                        {confidence}%
+                      </motion.p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
+                  <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-slate-500">
+                    <span>Momentum tape</span>
+                    <span>Updated 240 ms ago</span>
+                  </div>
+                  <div className="relative h-30 overflow-hidden rounded-[20px] border border-white/10 bg-[#140f15]/70 px-3 py-1">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_60%)]" />
+                    <svg viewBox="0 0 260 110" className="relative z-30 h-full w-full">
+                      <defs>
+                        <linearGradient id="analyticsStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor={isAmberTheme ? '#f6ad55' : '#67e8f9'} />
+                          <stop offset="55%" stopColor={isAmberTheme ? '#ffd27a' : '#8b7bff'} />
+                          <stop offset="100%" stopColor={isAmberTheme ? '#fde68a' : '#c4b5fd'} />
+                        </linearGradient>
+                        <linearGradient id="analyticsFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor={isAmberTheme ? 'rgba(255,210,122,0.22)' : 'rgba(139,123,255,0.22)'} />
+                          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                        </linearGradient>
+                      </defs>
+                      <motion.path
+                        d="M20 82 C34 78, 50 66, 74 54 C96 43, 118 44, 138 36 C158 29, 180 30, 198 24 C216 18, 234 22, 250 16"
+                        fill="none"
+                        stroke="transparent"
+                        strokeWidth="0"
+                      />
+                      <motion.path
+                        key={momentumPath}
+                        d={`${momentumPath} L250 110 L10 110 Z`}
+                        fill="url(#analyticsFill)"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      <motion.path
+                        key={`stroke-${momentumPath}`}
+                        d={momentumPath}
+                        fill="none"
+                        stroke="url(#analyticsStroke)"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        initial={{ pathLength: 0 }}
+                        whileInView={{ pathLength: 1 }}
+                        viewport={{ once: true, amount: 0.7 }}
+                        transition={{ duration: 1.5, ease: 'easeOut' }}
+                      />
+                      {[74, 138, 198, 250].map((cx, index) => (
+                        <motion.circle
+                          key={cx}
+                          cx={cx}
+                          cy={index === 0 ? 54 : index === 1 ? 36 : index === 2 ? 24 : 16}
+                          r="3"
+                          fill={isAmberTheme ? '#ffd27a' : '#8b7bff'}
+                          animate={{ scale: [1, 1.6, 1], opacity: [0.55, 1, 0.55] }}
+                          transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, delay: index * 0.18, ease: 'easeInOut' }}
+                        />
+                      ))}
+                    </svg>
+                    <div className="absolute inset-x-3 bottom-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                      <span>Open</span>
+                      <span>Mid session</span>
+                      <span>Close bias</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Win rate</p>
+                    <p className="mt-2 text-2xl font-semibold text-white text-center">74%</p>
+                  </div>
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Output style</p>
+                    <p className="mt-2 text-base font-semibold text-white text-center">Risk-first output</p>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -1105,7 +1260,7 @@ export default function LandingPage() {
                   className="inline-flex items-center gap-2 rounded-full border border-amber-200/20 bg-black/20 px-5 py-3 text-sm font-semibold text-amber-100 transition hover:bg-black/30"
                 >
                   <Phone className="h-4 w-4" />
-                  8605727484
+                  +91 8605727484
                 </a>
               </div>
             </motion.div>

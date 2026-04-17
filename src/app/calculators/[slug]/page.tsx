@@ -77,23 +77,6 @@ export default async function CalculatorDetailPage({ params }: CalculatorDetailP
             </aside>
 
             <div className="min-w-0">
-              <div className={`${calculatorCardClass} mb-6 overflow-hidden rounded-[30px] p-6 sm:p-7`}>
-                <div className={`h-1 w-28 rounded-full bg-gradient-to-r ${calculatorPageAccent}`} />
-                <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#f7c86e]">
-                      {calculatorHeaderCopy.eyebrow}
-                    </p>
-                    <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-gray-950 dark:text-white sm:text-5xl">
-                      {calculator.title}
-                    </h1>
-                  </div>
-                  <div className="inline-flex items-center rounded-full border border-[#f5b544]/20 bg-[#f5b544]/10 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-[#f7c86e]">
-                    {calculatorHeaderCopy.badge}
-                  </div>
-                </div>
-              </div>
-
               <div className={`${calculatorCardClass} overflow-hidden rounded-[30px] p-2 sm:p-3`}>
                 {renderCalculator(slug)}
               </div>
