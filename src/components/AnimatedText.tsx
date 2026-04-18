@@ -71,7 +71,7 @@ export default function AnimatedText({ text, hoverText, className = '' }: Animat
       onHoverEnd={() => setIsActive(false)}
     >
       <motion.h1
-        className={className}
+        className={`max-w-full break-words [overflow-wrap:anywhere] ${className}`}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         animate={isActive ? { scale: 1.02 } : { scale: 1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}

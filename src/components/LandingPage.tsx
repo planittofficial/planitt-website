@@ -21,7 +21,8 @@ import MobileShowcase from './MobileShowcase';
 import HeroParticles from './HeroParticles';
 import TradoChatbotShowcase from './TradoChatbotShowcase';
 
-const sectionShell = 'mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20';
+const sectionShell =
+  'relative mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20';
 const sectionHeader = 'text-[11px] font-medium uppercase tracking-[0.32em] text-slate-500';
 const glassCard =
   'rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-2xl transition duration-300 ease-out';
@@ -253,17 +254,23 @@ export default function LandingPage() {
 
         <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
           <HeroParticles isAmberTheme={isAmberTheme} />
-          <motion.div style={{ y: heroGlowY }} className={`absolute left-1/2 top-28 h-[520px] w-[520px] -translate-x-1/2 rounded-full blur-3xl ${heroGlowClass}`} />
-          <div className="absolute right-10 top-24 h-60 w-60 rounded-full bg-cyan-300/10 blur-3xl" />
+          <motion.div
+            style={{ y: heroGlowY }}
+            className={`absolute left-1/2 top-20 h-[min(28rem,92vw)] w-[min(28rem,92vw)] -translate-x-1/2 rounded-full blur-3xl sm:top-28 sm:h-[520px] sm:w-[520px] ${heroGlowClass}`}
+          />
+          <div className="absolute right-4 top-20 h-48 w-48 rounded-full bg-cyan-300/10 blur-3xl md:right-10 md:top-24 md:h-60 md:w-60" />
 
           <motion.div
             initial="hidden"
             animate="visible"
             variants={revealSection}
-            className="relative mx-auto max-w-6xl px-4 pb-14 pt-24 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20 lg:pt-32"
+            className="relative mx-auto max-w-6xl px-4 pb-12 pt-20 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32"
           >
-            <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl text-center">
-              <motion.div variants={revealItem} className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.24em] ${accentSoft}`}>
+            <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
+              <motion.div
+                variants={revealItem}
+                className={`mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em] ${accentSoft}`}
+              >
                 <Sparkles className="h-3.5 w-3.5" />
                 PLANITT RECOMMENDATION SYSTEM
               </motion.div>
@@ -271,27 +278,27 @@ export default function LandingPage() {
               <motion.div variants={revealItem} className="mt-6">
                 <AnimatedText
                   text={'Stop Guessing,\nStart Investing.'}
-                  className="mx-auto max-w-5xl text-center text-5xl font-extrabold leading-[0.9] tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.5rem] xl:text-[7rem]"
+                  className="mx-auto max-w-[min(100%,calc(100vw-2rem))] text-balance text-center text-4xl font-extrabold leading-[0.92] tracking-[-0.055em] text-white sm:text-5xl sm:tracking-[-0.065em] md:text-6xl lg:text-[6.5rem] lg:leading-[0.9] xl:text-[7rem]"
                 />
               </motion.div>
 
               <motion.div
                 variants={revealItem}
-                className="mt-4 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-slate-300"
+                className="mt-4 inline-flex max-w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-2 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-slate-300 sm:px-4 sm:text-[11px] sm:tracking-[0.22em]"
               >
                 SEBI Registered Investment Platform
               </motion.div>
 
-              <motion.p variants={revealItem} className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
+              <motion.p variants={revealItem} className="mx-auto mt-5 max-w-xl px-1 text-base leading-7 text-slate-300 sm:px-0 sm:text-lg">
                 AI-powered decisions across Stocks, Crypto, Forex &amp; F&amp;O
               </motion.p>
 
-              <motion.div variants={revealItem} className="mt-8 flex flex-wrap justify-center gap-3">
+              <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
                 <motion.a
                   href="#live-signals"
                   whileHover={buttonHover}
                   transition={microTransition}
-                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
                 >
                   Explore Signals
                 </motion.a>
@@ -301,7 +308,7 @@ export default function LandingPage() {
                   onClick={goToSite}
                   whileHover={buttonHover}
                   transition={microTransition}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)]"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)] sm:min-h-0 sm:px-7"
                 >
                   Continue to Services
                   <ArrowRight className="h-4 w-4" />
@@ -310,7 +317,7 @@ export default function LandingPage() {
 
               <motion.div
                 variants={revealItem}
-                className="mt-6 inline-flex items-center gap-3 rounded-[20px] border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-left backdrop-blur-xl"
+                className="mt-6 inline-flex max-w-full items-center gap-3 rounded-[20px] border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-left backdrop-blur-xl"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-300/15 text-amber-200">
                   <ShieldCheck className="h-5 w-5" />
@@ -363,15 +370,15 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl">
+          <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <motion.div variants={revealItem} className="max-w-2xl min-w-0">
               <p className={sectionHeader}>Live Signals</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">See what PLANITT does.</h2>
             </motion.div>
 
             <motion.div
               variants={revealItem}
-              className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-emerald-300"
+              className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-emerald-300"
             >
               <span className="relative flex h-2.5 w-2.5">
                 <motion.span
@@ -455,7 +462,6 @@ export default function LandingPage() {
   
   <motion.section
           id="ai"
-          ref={showcaseRef}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -474,25 +480,25 @@ export default function LandingPage() {
           className={sectionShell}
         >
           {/* HEADER */}
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl">
+          <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <motion.div variants={revealItem} className="max-w-2xl min-w-0">
               <p className={sectionHeader}>Dashboard Preview</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">
                 Built like a live system.
               </h2>
             </motion.div>
 
-            <motion.div variants={revealSection} className="grid grid-cols-3 gap-3">
+            <motion.div variants={revealSection} className="grid w-full min-w-0 grid-cols-3 gap-2 sm:gap-3">
               {dashboardMetrics.map((metric) => (
                 <motion.div
                   key={metric.label}
                   variants={revealItem}
                   whileHover={cardHover}
                   transition={microTransition}
-                  className={`${glassCard} ${softHover} min-w-[110px] p-4 text-center`}
+                  className={`${glassCard} ${softHover} min-w-0 p-3 text-center sm:p-4`}
                 >
-                  <p className="text-xs text-slate-400">{metric.label}</p>
-                  <p className="mt-2 text-2xl font-semibold">{metric.value}</p>
+                  <p className="text-[11px] leading-tight text-slate-400 sm:text-xs">{metric.label}</p>
+                  <p className="mt-1.5 text-xl font-semibold sm:mt-2 sm:text-2xl">{metric.value}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -537,7 +543,7 @@ export default function LandingPage() {
                     $<CountUp value={248} />K
                   </p>
 
-                  <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
+                  <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
                         Profit / Loss
@@ -546,7 +552,7 @@ export default function LandingPage() {
                         +<CountUp value={18} />.4%
                       </p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
                         Today
                       </p>
@@ -581,25 +587,25 @@ export default function LandingPage() {
                 transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
                 className="grid gap-4 h-full"
               >
-                <div className="rounded-[24px] border border-white/10 bg-black/25 p-5 h-full">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
+                <div className="h-full rounded-[24px] border border-white/10 bg-black/25 p-4 sm:p-5">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
                       <p className="text-sm font-semibold text-white">Market Board</p>
                       <p className="text-xs text-slate-400">
                         Real-time analytics across active markets
                       </p>
                     </div>
-                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
+                    <div className="w-fit shrink-0 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
                       Synced
                     </div>
                   </div>
 
-                  <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-8">
+                  <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-4 sm:p-6 lg:p-8">
                     <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
                       <span>Price action</span>
                       <span className="text-emerald-300">Bullish bias</span>
                     </div>
-                    <div className="relative mt-4 h-44 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))]">
+                    <div className="relative mt-4 h-36 min-h-[9rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))] sm:h-44">
                       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
                       <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
                         <motion.path
@@ -696,7 +702,7 @@ export default function LandingPage() {
                 <motion.div
                   key={step.id}
                   variants={revealItem}
-                  className={`${glassCard} ${softHover} overflow-hidden p-6 sm:p-8`}
+                  className={`${glassCard} ${softHover} relative overflow-hidden p-6 sm:p-8`}
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
                   <div className="relative">
@@ -744,7 +750,7 @@ export default function LandingPage() {
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Core features.</h2>
           </motion.div>
 
-          <motion.div variants={revealSection} className="mt-10 grid gap-4 lg:grid-cols-4">
+          <motion.div variants={revealSection} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
               <motion.div
                 key={feature.title}
@@ -780,30 +786,31 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-[0.92fr_1.08fr] items-stretch">
+          <div className="mt-10 grid min-w-0 gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
             <motion.div
               variants={revealItem}
               style={{ y: showcaseCardOneY }}
-              className={`${glassCard} relative overflow-hidden rounded-[24px] p-2 sm:p-3 h-full flex flex-col`}
+              className={`${glassCard} relative flex h-full min-w-0 flex-col overflow-hidden rounded-[24px] p-2 sm:p-3`}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
-              <div className="relative">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
+              <div className="relative min-w-0">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Forecast Dashboard</p>
-                    <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">High-conviction market view.</h3>
+                    <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">High-conviction market view.</h3>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-right">
+                  <div className="w-full shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left sm:w-auto sm:text-right">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Live P/L</p>
                     <p className="mt-1 text-lg font-semibold text-emerald-300">+18.4%</p>
                   </div>
                 </div>
 
-                <div className="relative mt-2 flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] min-h-[360px]">
+                <div className="relative mt-2 min-h-[220px] flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] sm:min-h-[360px]">
                   <Image
                     src="/Forcast_Dashboard.jpg"
                     alt="Planitt forecast dashboard"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                   />
                 </div>
@@ -817,15 +824,13 @@ export default function LandingPage() {
                 className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5 h-full flex flex-col`}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,92,255,0.16),transparent_28%)]" />
-                <div className="relative">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
-                      <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">Experience the product in action.</h3>
-                    </div>
+                <div className="relative min-w-0">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
+                    <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">Experience the product in action.</h3>
                   </div>
-                  <div className="mt-5 flex-1 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
-                    <div className="relative h-full">
+                  <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
+                    <div className="relative aspect-video h-full min-h-[200px] w-full sm:min-h-[280px]">
                       <video
                         src="/Create_a_premium_202604171446.mp4"
                         autoPlay
@@ -889,9 +894,9 @@ export default function LandingPage() {
               <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
   
   {/* Header */}
-  <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-slate-500">
+  <div className="mb-3 flex flex-col gap-1 text-[10px] uppercase tracking-[0.24em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
     <span>Momentum tape</span>
-    <span>Updated 240 ms ago</span>
+    <span className="text-slate-500">Updated 240 ms ago</span>
   </div>
 
   {/* Chart Container */}
@@ -1015,13 +1020,14 @@ export default function LandingPage() {
               </p>
             </motion.div>
 
-            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} >
+            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className="min-w-0">
                 <Image
                   src="/Learning.png"
                   alt="Planitt academy learning screen"
                   width={1000}
                   height={800}
-                  className="rounded-[30px] object-contain object-top"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  className="h-auto w-full max-w-full rounded-[24px] object-contain object-top sm:rounded-[30px]"
                   priority
                 />
             </motion.div>
@@ -1096,7 +1102,7 @@ export default function LandingPage() {
           <motion.div variants={revealItem} className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className={`${glassCard} overflow-hidden px-6 py-9 text-center sm:px-10 sm:py-12`}>
               <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-[#c9bcff]">PLANITT AI</p>
-              <h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Start from the signal.</h2>
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] sm:text-4xl lg:text-6xl">Start from the signal.</h2>
               <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">See the product. Move into the platform.</p>
               <p className="mx-auto mt-3 max-w-lg text-xs font-medium uppercase tracking-[0.22em] text-slate-400">
                 Built with SEBI-compliant advisory standards
@@ -1173,19 +1179,19 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
 
         <div className="mt-4 grid gap-3 md:grid-cols-[0.8fr_0.8fr]">
           <div className="rounded-[24px] border border-white/10 bg-[#0D1321]/85 p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
                 <p className="text-[11px] uppercase tracking-[0.26em] text-slate-500">Top setup</p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">NIFTY Breakout</h2>
+                <h2 className="mt-2 text-xl font-semibold tracking-[-0.04em] sm:text-2xl">NIFTY Breakout</h2>
                 <p className="mt-2 text-sm text-slate-400">AI confidence high. Risk mapped.</p>
               </div>
-              <div className="rounded-2xl border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-3 py-2 text-right">
+              <div className="w-full shrink-0 rounded-2xl border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-3 py-2 text-left sm:w-auto sm:text-right">
                 <p className="text-[10px] uppercase tracking-[0.18em] text-[#c9bcff]">Confidence</p>
                 <p className="text-xl font-semibold text-white">XX%</p>
               </div>
             </div>
 
-            <div className="mt-5 h-30 overflow-hidden rounded-[20px] border border-white/10 bg-black/20 p-3">
+            <div className="mt-5 h-32 overflow-hidden rounded-[20px] border border-white/10 bg-black/20 p-2 sm:p-3">
               <div className="flex h-full items-end gap-2">
                 {[28, 46, 40, 68, 55, 78, 72, 96, 88, 110, 102, 122].map((height, index) => (
                   <motion.span
@@ -1199,15 +1205,15 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="mt-4 grid grid-cols-3 gap-1.5 sm:gap-2">
               {[
                 ['Entry', '24,120'],
                 ['Target', '24,480'],
                 ['Stop', '23,940'],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">{label}</p>
-                  <p className="mt-1 text-sm font-semibold text-white">{value}</p>
+                <div key={label} className="rounded-2xl border border-white/10 bg-white/5 p-2 sm:p-3">
+                  <p className="text-[9px] uppercase tracking-[0.16em] text-slate-500 sm:text-[10px] sm:tracking-[0.2em]">{label}</p>
+                  <p className="mt-1 text-xs font-semibold tabular-nums text-white sm:text-sm">{value}</p>
                 </div>
               ))}
             </div>
