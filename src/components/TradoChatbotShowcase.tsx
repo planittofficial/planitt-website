@@ -76,11 +76,11 @@ export default function TradoChatbotShowcase() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(124,92,255,0.22),transparent_32%),radial-gradient(circle_at_86%_74%,rgba(34,211,238,0.14),transparent_34%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:56px_56px] opacity-20" />
 
-        <div className="relative z-10 grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div className="relative z-10 grid gap-7 lg:grid-cols-2 lg:items-start">
           <motion.div variants={itemReveal}>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-[#d4cbff]">
-              <Sparkles className="h-3.5 w-3.5" />
-              Meet Trado
+              <Bot className="h-3.5 w-3.5" />
+              Trado
             </div>
 
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl lg:text-[2.6rem] lg:leading-[1.08]">

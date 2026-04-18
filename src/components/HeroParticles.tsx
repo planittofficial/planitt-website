@@ -49,7 +49,7 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
     // F&O / Commodities
     'XAUUSD', 'XAGUSD', 'WTI', 'BRENT', 'COPPER', 'ALUMINUM', 'ZINC', 'NICKEL',
     // Popular US Stocks
-    'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ'
+    'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 
   ];
 
   useEffect(() => {

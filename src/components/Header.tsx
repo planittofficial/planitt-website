@@ -41,7 +41,7 @@ export default function Header({ variant = 'main' }: HeaderProps) {
   const navItems = isLanding
     ? [
         { name: 'Signals', href: '/#live-signals' },
-        { name: 'AI', href: '/#why-trade' },
+        { name: 'AI', href: '/#ai' },
         { name: 'Markets', href: '/#showcase' },
         { name: 'Academy', href: '/#academy' },
         { name: 'Calculators', href: '/calculators' },

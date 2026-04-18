@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from 'react';
 import AnimatedText from './AnimatedText';
 import MobileShowcase from './MobileShowcase';
 import HeroParticles from './HeroParticles';
+import TradoChatbotShowcase from './TradoChatbotShowcase';
 
 const sectionShell = 'mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20';
 const sectionHeader = 'text-[11px] font-medium uppercase tracking-[0.32em] text-slate-500';
@@ -51,10 +52,10 @@ const liveSignals: Array<{
   confidence: string | number;
   risk: 'Low' | 'Medium' | 'High';
 }> = [
-  { asset: 'BTC', action: 'Buy', confidence: 'XX', risk: 'Medium' },
-  { asset: 'NIFTY', action: 'Buy', confidence: 'XX', risk: 'Low' },
-  { asset: 'RELIANCE', action: 'Hold', confidence: 'XX', risk: 'High' },
-];
+    { asset: 'BTC', action: 'Buy', confidence: 'XX', risk: 'Medium' },
+    { asset: 'NIFTY', action: 'Buy', confidence: 'XX', risk: 'Low' },
+    { asset: 'RELIANCE', action: 'Hold', confidence: 'XX', risk: 'High' },
+  ];
 
 
 const dashboardMetrics = [
@@ -187,19 +188,19 @@ export default function LandingPage() {
       { x: 234, y: Math.random() * 15 + 10 },
       { x: 250, y: Math.random() * 8 + 5 },
     ];
-    
+
     let pathStr = `M${points[0].x} ${points[0].y}`;
     for (let i = 1; i < points.length; i++) {
       const curr = points[i];
       const prev = points[i - 1];
       const nextIdx = i + 1;
       const next = nextIdx < points.length ? points[nextIdx] : curr;
-      
+
       const cp1x = prev.x + (curr.x - prev.x) / 3;
       const cp1y = prev.y + (curr.y - prev.y) / 3;
       const cp2x = curr.x - (next.x - curr.x) / 3;
       const cp2y = curr.y - (next.y - curr.y) / 3;
-      
+
       pathStr += ` C${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`;
     }
     return pathStr;
@@ -207,7 +208,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     const biasOptions: Array<'Bullish' | 'Bearish' | 'Neutral'> = ['Bullish', 'Bearish', 'Neutral'];
-    
+
     const updateData = () => {
       setBias(biasOptions[Math.floor(Math.random() * biasOptions.length)]);
       setConfidence(Math.floor(Math.random() * (95 - 65 + 1) + 65));
@@ -216,7 +217,7 @@ export default function LandingPage() {
 
     // Generate random interval between 1-2 hours (in milliseconds)
     const getRandomInterval = () => Math.random() * (7200000 - 3600000) + 3600000;
-    
+
     let timeoutId: NodeJS.Timeout | null = null;
     const intervalId: NodeJS.Timeout | null = null;
 
@@ -398,13 +399,12 @@ export default function LandingPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Asset</p>
                     <h3 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-white">{signal.asset}</h3>
                   </div>
-                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${
-                    signal.action === 'Buy'
-                      ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-300'
-                      : signal.action === 'Sell'
-                        ? 'border-red-400/20 bg-red-400/10 text-red-300'
-                        : 'border-amber-400/20 bg-amber-400/10 text-amber-300'
-                  }`}>
+                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${signal.action === 'Buy'
+                    ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-300'
+                    : signal.action === 'Sell'
+                      ? 'border-red-400/20 bg-red-400/10 text-red-300'
+                      : 'border-amber-400/20 bg-amber-400/10 text-amber-300'
+                    }`}>
                     {signal.action}
                   </span>
                 </div>
@@ -423,13 +423,12 @@ export default function LandingPage() {
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Risk</p>
-                    <p className={`mt-2 text-2xl font-semibold ${
-                      signal.risk === 'Low'
-                        ? 'text-emerald-300'
-                        : signal.risk === 'High'
-                          ? 'text-red-300'
-                          : 'text-amber-300'
-                    }`}>
+                    <p className={`mt-2 text-2xl font-semibold ${signal.risk === 'Low'
+                      ? 'text-emerald-300'
+                      : signal.risk === 'High'
+                        ? 'text-red-300'
+                        : 'text-amber-300'
+                      }`}>
                       {signal.risk}
                     </p>
                   </div>
@@ -441,222 +440,232 @@ export default function LandingPage() {
                     whileInView={{ width: `${signal.confidence}%` }}
                     viewport={{ once: true, amount: 0.7 }}
                     transition={{ duration: 0.9, ease: 'easeOut' }}
-                    className={`h-full rounded-full ${
-                      signal.action === 'Buy'
-                        ? 'bg-gradient-to-r from-emerald-400 to-emerald-300'
-                        : signal.action === 'Sell'
-                          ? 'bg-gradient-to-r from-red-400 to-red-300'
-                          : 'bg-gradient-to-r from-amber-400 to-amber-300'
-                    }`}
+                    className={`h-full rounded-full ${signal.action === 'Buy'
+                      ? 'bg-gradient-to-r from-emerald-400 to-emerald-300'
+                      : signal.action === 'Sell'
+                        ? 'bg-gradient-to-r from-red-400 to-red-300'
+                        : 'bg-gradient-to-r from-amber-400 to-amber-300'
+                      }`}
                   />
                 </div>
               </motion.article>
             ))}
           </motion.div>
         </motion.section>
-
-       <motion.section
-  ref={dashboardRef}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.15 }}
-  variants={revealSection}
-  className={sectionShell}
->
-  {/* HEADER */}
-  <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-    <motion.div variants={revealItem} className="max-w-2xl">
-      <p className={sectionHeader}>Dashboard Preview</p>
-      <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">
-        Built like a live system.
-      </h2>
-    </motion.div>
-
-    <motion.div variants={revealSection} className="grid grid-cols-3 gap-3">
-      {dashboardMetrics.map((metric) => (
-        <motion.div
-          key={metric.label}
-          variants={revealItem}
-          whileHover={cardHover}
-          transition={microTransition}
-          className={`${glassCard} ${softHover} min-w-[110px] p-4 text-center`}
+  
+  <motion.section
+          id="ai"
+          ref={showcaseRef}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={revealSection}
+          className={sectionShell}
         >
-          <p className="text-xs text-slate-400">{metric.label}</p>
-          <p className="mt-2 text-2xl font-semibold">{metric.value}</p>
-        </motion.div>
-      ))}
-    </motion.div>
-  </div>
+  <TradoChatbotShowcase />
+  </motion.section>
+        
+        <motion.section
+          ref={dashboardRef}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={revealSection}
+          className={sectionShell}
+        >
+          {/* HEADER */}
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <motion.div variants={revealItem} className="max-w-2xl">
+              <p className={sectionHeader}>Dashboard Preview</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">
+                Built like a live system.
+              </h2>
+            </motion.div>
 
-  {/* MAIN CONTAINER */}
-  <motion.div
-    variants={revealItem}
-    style={{ y: dashboardY }}
-    className={`${glassCard} relative mt-10 overflow-hidden p-4 sm:p-5`}
-  >
-    {/* BACKGROUND GLOW */}
-    <motion.div
-      style={{ y: dashboardGlowY }}
-      className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
-    />
-
-    {/* ✅ FIXED GRID LAYOUT */}
-    <div className="relative grid gap-5 lg:grid-cols-2 items-start">
-      
-      {/* LEFT - PORTFOLIO */}
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="rounded-[24px] border border-white/10 bg-[#101827]/85 p-5"
-      >
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-            <Wallet className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-white">Portfolio Card</p>
-            <p className="text-xs text-slate-400">Multi-asset capital view</p>
-          </div>
-        </div>
-
-        <div className="mt-6 rounded-[22px] border border-white/10 bg-black/20 p-4">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
-            Net portfolio
-          </p>
-          <p className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">
-            $<CountUp value={248} />K
-          </p>
-
-          <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
-                Profit / Loss
-              </p>
-              <p className="mt-1 text-2xl font-semibold text-white">
-                +<CountUp value={18} />.4%
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
-                Today
-              </p>
-              <p className="mt-1 text-lg font-semibold text-emerald-300">
-                +$12.8K
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-4 grid gap-2">
-          {[
-            ['Equity', '44%'],
-            ['Crypto', '28%'],
-            ['Forex', '18%'],
-            ['F&O', '10%'],
-          ].map(([label, value]) => (
-            <div
-              key={label}
-              className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5"
-            >
-              <span className="text-sm text-slate-300">{label}</span>
-              <span className="text-sm font-semibold text-white">{value}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* RIGHT - MARKET BOARD */}
-      <motion.div
-        animate={{ y: [0, -4, 0] }}
-        transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
-        className="grid gap-4 h-full"
-      >
-        <div className="rounded-[24px] border border-white/10 bg-black/25 p-5 h-full">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-sm font-semibold text-white">Market Board</p>
-              <p className="text-xs text-slate-400">
-                Real-time analytics across active markets
-              </p>
-            </div>
-            <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-              Synced
-            </div>
+            <motion.div variants={revealSection} className="grid grid-cols-3 gap-3">
+              {dashboardMetrics.map((metric) => (
+                <motion.div
+                  key={metric.label}
+                  variants={revealItem}
+                  whileHover={cardHover}
+                  transition={microTransition}
+                  className={`${glassCard} ${softHover} min-w-[110px] p-4 text-center`}
+                >
+                  <p className="text-xs text-slate-400">{metric.label}</p>
+                  <p className="mt-2 text-2xl font-semibold">{metric.value}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
 
-          <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-8">
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
-              <span>Price action</span>
-              <span className="text-emerald-300">Bullish bias</span>
-            </div>
-            <div className="relative mt-4 h-44 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))]">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
-              <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
-                <motion.path
-                  d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
-                  fill="none"
-                  stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 1.6, ease: 'easeOut' }}
-                />
-                <motion.path
-                  d="M0 150 C28 152, 54 126, 86 122 C118 118, 150 96, 180 98 C214 100, 240 66, 274 70 C304 72, 330 50, 360 52 C386 54, 402 34, 420 28 L420 176 L0 176 Z"
-                  fill={isAmberTheme ? 'rgba(245,181,68,0.16)' : 'rgba(124,92,255,0.16)'}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 1.1, ease: 'easeOut' }}
-                />
-              </svg>
+          {/* MAIN CONTAINER */}
+          <motion.div
+            variants={revealItem}
+            style={{ y: dashboardY }}
+            className={`${glassCard} relative mt-10 overflow-hidden p-4 sm:p-5`}
+          >
+            {/* BACKGROUND GLOW */}
+            <motion.div
+              style={{ y: dashboardGlowY }}
+              className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
+            />
+
+            {/* ✅ FIXED GRID LAYOUT */}
+            <div className="relative grid gap-5 lg:grid-cols-2 items-start">
+
+              {/* LEFT - PORTFOLIO */}
               <motion.div
-                animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
-                transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
-                className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
-              />
-            </div>
-
-            <div className="mt-4 grid gap-3 p-5 sm:grid-cols-3">
-              {[
-                ['Equity outlook', 84],
-                ['Crypto outlook', 72],
-                ['MF view', 76],
-              ].map(([label, score]) => (
-                <div key={label} className="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-300">{label}</span>
-                    <span className="font-semibold text-white">{score}</span>
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="rounded-[24px] border border-white/10 bg-[#101827]/85 p-5"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
+                    <Wallet className="h-5 w-5" />
                   </div>
-                  <div className="mt-3 h-2 rounded-full bg-white/10">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${score}%` }}
-                      viewport={{ once: true, amount: 0.8 }}
-                      transition={{ duration: 1, ease: 'easeOut' }}
-                      className={`h-full rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-[#7C5CFF]'}`}
-                    />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Portfolio Card</p>
+                    <p className="text-xs text-slate-400">Multi-asset capital view</p>
                   </div>
                 </div>
-              ))}
+
+                <div className="mt-6 rounded-[22px] border border-white/10 bg-black/20 p-4">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                    Net portfolio
+                  </p>
+                  <p className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">
+                    $<CountUp value={248} />K
+                  </p>
+
+                  <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
+                        Profit / Loss
+                      </p>
+                      <p className="mt-1 text-2xl font-semibold text-white">
+                        +<CountUp value={18} />.4%
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
+                        Today
+                      </p>
+                      <p className="mt-1 text-lg font-semibold text-emerald-300">
+                        +$12.8K
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-2">
+                  {[
+                    ['Equity', '44%'],
+                    ['Crypto', '28%'],
+                    ['Forex', '18%'],
+                    ['F&O', '10%'],
+                  ].map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5"
+                    >
+                      <span className="text-sm text-slate-300">{label}</span>
+                      <span className="text-sm font-semibold text-white">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* RIGHT - MARKET BOARD */}
+              <motion.div
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
+                className="grid gap-4 h-full"
+              >
+                <div className="rounded-[24px] border border-white/10 bg-black/25 p-5 h-full">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Market Board</p>
+                      <p className="text-xs text-slate-400">
+                        Real-time analytics across active markets
+                      </p>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
+                      Synced
+                    </div>
+                  </div>
+
+                  <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-8">
+                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                      <span>Price action</span>
+                      <span className="text-emerald-300">Bullish bias</span>
+                    </div>
+                    <div className="relative mt-4 h-44 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))]">
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
+                      <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
+                        <motion.path
+                          d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
+                          fill="none"
+                          stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          initial={{ pathLength: 0 }}
+                          whileInView={{ pathLength: 1 }}
+                          viewport={{ once: true, amount: 0.6 }}
+                          transition={{ duration: 1.6, ease: 'easeOut' }}
+                        />
+                        <motion.path
+                          d="M0 150 C28 152, 54 126, 86 122 C118 118, 150 96, 180 98 C214 100, 240 66, 274 70 C304 72, 330 50, 360 52 C386 54, 402 34, 420 28 L420 176 L0 176 Z"
+                          fill={isAmberTheme ? 'rgba(245,181,68,0.16)' : 'rgba(124,92,255,0.16)'}
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: true, amount: 0.6 }}
+                          transition={{ duration: 1.1, ease: 'easeOut' }}
+                        />
+                      </svg>
+                      <motion.div
+                        animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
+                        transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
+                        className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
+                      />
+                    </div>
+
+                    <div className="mt-4 grid gap-3 p-5 sm:grid-cols-3">
+                      {[
+                        ['Equity outlook', 84],
+                        ['Crypto outlook', 72],
+                        ['MF view', 76],
+                      ].map(([label, score]) => (
+                        <div key={label} className="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-slate-300">{label}</span>
+                            <span className="font-semibold text-white">{score}</span>
+                          </div>
+                          <div className="mt-3 h-2 rounded-full bg-white/10">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${score}%` }}
+                              viewport={{ once: true, amount: 0.8 }}
+                              transition={{ duration: 1, ease: 'easeOut' }}
+                              className={`h-full rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-[#7C5CFF]'}`}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* ✅ FULL WIDTH SIGNAL DASHBOARD */}
+              <div className="lg:col-span-2">
+                <SignalDashboardCard />
+              </div>
+
             </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ✅ FULL WIDTH SIGNAL DASHBOARD */}
-      <div className="lg:col-span-2">
-        <SignalDashboardCard />
-      </div>
-
-    </div>
-  </motion.div>
-</motion.section>
+          </motion.div>
+        </motion.section>
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          <div className={`pointer-events-none absolute left-1/2 top-24 h-[220px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${
-              isAmberTheme ? 'bg-[#f5b544]/12' : 'bg-[#7C5CFF]/12'
+          <div className={`pointer-events-none absolute left-1/2 top-24 h-[220px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${isAmberTheme ? 'bg-[#f5b544]/12' : 'bg-[#7C5CFF]/12'
             }`} />
 
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -692,9 +701,8 @@ export default function LandingPage() {
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
                   <div className="relative">
                     <div className="flex items-center gap-4">
-                      <div className={`flex h-14 w-14 flex-none items-center justify-center rounded-2xl ${
-                        isAmberTheme ? 'bg-[#f5b544]/12 text-[#ffd27a]' : 'bg-[#7C5CFF]/10 text-[#c9bcff]'
-                      }`}>
+                      <div className={`flex h-14 w-14 flex-none items-center justify-center rounded-2xl ${isAmberTheme ? 'bg-[#f5b544]/12 text-[#ffd27a]' : 'bg-[#7C5CFF]/10 text-[#c9bcff]'
+                        }`}>
                         {step.icon}
                       </div>
                       <div>
@@ -736,20 +744,20 @@ export default function LandingPage() {
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Core features.</h2>
           </motion.div>
 
-          <motion.div variants={revealSection} className="mt-8 grid gap-4 lg:grid-cols-4">
+          <motion.div variants={revealSection} className="mt-10 grid gap-4 lg:grid-cols-4">
             {features.map((feature) => (
               <motion.div
                 key={feature.title}
                 variants={revealItem}
-                whileHover={cardHover}
+                // whileHover={cardHover}
                 transition={microTransition}
-                className={`${glassCard} ${softHover} p-4 sm:p-5`}
+                className={`p-4 sm:p-5`}
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
+                <div className="flex h-11 w-11 items-center justify-center align-middle rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff] mx-auto">
                   {feature.icon}
                 </div>
-                <h3 className="mt-4 text-lg font-semibold tracking-[-0.03em]">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-300">{feature.description}</p>
+                <h3 className="mt-4 text-lg text-center font-semibold tracking-[-0.03em] mx-auto">{feature.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-300 text-center">{feature.description}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -772,11 +780,11 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="mt-10 grid gap-5 lg:grid-cols-[0.92fr_1.08fr] items-stretch">
             <motion.div
               variants={revealItem}
               style={{ y: showcaseCardOneY }}
-              className={`${glassCard} relative overflow-hidden rounded-[24px] p-2 sm:p-3`}
+              className={`${glassCard} relative overflow-hidden rounded-[24px] p-2 sm:p-3 h-full flex flex-col`}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
               <div className="relative">
@@ -791,35 +799,13 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                <div className="relative mt-2 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] ">
-                  <div className="relative aspect-[14.4/10.5]">
-                    <Image
-                      src="/Forcast_Dashboard.jpg"
-                      alt="Planitt forecast dashboard"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px, max-height: 500px) 200vw, 45vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                    <motion.div
-                      animate={{ x: ['-12%', '105%'], opacity: [0, 0.75, 0] }}
-                      transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
-                      className="absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4 grid grid-cols-3 gap-3">
-                  {[
-                    ['Signals', '128'],
-                    ['Markets', '5'],
-                    ['Latency', '240ms'],
-                  ].map(([label, value]) => (
-                    <div key={label} className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">{label}</p>
-                      <p className="mt-1 text-sm font-semibold text-white">{value}</p>
-                    </div>
-                  ))}
+                <div className="relative mt-2 flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] min-h-[360px]">
+                  <Image
+                    src="/Forcast_Dashboard.jpg"
+                    alt="Planitt forecast dashboard"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </motion.div>
@@ -828,7 +814,7 @@ export default function LandingPage() {
               <motion.div
                 variants={revealItem}
                 style={{ y: showcaseCardTwoY }}
-                className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5`}
+                className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5 h-full flex flex-col`}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,92,255,0.16),transparent_28%)]" />
                 <div className="relative">
@@ -838,9 +824,8 @@ export default function LandingPage() {
                       <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-white">Experience the product in action.</h3>
                     </div>
                   </div>
-
-                  <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
-                    <div className="relative aspect-[14.4/11.5]">
+                  <div className="mt-5 flex-1 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
+                    <div className="relative h-full">
                       <video
                         src="/Create_a_premium_202604171446.mp4"
                         autoPlay
@@ -878,7 +863,7 @@ export default function LandingPage() {
                   <div className="flex flex-wrap gap-2">
                     <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-3 py-2">
                       <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Bias</p>
-                      <motion.p 
+                      <motion.p
                         key={bias}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -886,10 +871,10 @@ export default function LandingPage() {
                       >
                         {bias}
                       </motion.p>
-                    </div>                 
+                    </div>
                     <div className={`rounded-2xl border px-3 py-2 ${isAmberTheme ? 'border-[#ffd27a]/20 bg-[#ffd27a]/10' : 'border-emerald-400/20 bg-emerald-400/10'}`}>
                       <p className={`text-[10px] uppercase tracking-[0.18em] ${isAmberTheme ? 'text-[#ffe4ad]/80' : 'text-emerald-300/80'}`}>Confidence</p>
-                      <motion.p 
+                      <motion.p
                         key={confidence}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -901,70 +886,102 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
-                  <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-slate-500">
-                    <span>Momentum tape</span>
-                    <span>Updated 240 ms ago</span>
-                  </div>
-                  <div className="relative h-30 overflow-hidden rounded-[20px] border border-white/10 bg-[#140f15]/70 px-3 py-1">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_60%)]" />
-                    <svg viewBox="0 0 260 110" className="relative z-30 h-full w-full">
-                      <defs>
-                        <linearGradient id="analyticsStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor={isAmberTheme ? '#f6ad55' : '#67e8f9'} />
-                          <stop offset="55%" stopColor={isAmberTheme ? '#ffd27a' : '#8b7bff'} />
-                          <stop offset="100%" stopColor={isAmberTheme ? '#fde68a' : '#c4b5fd'} />
-                        </linearGradient>
-                        <linearGradient id="analyticsFill" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor={isAmberTheme ? 'rgba(255,210,122,0.22)' : 'rgba(139,123,255,0.22)'} />
-                          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                        </linearGradient>
-                      </defs>
-                      <motion.path
-                        d="M20 82 C34 78, 50 66, 74 54 C96 43, 118 44, 138 36 C158 29, 180 30, 198 24 C216 18, 234 22, 250 16"
-                        fill="none"
-                        stroke="transparent"
-                        strokeWidth="0"
-                      />
-                      <motion.path
-                        key={momentumPath}
-                        d={`${momentumPath} L250 110 L10 110 Z`}
-                        fill="url(#analyticsFill)"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                      />
-                      <motion.path
-                        key={`stroke-${momentumPath}`}
-                        d={momentumPath}
-                        fill="none"
-                        stroke="url(#analyticsStroke)"
-                        strokeWidth="3.5"
-                        strokeLinecap="round"
-                        initial={{ pathLength: 0 }}
-                        whileInView={{ pathLength: 1 }}
-                        viewport={{ once: true, amount: 0.7 }}
-                        transition={{ duration: 1.5, ease: 'easeOut' }}
-                      />
-                      {[74, 138, 198, 250].map((cx, index) => (
-                        <motion.circle
-                          key={cx}
-                          cx={cx}
-                          cy={index === 0 ? 54 : index === 1 ? 36 : index === 2 ? 24 : 16}
-                          r="3"
-                          fill={isAmberTheme ? '#ffd27a' : '#8b7bff'}
-                          animate={{ scale: [1, 2.6, 1], opacity: [0.55, 1, 0.55] }}
-                          transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, delay: index * 0.18, ease: 'easeInOut' }}
-                        />
-                      ))}
-                    </svg>
-                    <div className="absolute inset-x-3 bottom-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-500">
-                      <span>Open</span>
-                      <span>Mid session</span>
-                      <span>Close bias</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
+  
+  {/* Header */}
+  <div className="mb-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-slate-500">
+    <span>Momentum tape</span>
+    <span>Updated 240 ms ago</span>
+  </div>
+
+  {/* Chart Container */}
+  <div className="relative h-[120px] overflow-hidden rounded-[20px] border border-white/10 bg-[#140f15]/70 px-3 py-1">
+    
+    {/* Background Glow */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_60%)]" />
+
+    {/* SVG Chart */}
+    <svg viewBox="0 0 260 110" className="relative z-30 h-full w-full">
+      
+      <defs>
+        <linearGradient id="analyticsStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={isAmberTheme ? '#f6ad55' : '#67e8f9'} />
+          <stop offset="55%" stopColor={isAmberTheme ? '#ffd27a' : '#8b7bff'} />
+          <stop offset="100%" stopColor={isAmberTheme ? '#fde68a' : '#c4b5fd'} />
+        </linearGradient>
+
+        <linearGradient id="analyticsFill" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={isAmberTheme ? 'rgba(255,210,122,0.22)' : 'rgba(139,123,255,0.22)'} />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+      </defs>
+
+      {/* === MAIN PATH (STARTS FROM OPEN) === */}
+      {/*
+        IMPORTANT FIX:
+        - Start from x = 12 (matches px-3 padding)
+        - End slightly before edge for symmetry
+      */}
+      <motion.path
+        d="M12 82 
+           C28 78, 48 66, 74 54 
+           C96 43, 118 44, 138 36 
+           C158 29, 180 30, 198 24 
+           C216 18, 234 22, 248 16"
+        fill="none"
+        stroke="url(#analyticsStroke)"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.7 }}
+        transition={{ duration: 1.6, ease: 'easeOut' }}
+      />
+
+      {/* === AREA FILL === */}
+      <motion.path
+        d="M12 82 
+           C28 78, 48 66, 74 54 
+           C96 43, 118 44, 138 36 
+           C158 29, 180 30, 198 24 
+           C216 18, 234 22, 248 16
+           L248 110 L12 110 Z"
+        fill="url(#analyticsFill)"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      />
+
+      {/* === GLOW DOTS === */}
+      {[74, 138, 198, 248].map((cx, index) => {
+        const cyValues = [54, 36, 24, 16];
+        return (
+          <motion.circle
+            key={cx}
+            cx={cx}
+            cy={cyValues[index]}
+            r="3"
+            fill={isAmberTheme ? '#ffd27a' : '#8b7bff'}
+            animate={{ scale: [1, 2.6, 1], opacity: [0.55, 1, 0.55] }}
+            transition={{
+              duration: 1.8,
+              repeat: Infinity,
+              delay: index * 0.2,
+              ease: 'easeInOut',
+            }}
+          />
+        );
+      })}
+    </svg>
+
+    {/* Bottom Labels */}
+    <div className="absolute inset-x-3 bottom-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-500">
+      <span>Open</span>
+      <span>Mid session</span>
+      <span>Close bias</span>
+    </div>
+  </div>
+</div>
 
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
@@ -998,79 +1015,15 @@ export default function LandingPage() {
               </p>
             </motion.div>
 
-            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} overflow-hidden rounded-[24px] p-2 sm:p-3 shadow-xl`}>
-              <div className="relative overflow-hidden rounded-[18px] contain-fill">
+            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} >
                 <Image
                   src="/Learning.png"
                   alt="Planitt academy learning screen"
-                  width={1200}
+                  width={1000}
                   height={800}
-                  className="h-full w-full"
+                  className="rounded-[30px] object-contain object-top"
+                  priority
                 />
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <motion.div variants={revealItem} className="max-w-2xl">
-              <p className={sectionHeader}>AI Chatbot</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Recommendation chatbot, built into the product.</h2>
-              <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
-                Users can ask about stocks, crypto, forex, and current setups, then get fast AI-led responses inside the application experience.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {['Market questions', 'Live prompts', 'Setup guidance'].map((item) => (
-                  <span key={item} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-200">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} overflow-hidden rounded-[30px] p-4 sm:p-5`}>
-              <div className="rounded-[26px] border border-white/10 bg-[#11172a]">
-                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/12 text-[#c9bcff]">
-                      <BrainCircuit className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-lg font-semibold text-white">Trado</p>
-                      <div className="mt-1 flex items-center gap-2 text-sm text-slate-400">
-                        <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                        Live preview
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-5 px-5 py-5">
-                  <div className="rounded-[22px] border border-white/10 bg-white/[0.04] p-5 text-lg font-medium leading-9 text-slate-100">
-                    Hi, I am Trado. Ask about stocks, crypto, forex, or today&apos;s opportunities.
-                  </div>
-                  <div className="rounded-[22px] border border-white/10 bg-white/[0.04] p-5 text-lg font-medium leading-9 text-slate-100">
-                    Try prompts like &quot;What is the risk on BTC today?&quot; or &quot;Show buy signals in forex.&quot;
-                  </div>
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.28em] text-slate-500">Suggested prompts</p>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      {['Ask about stocks, crypto, forex', 'What looks strongest today?', 'Show me lower-risk setups'].map((prompt) => (
-                        <div key={prompt} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
-                          {prompt}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </motion.section>

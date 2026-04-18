@@ -53,6 +53,7 @@ const floatTransition = {
   ease: 'easeInOut' as const,
 };
 
+
 export default function LandingDashboardPreview({
   className = '',
 }: LandingDashboardPreviewProps) {
