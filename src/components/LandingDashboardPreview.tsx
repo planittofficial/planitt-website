@@ -306,7 +306,7 @@ export default function LandingDashboardPreview({
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
-                Confidence 84/100
+                Confidence XX/100
               </span>
               <span className="rounded-full border border-emerald-400/15 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
                 Analyst aligned

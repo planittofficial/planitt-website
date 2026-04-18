@@ -18,6 +18,7 @@ import { animate, motion, useInView, useScroll, useTransform, type Variants } fr
 import { useEffect, useRef, useState } from 'react';
 import AnimatedText from './AnimatedText';
 import MobileShowcase from './MobileShowcase';
+import HeroParticles from './HeroParticles';
 
 const sectionShell = 'mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20';
 const sectionHeader = 'text-[11px] font-medium uppercase tracking-[0.32em] text-slate-500';
@@ -47,41 +48,14 @@ const microTransition = { duration: 0.24, ease: 'easeOut' as const };
 const liveSignals: Array<{
   asset: string;
   action: 'Buy' | 'Sell' | 'Hold';
-  confidence: number;
+  confidence: string | number;
   risk: 'Low' | 'Medium' | 'High';
 }> = [
-  { asset: 'BTC', action: 'Buy', confidence: 88, risk: 'Medium' },
-  { asset: 'NIFTY', action: 'Buy', confidence: 91, risk: 'Low' },
-  { asset: 'RELIANCE', action: 'Hold', confidence: 76, risk: 'High' },
+  { asset: 'BTC', action: 'Buy', confidence: 'XX', risk: 'Medium' },
+  { asset: 'NIFTY', action: 'Buy', confidence: 'XX', risk: 'Low' },
+  { asset: 'RELIANCE', action: 'Hold', confidence: 'XX', risk: 'High' },
 ];
 
-const whyTradeExample = {
-  asset: 'NIFTY',
-  action: 'Buy',
-  confidence: 87,
-  reasons: [
-    {
-      title: 'Technical signal',
-      detail: 'Breakout above resistance is holding.',
-      icon: TrendingUp,
-    },
-    {
-      title: 'Volume',
-      detail: 'Participation expanded with the move.',
-      icon: Target,
-    },
-    {
-      title: 'Sentiment',
-      detail: 'Sector breadth flipped positive.',
-      icon: BrainCircuit,
-    },
-    {
-      title: 'Risk',
-      detail: 'Invalidation is clearly defined below support.',
-      icon: ShieldCheck,
-    },
-  ],
-} as const;
 
 const dashboardMetrics = [
   { label: 'Live signals', value: '128' },
@@ -277,6 +251,7 @@ export default function LandingPage() {
         />
 
         <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
+          <HeroParticles isAmberTheme={isAmberTheme} />
           <motion.div style={{ y: heroGlowY }} className={`absolute left-1/2 top-28 h-[520px] w-[520px] -translate-x-1/2 rounded-full blur-3xl ${heroGlowClass}`} />
           <div className="absolute right-10 top-24 h-60 w-60 rounded-full bg-cyan-300/10 blur-3xl" />
 
@@ -294,7 +269,7 @@ export default function LandingPage() {
 
               <motion.div variants={revealItem} className="mt-6">
                 <AnimatedText
-                  text={'Stop Guessing.\nStart Investing.'}
+                  text={'Stop Guessing,\nStart Investing.'}
                   className="mx-auto max-w-5xl text-center text-5xl font-extrabold leading-[0.9] tracking-[-0.065em] text-white sm:text-6xl lg:text-[6.5rem] xl:text-[7rem]"
                 />
               </motion.div>
@@ -438,7 +413,12 @@ export default function LandingPage() {
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Confidence</p>
                     <p className="mt-2 text-3xl font-semibold text-white">
-                      <CountUp value={signal.confidence} />%
+                      {typeof signal.confidence === 'number' ? (
+                        <CountUp value={signal.confidence} />
+                      ) : (
+                        signal.confidence
+                      )}
+                      %
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -475,270 +455,207 @@ export default function LandingPage() {
           </motion.div>
         </motion.section>
 
-        <motion.section
-          id="why-trade"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
+       <motion.section
+  ref={dashboardRef}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.15 }}
+  variants={revealSection}
+  className={sectionShell}
+>
+  {/* HEADER */}
+  <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <motion.div variants={revealItem} className="max-w-2xl">
+      <p className={sectionHeader}>Dashboard Preview</p>
+      <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">
+        Built like a live system.
+      </h2>
+    </motion.div>
+
+    <motion.div variants={revealSection} className="grid grid-cols-3 gap-3">
+      {dashboardMetrics.map((metric) => (
+        <motion.div
+          key={metric.label}
+          variants={revealItem}
+          whileHover={cardHover}
+          transition={microTransition}
+          className={`${glassCard} ${softHover} min-w-[110px] p-4 text-center`}
         >
-          <motion.div variants={revealItem} className="max-w-2xl">
-            <p className={sectionHeader}>Why This Trade</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Explainable AI, at a glance.</h2>
-          </motion.div>
+          <p className="text-xs text-slate-400">{metric.label}</p>
+          <p className="mt-2 text-2xl font-semibold">{metric.value}</p>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
 
-          <motion.div variants={revealSection} className="mt-10 grid gap-5 lg:grid-cols-[0.88fr_1.12fr]">
-            <motion.div variants={revealItem} className="rounded-[24px] border border-white/10 bg-[#101827]/80 p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Example asset</p>
-                  <h3 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">{whyTradeExample.asset}</h3>
-                </div>
-                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-right">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">{whyTradeExample.action}</p>
-                  <p className="mt-1 text-2xl font-semibold text-white">{whyTradeExample.confidence}%</p>
-                </div>
-              </div>
+  {/* MAIN CONTAINER */}
+  <motion.div
+    variants={revealItem}
+    style={{ y: dashboardY }}
+    className={`${glassCard} relative mt-10 overflow-hidden p-4 sm:p-5`}
+  >
+    {/* BACKGROUND GLOW */}
+    <motion.div
+      style={{ y: dashboardGlowY }}
+      className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
+    />
 
-              <p className="mt-8 max-w-sm text-base leading-7 text-slate-300">
-                One trade. Clear reasons. Easy to trust.
+    {/* ✅ FIXED GRID LAYOUT */}
+    <div className="relative grid gap-5 lg:grid-cols-2 items-start">
+      
+      {/* LEFT - PORTFOLIO */}
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="rounded-[24px] border border-white/10 bg-[#101827]/85 p-5"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
+            <Wallet className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-white">Portfolio Card</p>
+            <p className="text-xs text-slate-400">Multi-asset capital view</p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-[22px] border border-white/10 bg-black/20 p-4">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+            Net portfolio
+          </p>
+          <p className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">
+            $<CountUp value={248} />K
+          </p>
+
+          <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
+                Profit / Loss
               </p>
-            </motion.div>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                +<CountUp value={18} />.4%
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
+                Today
+              </p>
+              <p className="mt-1 text-lg font-semibold text-emerald-300">
+                +$12.8K
+              </p>
+            </div>
+          </div>
+        </div>
 
-            
+        <div className="mt-4 grid gap-2">
+          {[
+            ['Equity', '44%'],
+            ['Crypto', '28%'],
+            ['Forex', '18%'],
+            ['F&O', '10%'],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5"
+            >
+              <span className="text-sm text-slate-300">{label}</span>
+              <span className="text-sm font-semibold text-white">{value}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
 
-            <motion.div variants={revealSection} className="grid gap-3">
-              {whyTradeExample.reasons.map((reason) => {
-                const Icon = reason.icon;
-
-                return (
-                  <motion.div
-                    key={reason.title}
-                    variants={revealItem}
-                    className={`${glassCard} ${softHover} flex items-start gap-4 p-5`}
-                  >
-                    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-base font-semibold text-white">{reason.title}</p>
-                      <p className="mt-1 text-sm leading-6 text-slate-300">{reason.detail}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        <motion.section
-          ref={dashboardRef}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl">
-              <p className={sectionHeader}>Dashboard Preview</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Built like a live system.</h2>
-            </motion.div>
-
-            <motion.div variants={revealSection} className="grid grid-cols-3 gap-3">
-              {dashboardMetrics.map((metric) => (
-                <motion.div key={metric.label} variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} ${softHover} min-w-[110px] p-4 text-center`}>
-                  <p className="text-xs text-slate-400">{metric.label}</p>
-                  <p className="mt-2 text-2xl font-semibold">{metric.value}</p>
-                </motion.div>
-              ))}
-            </motion.div>
+      {/* RIGHT - MARKET BOARD */}
+      <motion.div
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
+        className="grid gap-4 h-full"
+      >
+        <div className="rounded-[24px] border border-white/10 bg-black/25 p-5 h-full">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-white">Market Board</p>
+              <p className="text-xs text-slate-400">
+                Real-time analytics across active markets
+              </p>
+            </div>
+            <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
+              Synced
+            </div>
           </div>
 
-          <motion.div
-            variants={revealItem}
-            style={{ y: dashboardY }}
-            className={`${glassCard} relative mt-10 overflow-hidden p-4 sm:p-5`}
-          >
-            <motion.div
-              style={{ y: dashboardGlowY }}
-              className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
-            />
-
-            <div className="relative grid gap-5 lg:grid-cols-[0.96fr_1.04fr]">
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 6.5, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-                className="rounded-[24px] border border-white/10 bg-[#101827]/85 p-5"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-                    <Wallet className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-white">Portfolio Card</p>
-                    <p className="text-xs text-slate-400">Multi-asset capital view</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-[22px] border border-white/10 bg-black/20 p-4">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Net portfolio</p>
-                  <p className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">
-                    $<CountUp value={248} />K
-                  </p>
-                  <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">Profit / Loss</p>
-                      <p className="mt-1 text-2xl font-semibold text-white">+<CountUp value={18} />.4%</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">Today</p>
-                      <p className="mt-1 text-lg font-semibold text-emerald-300">+$12.8K</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid gap-2">
-                  {[
-                    ['Equity', '44%'],
-                    ['Crypto', '28%'],
-                    ['Forex + F&O', '18%'],
-                    ['Cash', '10%'],
-                  ].map(([label, value]) => (
-                    <div key={label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5">
-                      <span className="text-sm text-slate-300">{label}</span>
-                      <span className="text-sm font-semibold text-white">{value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <SignalDashboardCard className="mt-5" />
-
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 5.8, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-                className="grid gap-4"
-              >
-                <div className="rounded-[24px] border border-white/10 bg-black/25 p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-white">Market Board</p>
-                      <p className="text-xs text-slate-400">Real-time analytics across active markets</p>
-                    </div>
-                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                      Synced
-                    </div>
-                  </div>
-
-                  <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-4">
-                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
-                      <span>Price action</span>
-                      <span className="text-emerald-300">Bullish bias</span>
-                    </div>
-                    <div className="relative mt-4 h-44 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))]">
-                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
-                      <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
-                        <motion.path
-                          d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
-                          fill="none"
-                          stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                          initial={{ pathLength: 0 }}
-                          whileInView={{ pathLength: 1 }}
-                          viewport={{ once: true, amount: 0.6 }}
-                          transition={{ duration: 1.6, ease: 'easeOut' }}
-                        />
-                        <motion.path
-                          d="M0 150 C28 152, 54 126, 86 122 C118 118, 150 96, 180 98 C214 100, 240 66, 274 70 C304 72, 330 50, 360 52 C386 54, 402 34, 420 28 L420 176 L0 176 Z"
-                          fill={isAmberTheme ? 'rgba(245,181,68,0.16)' : 'rgba(124,92,255,0.16)'}
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true, amount: 0.6 }}
-                          transition={{ duration: 1.1, ease: 'easeOut' }}
-                        />
-                      </svg>
-                      <motion.div
-                        animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
-                        transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
-                        className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
-                      />
-                    </div>
-
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {[
-                        ['Equity outlook', 84],
-                        ['Crypto outlook', 72],
-                        ['MF view', 76],
-                      ].map(([label, score]) => (
-                        <div key={label} className="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">{label}</span>
-                            <span className="font-semibold text-white">{score}</span>
-                          </div>
-                          <div className="mt-3 h-2 rounded-full bg-white/10">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${score}%` }}
-                              viewport={{ once: true, amount: 0.8 }}
-                              transition={{ duration: 1, ease: 'easeOut' }}
-                              className={`h-full rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-[#7C5CFF]'}`}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-                      <CandlestickChart className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">Signals List</p>
-                      <p className="text-xs text-slate-400">Execution-ready calls</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 grid gap-2">
-                    {[
-                      ['BTC', 'Buy', '88'],
-                      ['NIFTY', 'Buy', '91'],
-                      ['RELIANCE', 'Hold', '76'],
-                    ].map(([asset, action, score]) => (
-                      <div key={asset} className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5">
-                        <div>
-                          <p className="text-sm font-semibold text-white">{asset}</p>
-                          <p className="text-[11px] text-slate-500">{action}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Score</p>
-                          <p className="text-sm font-semibold text-white">{score}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-[24px] border border-cyan-300/15 bg-cyan-300/10 p-5">
-                  <p className="text-[11px] uppercase tracking-[0.24em] text-cyan-200/80">AI Insight Box</p>
-                  <p className="mt-3 text-xl font-semibold tracking-[-0.03em] text-white">Momentum is strongest in index leaders. Keep BTC exposure active and trail stops tighter into close.</p>
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-3 py-3">
-                    <p className="text-xs text-slate-300">AI confidence: <span className="font-semibold text-white"><CountUp value={84} />%</span></p>
-                  </div>
-                </div>
-              </motion.div>
+          <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-8">
+            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
+              <span>Price action</span>
+              <span className="text-emerald-300">Bullish bias</span>
             </div>
-          </motion.div>
-        </motion.section>
+            <div className="relative mt-4 h-44 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))]">
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
+              <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
+                <motion.path
+                  d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
+                  fill="none"
+                  stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  whileInView={{ pathLength: 1 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 1.6, ease: 'easeOut' }}
+                />
+                <motion.path
+                  d="M0 150 C28 152, 54 126, 86 122 C118 118, 150 96, 180 98 C214 100, 240 66, 274 70 C304 72, 330 50, 360 52 C386 54, 402 34, 420 28 L420 176 L0 176 Z"
+                  fill={isAmberTheme ? 'rgba(245,181,68,0.16)' : 'rgba(124,92,255,0.16)'}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 1.1, ease: 'easeOut' }}
+                />
+              </svg>
+              <motion.div
+                animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
+                transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
+                className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
+              />
+            </div>
 
+            <div className="mt-4 grid gap-3 p-5 sm:grid-cols-3">
+              {[
+                ['Equity outlook', 84],
+                ['Crypto outlook', 72],
+                ['MF view', 76],
+              ].map(([label, score]) => (
+                <div key={label} className="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-300">{label}</span>
+                    <span className="font-semibold text-white">{score}</span>
+                  </div>
+                  <div className="mt-3 h-2 rounded-full bg-white/10">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${score}%` }}
+                      viewport={{ once: true, amount: 0.8 }}
+                      transition={{ duration: 1, ease: 'easeOut' }}
+                      className={`h-full rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-[#7C5CFF]'}`}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ✅ FULL WIDTH SIGNAL DASHBOARD */}
+      <div className="lg:col-span-2">
+        <SignalDashboardCard />
+      </div>
+
+    </div>
+  </motion.div>
+</motion.section>
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          <div className={`pointer-events-none absolute left-1/2 top-24 h-[420px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${
+          <div className={`pointer-events-none absolute left-1/2 top-24 h-[220px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${
               isAmberTheme ? 'bg-[#f5b544]/12' : 'bg-[#7C5CFF]/12'
             }`} />
 
@@ -859,9 +776,9 @@ export default function LandingPage() {
             <motion.div
               variants={revealItem}
               style={{ y: showcaseCardOneY }}
-              className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5`}
+              className={`${glassCard} relative overflow-hidden rounded-[24px] p-2 sm:p-3`}
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_28%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
               <div className="relative">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -874,14 +791,14 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                <div className="relative mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
-                  <div className="relative aspect-[16/11.5]">
+                <div className="relative mt-2 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] ">
+                  <div className="relative aspect-[14.4/10.5]">
                     <Image
-                      src="/Forcast_Dashboard.png"
+                      src="/Forcast_Dashboard.jpg"
                       alt="Planitt forecast dashboard"
                       fill
                       className="object-cover"
-                      sizes="(max-width: 1024px, max-height: 600px) 200vw, 45vw"
+                      sizes="(max-width: 1024px, max-height: 500px) 200vw, 45vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                     <motion.div
@@ -923,7 +840,7 @@ export default function LandingPage() {
                   </div>
 
                   <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19]">
-                    <div className="relative aspect-[16/11.5]">
+                    <div className="relative aspect-[14.4/11.5]">
                       <video
                         src="/Create_a_premium_202604171446.mp4"
                         autoPlay
@@ -956,7 +873,6 @@ export default function LandingPage() {
                       Realtime analytics
                     </div>
                     <h4 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">High-conviction market view.</h4>
-                    <p className="mt-2 max-w-xs text-sm leading-6 text-slate-400">Momentum, stability, and execution risk surfaced in one compact signal block.</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -970,7 +886,7 @@ export default function LandingPage() {
                       >
                         {bias}
                       </motion.p>
-                    </div>
+                    </div>                 
                     <div className={`rounded-2xl border px-3 py-2 ${isAmberTheme ? 'border-[#ffd27a]/20 bg-[#ffd27a]/10' : 'border-emerald-400/20 bg-emerald-400/10'}`}>
                       <p className={`text-[10px] uppercase tracking-[0.18em] ${isAmberTheme ? 'text-[#ffe4ad]/80' : 'text-emerald-300/80'}`}>Confidence</p>
                       <motion.p 
@@ -979,7 +895,7 @@ export default function LandingPage() {
                         animate={{ opacity: 1 }}
                         className="mt-1 text-sm font-semibold text-white"
                       >
-                        {confidence}%
+                        {'XX'}%
                       </motion.p>
                     </div>
                   </div>
@@ -1037,7 +953,7 @@ export default function LandingPage() {
                           cy={index === 0 ? 54 : index === 1 ? 36 : index === 2 ? 24 : 16}
                           r="3"
                           fill={isAmberTheme ? '#ffd27a' : '#8b7bff'}
-                          animate={{ scale: [1, 1.6, 1], opacity: [0.55, 1, 0.55] }}
+                          animate={{ scale: [1, 2.6, 1], opacity: [0.55, 1, 0.55] }}
                           transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, delay: index * 0.18, ease: 'easeInOut' }}
                         />
                       ))}
@@ -1053,7 +969,7 @@ export default function LandingPage() {
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Win rate</p>
-                    <p className="mt-2 text-2xl font-semibold text-white text-center">74%</p>
+                    <p className="mt-2 text-2xl font-semibold text-white text-center">XX%</p>
                   </div>
                   <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Output style</p>
@@ -1083,13 +999,13 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className={`${glassCard} overflow-hidden rounded-[24px] p-2 sm:p-3 shadow-xl`}>
-              <div className="relative overflow-hidden rounded-[18px]">
+              <div className="relative overflow-hidden rounded-[18px] contain-fill">
                 <Image
                   src="/Learning.png"
                   alt="Planitt academy learning screen"
                   width={1200}
                   height={800}
-                  className="h-auto w-full"
+                  className="h-full w-full"
                 />
               </div>
             </motion.div>
@@ -1302,7 +1218,7 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
           </div>
         </div>
 
-        <div className="mt-4 grid gap-3 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="mt-4 grid gap-3 md:grid-cols-[0.8fr_0.8fr]">
           <div className="rounded-[24px] border border-white/10 bg-[#0D1321]/85 p-4">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -1312,11 +1228,11 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
               </div>
               <div className="rounded-2xl border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-3 py-2 text-right">
                 <p className="text-[10px] uppercase tracking-[0.18em] text-[#c9bcff]">Confidence</p>
-                <p className="text-xl font-semibold text-white">87%</p>
+                <p className="text-xl font-semibold text-white">XX%</p>
               </div>
             </div>
 
-            <div className="mt-5 h-24 overflow-hidden rounded-[20px] border border-white/10 bg-black/20 p-3">
+            <div className="mt-5 h-30 overflow-hidden rounded-[20px] border border-white/10 bg-black/20 p-3">
               <div className="flex h-full items-end gap-2">
                 {[28, 46, 40, 68, 55, 78, 72, 96, 88, 110, 102, 122].map((height, index) => (
                   <motion.span
