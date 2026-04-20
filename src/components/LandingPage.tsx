@@ -22,7 +22,7 @@ import HeroParticles from './HeroParticles';
 import TradoChatbotShowcase from './TradoChatbotShowcase';
 
 const sectionShell =
-  'relative mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20';
+  'relative mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-8';
 const sectionHeader = 'text-[11px] font-medium uppercase tracking-[0.32em] text-slate-500';
 const glassCard =
   'rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-2xl transition duration-300 ease-out';
@@ -371,7 +371,7 @@ export default function LandingPage() {
           className={sectionShell}
         >
           <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl min-w-0">
+            <motion.div variants={revealItem} className="max-w-2xl min-w-0 py-12">
               <p className={sectionHeader}>Live Signals</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">See what PLANITT does.</h2>
             </motion.div>
@@ -445,16 +445,9 @@ export default function LandingPage() {
           </motion.div>
         </motion.section>
   
-  <motion.section
-          id="ai"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-  <TradoChatbotShowcase />
-  </motion.section>
+        <div id="ai">
+          <TradoChatbotShowcase />
+        </div>
         
         <motion.section
           ref={dashboardRef}
@@ -763,7 +756,7 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl text-center">
+          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl text-center py-15">
             <p className={sectionHeader}>Showcase</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Swipe through the product.</h2>
             <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
@@ -996,7 +989,7 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center py-20">
             <motion.div variants={revealItem} className="max-w-xl">
               <p className={sectionHeader}>Academy</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Learn through the real app experience.</h2>
@@ -1027,7 +1020,7 @@ export default function LandingPage() {
           className={sectionShell}
         >
           <div className={`${glassCard} overflow-hidden rounded-[30px] p-6 sm:p-8`}>
-            <motion.div variants={revealItem} className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <motion.div variants={revealItem} className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center py-20">
               <div className="max-w-2xl">
                 <p className={sectionHeader}>Trading Algorithms</p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">We also build and sell trading algorithms.</h2>
@@ -1106,6 +1099,14 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </motion.section>
+
+        <footer className="overflow-hidden border-t border-white/10 bg-white text-black">
+          <div className="mx-auto max-w-[1800px] px-3 py-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10">
+            <p className="text-center font-black uppercase leading-none tracking-[0.22em] text-[clamp(2.4rem,8vw,7.5rem)] sm:tracking-[0.28em] lg:tracking-[0.34em]">
+              PLANITT
+            </p>
+          </div>
+        </footer>
       </main>
     </>
   );
