@@ -433,21 +433,6 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-
-                <div className="mt-6 h-2 rounded-full bg-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${signal.confidence}%` }}
-                    viewport={{ once: true, amount: 0.7 }}
-                    transition={{ duration: 0.9, ease: 'easeOut' }}
-                    className={`h-full rounded-full ${signal.action === 'Buy'
-                      ? 'bg-gradient-to-r from-emerald-400 to-emerald-300'
-                      : signal.action === 'Sell'
-                        ? 'bg-gradient-to-r from-red-400 to-red-300'
-                        : 'bg-gradient-to-r from-amber-400 to-amber-300'
-                      }`}
-                  />
-                </div>
               </motion.article>
             ))}
           </motion.div>

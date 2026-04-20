@@ -28,43 +28,152 @@ interface HeroParticlesProps {
   isAmberTheme?: boolean;
 }
 
+interface ParticleFieldSize {
+  width: number;
+  height: number;
+}
+
+const getParticleSettings = ({ width, height }: ParticleFieldSize) => {
+  const isMobile = width < 640;
+  const isTablet = width >= 640 && width < 1024;
+
+  return {
+    particleCount: isMobile ? 12 : isTablet ? 18 : 25,
+    connectionDistance: isMobile ? 118 : isTablet ? 170 : 220,
+    edgePadding: isMobile ? 30 : 50,
+    minDistance: Math.min(width, height) * (isMobile ? 0.22 : isTablet ? 0.18 : 0.15),
+    fontMin: isMobile ? 0.58 : isTablet ? 0.68 : 0.7,
+    fontRange: isMobile ? 0.42 : isTablet ? 0.74 : 1.2,
+    centerClearance: {
+      left: width * (isMobile ? 0.18 : 0.16),
+      right: width * (isMobile ? 0.82 : 0.84),
+      top: height * (isMobile ? 0.17 : 0.22),
+      bottom: height * (isMobile ? 0.82 : 0.74),
+    },
+  };
+};
+
+const isInsideCenterClearance = (
+  x: number,
+  y: number,
+  clearance: ReturnType<typeof getParticleSettings>['centerClearance'],
+) => x > clearance.left && x < clearance.right && y > clearance.top && y < clearance.bottom;
+
+const stockSymbols = [
+  // Crypto
+  'BTCUSD', 'ETHUSD', 'BNBUSD', 'ADAUSD', 'SOLUSD', 'DOTUSD', 'DOGEUSD', 'AVAXUSD',
+  // Indian Stocks
+  'NIFTY', 'RELIANCE', 'TCS', 'HDFCBANK', 'ICICIBANK', 'INFY', 'HINDUNILVR', 'ITC',
+  'KOTAKBANK', 'LT', 'AXISBANK', 'MARUTI', 'BAJFINANCE', 'WIPRO', 'BHARTIARTL',
+  // Forex
+  'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD', 'USDCHF', 'NZDUSD', 'GBPJPY',
+  'EURJPY', 'AUDJPY', 'EURGBP', 'GBPAUD', 'USDSGD', 'USDHKD', 'USDMXN',
+  // F&O / Commodities
+  'XAUUSD', 'XAGUSD', 'WTI', 'BRENT', 'COPPER', 'ALUMINUM', 'ZINC', 'NICKEL',
+  // Popular US Stocks
+  'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY',
+];
+
+const buildConnections = (particleList: Particle[], fieldSize: ParticleFieldSize) => {
+  const newConnections: Connection[] = [];
+  const { connectionDistance } = getParticleSettings(fieldSize);
+
+  particleList.forEach((p1, i) => {
+    particleList.slice(i + 1).forEach((p2, j) => {
+      const dx = p1.x - p2.x;
+      const dy = p1.y - p2.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < connectionDistance) {
+        newConnections.push({
+          from: i,
+          to: i + j + 1,
+          distance,
+        });
+      }
+    });
+  });
+
+  if (newConnections.length < particleList.length * 2) {
+    particleList.forEach((p1, i) => {
+      particleList.slice(i + 2).forEach((p2, j) => {
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < connectionDistance * 1.35 && Math.random() < 0.24) {
+          newConnections.push({
+            from: i,
+            to: i + j + 2,
+            distance,
+          });
+        }
+      });
+    });
+  }
+
+  return newConnections;
+};
+
 export default function HeroParticles({ isAmberTheme = false }: HeroParticlesProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMouseMoving, setIsMouseMoving] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [fieldSize, setFieldSize] = useState<ParticleFieldSize | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const stockSymbols = [
-    // Crypto
-    'BTCUSD', 'ETHUSD', 'BNBUSD', 'ADAUSD', 'SOLUSD', 'DOTUSD', 'DOGEUSD', 'AVAXUSD',
-    // Indian Stocks
-    'NIFTY', 'RELIANCE', 'TCS', 'HDFCBANK', 'ICICIBANK', 'INFY', 'HINDUNILVR', 'ITC',
-    'KOTAKBANK', 'LT', 'AXISBANK', 'MARUTI', 'BAJFINANCE', 'WIPRO', 'BHARTIARTL',
-    // Forex
-    'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD', 'USDCHF', 'NZDUSD', 'GBPJPY',
-    'EURJPY', 'AUDJPY', 'EURGBP', 'GBPAUD', 'USDSGD', 'USDHKD', 'USDMXN',
-    // F&O / Commodities
-    'XAUUSD', 'XAGUSD', 'WTI', 'BRENT', 'COPPER', 'ALUMINUM', 'ZINC', 'NICKEL',
-    // Popular US Stocks
-    'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 
-  ];
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updateFieldSize = () => {
+      const rect = container.getBoundingClientRect();
+      setFieldSize({
+        width: Math.max(rect.width, 1),
+        height: Math.max(rect.height, 1),
+      });
+    };
+
+    updateFieldSize();
+
+    const resizeObserver = new ResizeObserver(updateFieldSize);
+    resizeObserver.observe(container);
+    window.addEventListener('orientationchange', updateFieldSize);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('orientationchange', updateFieldSize);
+    };
+  }, []);
 
   useEffect(() => {
-    const particleCount = 25; // Increased to show more stocks
+    if (!fieldSize) return;
+
+    const { width, height } = fieldSize;
+    const {
+      particleCount,
+      edgePadding,
+      minDistance,
+      fontMin,
+      fontRange,
+      centerClearance,
+    } = getParticleSettings(fieldSize);
     const newParticles: Particle[] = [];
     const usedSymbols = new Set<string>();
+    const symbolPool = width < 640
+      ? stockSymbols.filter(symbol => symbol.length <= 6)
+      : stockSymbols;
 
-    // Create well-distributed positions using improved algorithm
-    const minDistance = Math.min(window.innerWidth, window.innerHeight) * 0.15; // Minimum distance between particles
-    const maxAttempts = 50; // Maximum attempts to place each particle
+    const maxAttempts = 25; // Maximum attempts to place each particle
 
-    for (let i = 0; i < particleCount && i < stockSymbols.length; i++) {
+    for (let i = 0; i < particleCount && i < symbolPool.length; i++) {
       let symbol: string;
       do {
-        symbol = stockSymbols[Math.floor(Math.random() * stockSymbols.length)];
+        symbol = symbolPool[Math.floor(Math.random() * symbolPool.length)];
       } while (usedSymbols.has(symbol)); // Ensure no duplicate symbols
 
       usedSymbols.add(symbol);
@@ -75,10 +184,10 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
 
       // Try to find a valid position that's not too close to existing particles
       do {
-        x = Math.random() * (window.innerWidth - 100) + 50; // Keep away from edges
-        y = Math.random() * (window.innerHeight - 100) + 50; // Keep away from edges
+        x = Math.random() * (width - edgePadding * 2) + edgePadding;
+        y = Math.random() * (height - edgePadding * 2) + edgePadding;
 
-        validPosition = true;
+        validPosition = !isInsideCenterClearance(x, y, centerClearance);
         for (const particle of newParticles) {
           const dx = x - particle.x;
           const dy = y - particle.y;
@@ -93,16 +202,21 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
 
       // If we couldn't find a good position, just place it randomly
       if (!validPosition) {
-        x = Math.random() * window.innerWidth;
-        y = Math.random() * window.innerHeight;
+        const placeOnSide = Math.random() > 0.5;
+        x = placeOnSide
+          ? (Math.random() > 0.5 ? width - edgePadding : edgePadding)
+          : Math.random() * (width - edgePadding * 2) + edgePadding;
+        y = placeOnSide
+          ? Math.random() * (height - edgePadding * 2) + edgePadding
+          : (Math.random() > 0.5 ? height - edgePadding : edgePadding);
       }
 
       newParticles.push({
         id: i,
-        left: (x / window.innerWidth) * 100,
-        top: (y / window.innerHeight) * 100,
+        left: (x / width) * 100,
+        top: (y / height) * 100,
         symbol,
-        size: Math.random() * 1.2 + 0.7,
+        size: Math.random() * fontRange + fontMin,
         duration: Math.random() * 15 + 10,
         delay: Math.random() * 5,
         x,
@@ -114,8 +228,10 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
       });
     }
 
+    particlesRef.current = newParticles;
     setParticles(newParticles);
-  }, []);
+    setConnections(buildConnections(newParticles, fieldSize));
+  }, [fieldSize]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -167,54 +283,13 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
   }, [isHovering]);
 
   useEffect(() => {
-    const updateConnections = () => {
-      const newConnections: Connection[] = [];
-      const maxDistance = 220; // Increased for better connectivity
-
-      // Create connections between all particles within range
-      particles.forEach((p1, i) => {
-        particles.slice(i + 1).forEach((p2, j) => {
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < maxDistance) {
-            newConnections.push({
-              from: i,
-              to: i + j + 1,
-              distance,
-            });
-          }
-        });
-      });
-
-      // If we have fewer connections than desired, create some longer-range connections
-      if (newConnections.length < particles.length * 2) {
-        particles.forEach((p1, i) => {
-          particles.slice(i + 2).forEach((p2, j) => {
-            const dx = p1.x - p2.x;
-            const dy = p1.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < maxDistance * 1.5 && Math.random() < 0.3) {
-              newConnections.push({
-                from: i,
-                to: i + j + 2,
-                distance,
-              });
-            }
-          });
-        });
-      }
-
-      setConnections(newConnections);
-    };
+    if (!fieldSize) return;
 
     const animateParticles = () => {
-      setParticles(prevParticles =>
-        prevParticles.map(particle => {
+      const nextParticles = particlesRef.current.map(particle => {
           let newVx = particle.vx;
           let newVy = particle.vy;
+          const { width, height } = fieldSize;
 
           if (isHovering && isMouseMoving) {
             // Stronger mouse interaction when moving and hovering
@@ -248,13 +323,13 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
           let newY = particle.y + newVy;
 
           // Gentle bounce off edges
-          if (newX <= 20 || newX >= window.innerWidth - 20) {
+          if (newX <= 20 || newX >= width - 20) {
             newVx *= -0.8;
-            newX = Math.max(20, Math.min(window.innerWidth - 20, newX));
+            newX = Math.max(20, Math.min(width - 20, newX));
           }
-          if (newY <= 20 || newY >= window.innerHeight - 20) {
+          if (newY <= 20 || newY >= height - 20) {
             newVy *= -0.8;
-            newY = Math.max(20, Math.min(window.innerHeight - 20, newY));
+            newY = Math.max(20, Math.min(height - 20, newY));
           }
 
           return {
@@ -263,18 +338,19 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
             y: newY,
             vx: newVx,
             vy: newVy,
-            left: (newX / window.innerWidth) * 100,
-            top: (newY / window.innerHeight) * 100,
+            left: (newX / width) * 100,
+            top: (newY / height) * 100,
           };
-        })
-      );
+        });
 
-      updateConnections();
+      particlesRef.current = nextParticles;
+      setParticles(nextParticles);
+      setConnections(buildConnections(nextParticles, fieldSize));
     };
 
     const interval = setInterval(animateParticles, 16); // ~60fps
     return () => clearInterval(interval);
-  }, [particles.length, mousePos, isMouseMoving, isHovering]);
+  }, [fieldSize, mousePos, isMouseMoving, isHovering]);
 
   const particleColor = isAmberTheme
     ? ['#ffd27a', '#f5b544', '#f97316']
@@ -283,7 +359,7 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
       style={{
         zIndex: 0,
       }}
@@ -307,14 +383,14 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
           animation: gentle-float 6s ease-in-out infinite;
           transition: all 0.3s ease;
           user-select: none;
-          cursor: pointer;
           opacity: ${isHovering ? 1 : 0.7};
-          transform: ${isHovering ? 'scale(1.05)' : 'scale(1)'};
+          transform: translate(-50%, -50%) ${isHovering ? 'scale(1.05)' : 'scale(1)'};
+          white-space: nowrap;
         }
 
         .particle-text:hover {
           animation: pulse-glow 1s ease-in-out infinite;
-          transform: scale(1.2);
+          transform: translate(-50%, -50%) scale(1.2);
         }
 
         .connection-line {
@@ -334,6 +410,18 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
         .cursor-trail {
           pointer-events: none;
           mix-blend-mode: screen;
+        }
+
+        @media (max-width: 639px) {
+          .particle-text {
+            opacity: ${isAmberTheme ? 0.34 : 0.4};
+            text-shadow: 0 0 8px currentColor;
+          }
+
+          .connection-line {
+            opacity: ${isAmberTheme ? 0.12 : 0.16};
+            stroke-width: 1;
+          }
         }
       `}</style>
 
@@ -356,8 +444,8 @@ export default function HeroParticles({ isAmberTheme = false }: HeroParticlesPro
               y2={`${p2.top}%`}
               className="connection-line"
               style={{
-                opacity: Math.max(0.2, 0.8 - conn.distance / 220),
-                strokeWidth: Math.max(1, 3 - conn.distance / 110),
+                opacity: Math.max(0.12, 0.72 - conn.distance / getParticleSettings(fieldSize ?? { width: 1024, height: 768 }).connectionDistance),
+                strokeWidth: Math.max(0.8, 2.6 - conn.distance / 110),
                 animationDelay: `${conn.from * 0.1}s`,
               }}
             />
