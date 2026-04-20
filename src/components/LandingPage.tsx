@@ -1100,11 +1100,37 @@ export default function LandingPage() {
           </motion.div>
         </motion.section>
 
-        <footer className="overflow-hidden border-t border-white/10 bg-white text-black">
-          <div className="mx-auto max-w-[1800px] px-3 py-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10">
-            <p className="text-center font-black uppercase leading-none tracking-[0.22em] text-[clamp(2.4rem,8vw,7.5rem)] sm:tracking-[0.28em] lg:tracking-[0.34em]">
-              PLANITT
-            </p>
+        <footer className={`overflow-hidden border-t border-white/10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#05070d]'}`}>
+          <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+            <div
+              className={`relative overflow-hidden rounded-[28px] border border-white/10 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 ${
+                isAmberTheme
+                  ? 'bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))]'
+                  : 'bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))]'
+              }`}
+            >
+              <div
+                className={`pointer-events-none absolute inset-0 ${
+                  isAmberTheme
+                    ? 'bg-[radial-gradient(circle_at_20%_40%,rgba(245,181,68,0.18),transparent_28%),radial-gradient(circle_at_82%_58%,rgba(251,191,36,0.12),transparent_26%)]'
+                    : 'bg-[radial-gradient(circle_at_20%_40%,rgba(124,92,255,0.18),transparent_28%),radial-gradient(circle_at_82%_58%,rgba(56,189,248,0.12),transparent_26%)]'
+                }`}
+              />
+              <div className="relative">
+                <p className="text-center text-[10px] font-medium uppercase tracking-[0.36em] text-slate-500 sm:text-[11px]">
+                  Plan with signal. Move with conviction.
+                </p>
+                <div className="mt-4">
+                  <p className="text-center font-black uppercase leading-none tracking-[0.18em] text-transparent [text-stroke:1px_rgba(255,255,255,0.22)] [-webkit-text-stroke:1px_rgba(255,255,255,0.22)] text-[clamp(3.25rem,14vw,9.5rem)] sm:tracking-[0.24em]">
+                    PLANITT
+                  </p>
+                  <p className="-mt-[0.68em] text-center font-black uppercase leading-none tracking-[0.14em] text-white text-[clamp(2.9rem,12vw,8.5rem)] sm:tracking-[0.2em]">
+                    PLANITT
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </footer>
       </main>
