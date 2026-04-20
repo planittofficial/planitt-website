@@ -125,8 +125,8 @@ export default function TradoChatbotShowcase() {
           >
             <div className="absolute -inset-5 rounded-[2.5rem] bg-[radial-gradient(circle,rgba(124,92,255,0.22),transparent_62%)] blur-2xl" />
             <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.06] p-4 shadow-[0_22px_64px_rgba(0,0,0,0.36)] backdrop-blur-2xl">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-3 border-b border-white/10 pb-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 items-center gap-3">
                   <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-[#7C5CFF]/15 text-[#d4cbff]">
                     <motion.span
                       animate={{ scale: [1, 1.35, 1], opacity: [0.55, 0, 0.55] }}
@@ -140,7 +140,7 @@ export default function TradoChatbotShowcase() {
                     <p className="mt-0.5 text-xs text-slate-400">Planitt AI market assistant</p>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
+                <span className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
                   <span className="relative flex h-2 w-2">
                     <motion.span
                       animate={{ scale: [1, 2.2, 1], opacity: [0.8, 0, 0.8] }}
@@ -201,9 +201,9 @@ export default function TradoChatbotShowcase() {
                 </button>
               </div>
 
-              <div className="mt-3 flex items-center gap-2 rounded-2xl border border-emerald-400/15 bg-emerald-400/10 p-3 text-sm text-emerald-200">
-                <CheckCircle2 className="h-4 w-4 flex-none" />
-                Trado can be embedded directly into the Planitt recommendation journey.
+              <div className="mt-3 flex items-start gap-2 rounded-2xl border border-emerald-400/15 bg-emerald-400/10 p-3 text-sm leading-snug text-emerald-200 sm:items-center">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none sm:mt-0" />
+                <span>Trado can be embedded directly into the Planitt recommendation journey.</span>
               </div>
             </div>
           </motion.div>

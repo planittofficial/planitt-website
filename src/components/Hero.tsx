@@ -78,7 +78,7 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
                 <div className="w-full max-w-md mx-auto mb-10 lg:mb-14">
-                    <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400 mb-2">
+                    <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400 mb-2 mt-10">
                         Select Focus
                     </p>
                     <div className={`relative rounded-2xl border ${palette.toggleBorder} bg-white/80 dark:bg-gray-900/70 backdrop-blur-xl p-1.5 ${palette.toggleShadow}`}>
