@@ -44,8 +44,9 @@ const revealItem: Variants = {
 };
 
 const buttonHover = { scale: 1.03, filter: 'brightness(1.06)' };
-const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14)' };
+const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14), py-3' };
 const microTransition = { duration: 0.24, ease: 'easeOut' as const };
+const scrollCueTransition = { duration: 2.0, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' as const };
 
 const liveSignals: Array<{
   asset: string;
@@ -264,7 +265,7 @@ export default function LandingPage() {
             initial="hidden"
             animate="visible"
             variants={revealSection}
-            className="relative mx-auto max-w-6xl px-4 pb-12 pt-20 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32"
+            className="relative mx-auto max-w-6xl px-4 pb-36 pt-20 sm:px-6 sm:pb-40 sm:pt-24 lg:px-8 lg:pb-29 lg:pt-32"
           >
             <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
               <motion.div
@@ -328,6 +329,26 @@ export default function LandingPage() {
                 </div>
               </motion.div>
             </motion.div>
+
+            <motion.a
+              href="#live-signals"
+              variants={revealItem}
+              whileHover={{ scale: 1.06 }}
+              transition={microTransition}
+              aria-label="Scroll to live signals"
+              className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
+            >
+              <div className="relative flex h-[64px] w-[44px] items-start justify-center rounded-full border-[2px] border-white/195 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+                <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
+                  SCROLL
+                </span>
+                <motion.div
+                  animate={{ y: [0, 14, 0] }}
+                  transition={scrollCueTransition}
+                  className="mt-4 h-[14px] w-[5px] rounded-full bg-white/95"
+                />
+              </div>
+            </motion.a>
           </motion.div>
         </section>
 
