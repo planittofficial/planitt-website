@@ -177,6 +177,14 @@ export default function WebDevPage() {
               liveLink: "https://coffeeculturenagpur.com/",
               tags: ["Food & Beverage", "Online Ordering", "Event Management"],
             },
+            {
+              title: "Planitt CRM Website",
+              description:
+                "A customer relationship management website designed to streamline sales processes and enhance customer engagement.",
+              image: "/Planitt-CRM.png",
+              liveLink: "https://crm.planitt.in/",
+              tags: ["SaaS", "CRM", "Sales Automation"],
+            },
           ]}
         />
 

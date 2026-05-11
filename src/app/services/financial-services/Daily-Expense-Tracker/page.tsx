@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Plus, Trash2, Edit3, Save, Calendar, Wallet } from 'lucide-react';
 import ServicePageLayout from '@/components/ServicePageLayout';
+import { formatIndianCompactCurrency } from '@/lib/numberFormat';
 
 interface DailySIPEntry {
     id: string;
@@ -154,13 +155,7 @@ export default function DailyExpenseTrackerPage() {
         setEditingId(null);
     };
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0
-        }).format(amount);
-    };
+    const formatCurrency = (amount: number) => formatIndianCompactCurrency(amount);
 
     const colors = [
         '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6',

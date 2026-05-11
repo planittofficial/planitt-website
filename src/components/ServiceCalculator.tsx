@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Calculator, TrendingUp, IndianRupee, Target } from 'lucide-react';
+import { formatIndianCompactCurrency } from '@/lib/numberFormat';
 
 interface CalculatorData {
     monthlyInvestment?: number;
@@ -244,13 +245,7 @@ const ServiceCalculator = ({ serviceType, title, description }: ServiceCalculato
         calculateReturns();
     }, [calculateReturns]);
 
-    const formatCurrency = (value: number) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0,
-        }).format(value);
-    };
+    const formatCurrency = (value: number) => formatIndianCompactCurrency(value);
 
     const handleInputChange = (field: keyof CalculatorData, value: number | string) => {
         if (field === 'withdrawalFrequency') {

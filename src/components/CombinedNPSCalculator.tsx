@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TrendingDown } from 'lucide-react';
+import { formatIndianCompactCurrency } from '@/lib/numberFormat';
 
 interface SIPData {
     monthlyInvestment: number;
@@ -207,13 +208,7 @@ const CombinedNPSCalculator = () => {
         }));
     }, [sipSummary.maturityValue]);
 
-    const formatCurrency = (value: number) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0,
-        }).format(value);
-    };
+    const formatCurrency = (value: number) => formatIndianCompactCurrency(value);
 
     const handleSipInputChange = (field: keyof SIPData, value: number) => {
         let sanitizedValue = value;

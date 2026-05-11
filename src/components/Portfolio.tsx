@@ -60,6 +60,14 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             accentColor="blue"
                             projects={[
                                 {
+                                    title: "Planitt CRM Website",
+                                    description:
+                                        "A customer relationship management website designed to streamline sales processes and enhance customer engagement.",
+                                    image: "/Planitt-CRM.png",
+                                    liveLink: "https://crm.planitt.in/",
+                                    tags: ["SaaS", "CRM", "Sales Automation"],
+                                },
+                                {
                                     title: "Coffee Culture Website ↗",
                                     description:
                                         "A coffee shop website designed to showcase products, services, and events while providing an easy-to-use online ordering system.",

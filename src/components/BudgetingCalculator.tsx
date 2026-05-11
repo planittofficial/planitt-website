@@ -8,6 +8,7 @@ import { Calculator, Camera, TrendingUp, IndianRupee, Target } from 'lucide-reac
 import domtoimage from 'dom-to-image';
 import CombinedSnapshot1 from './CombinedSnapshot1';
 import CombinedSnapshot2 from './CombinedSnapshot2';
+import { formatIndianCompactCurrency } from '@/lib/numberFormat';
 
 interface BudgetData {
     monthlyIncome: number;
@@ -53,14 +54,7 @@ const BudgetingCalculator = () => {
     const snapshot1Ref = useRef<HTMLDivElement>(null);
     const snapshot2Ref = useRef<HTMLDivElement>(null);
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount);
-    };
+    const formatCurrency = (amount: number) => formatIndianCompactCurrency(amount);
 
     const calculateSIP = useCallback(() => {
         if (totalSavings <= 0) return;
