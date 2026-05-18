@@ -1021,7 +1021,7 @@ export default function LandingPage() {
 
             <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className="min-w-0">
                 <Image
-                  src="/Learning.png"
+                  src="/learning.jpeg"
                   alt="Planitt academy learning screen"
                   width={1000}
                   height={800}
