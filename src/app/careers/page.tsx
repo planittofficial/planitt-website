@@ -70,7 +70,7 @@ const teamMembers: TeamMember[] = [
         name: 'Harsh R. Meshram ',
         role: 'Digital Marketer',
         image: '/Harsh_profile.jpg', // Default image as requested
-        portfolio: 'https://harsh-meshram.netlify.app/',
+        portfolio: 'https://harshrmeshram.vercel.app/',
     },
 
 ];
@@ -246,7 +246,7 @@ Thank You.`;
         <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-[#ffdc40] to-zinc-900 text-white py-20 pt-28">
+            <section className="relative bg-linear-to-r from-[#ffdc40] to-zinc-900 text-white py-20 pt-28">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-5xl font-bold my-10">Join Our Team</h1>
