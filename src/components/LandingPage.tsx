@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -11,13 +11,11 @@ import {
   ShieldCheck,
   Sparkles,
   Target,
-  TrendingUp,
   Wallet,
 } from 'lucide-react';
 import { animate, motion, useInView, useScroll, useTransform, type Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import AnimatedText from './AnimatedText';
-import MobileShowcase from './MobileShowcase';
 import HeroParticles from './HeroParticles';
 import TradoChatbotShowcase from './TradoChatbotShowcase';
 
@@ -117,7 +115,6 @@ export default function LandingPage() {
   const [accentTheme, setAccentTheme] = useState<'violet' | 'amber'>('violet');
   const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
   const [confidence, setConfidence] = useState(74);
-  const [momentumPath, setMomentumPath] = useState('M10 82 C34 78, 50 66, 74 54 C96 43, 118 44, 138 36 C158 29, 180 30, 198 24 C216 18, 234 22, 250 16');
   const heroRef = useRef<HTMLElement | null>(null);
   const dashboardRef = useRef<HTMLElement | null>(null);
   const showcaseRef = useRef<HTMLElement | null>(null);
@@ -173,48 +170,12 @@ export default function LandingPage() {
     return () => window.removeEventListener('planitt-landing-accent-change', handleAccentChange);
   }, []);
 
-  const generateRandomMomentumPath = () => {
-    // Generate a random but realistic momentum tape path
-    const points = [
-      { x: 10, y: 82 },
-      { x: 34, y: Math.random() * 20 + 70 },
-      { x: 50, y: Math.random() * 25 + 60 },
-      { x: 74, y: Math.random() * 30 + 40 },
-      { x: 96, y: Math.random() * 15 + 35 },
-      { x: 118, y: Math.random() * 20 + 35 },
-      { x: 138, y: Math.random() * 25 + 25 },
-      { x: 158, y: Math.random() * 15 + 20 },
-      { x: 180, y: Math.random() * 18 + 15 },
-      { x: 198, y: Math.random() * 12 + 10 },
-      { x: 216, y: Math.random() * 10 + 5 },
-      { x: 234, y: Math.random() * 15 + 10 },
-      { x: 250, y: Math.random() * 8 + 5 },
-    ];
-
-    let pathStr = `M${points[0].x} ${points[0].y}`;
-    for (let i = 1; i < points.length; i++) {
-      const curr = points[i];
-      const prev = points[i - 1];
-      const nextIdx = i + 1;
-      const next = nextIdx < points.length ? points[nextIdx] : curr;
-
-      const cp1x = prev.x + (curr.x - prev.x) / 3;
-      const cp1y = prev.y + (curr.y - prev.y) / 3;
-      const cp2x = curr.x - (next.x - curr.x) / 3;
-      const cp2y = curr.y - (next.y - curr.y) / 3;
-
-      pathStr += ` C${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`;
-    }
-    return pathStr;
-  };
-
   useEffect(() => {
     const biasOptions: Array<'Bullish' | 'Bearish' | 'Neutral'> = ['Bullish', 'Bearish', 'Neutral'];
 
     const updateData = () => {
       setBias(biasOptions[Math.floor(Math.random() * biasOptions.length)]);
       setConfidence(Math.floor(Math.random() * (95 - 65 + 1) + 65));
-      setMomentumPath(generateRandomMomentumPath());
     };
 
     // Generate random interval between 1-2 hours (in milliseconds)
@@ -250,7 +211,7 @@ export default function LandingPage() {
         />
         <motion.div
           style={{ y: heroGridY }}
-          className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:110px_110px] opacity-[0.12]"
+          className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[110px_110px] opacity-[0.12]"
         />
 
         <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
@@ -299,7 +260,7 @@ export default function LandingPage() {
                   href="#live-signals"
                   whileHover={buttonHover}
                   transition={microTransition}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
                 >
                   Explore Signals
                 </motion.a>
@@ -309,7 +270,7 @@ export default function LandingPage() {
                   onClick={goToSite}
                   whileHover={buttonHover}
                   transition={microTransition}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)] sm:min-h-0 sm:px-7"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)] sm:min-h-0 sm:px-7"
                 >
                   Continue to Services
                   <ArrowRight className="h-4 w-4" />
@@ -338,14 +299,14 @@ export default function LandingPage() {
               aria-label="Scroll to live signals"
               className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
             >
-              <div className="relative flex h-[64px] w-[44px] items-start justify-center rounded-full border-[2px] border-white/195 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/195 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
                 <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
                   SCROLL
                 </span>
                 <motion.div
                   animate={{ y: [0, 14, 0] }}
                   transition={scrollCueTransition}
-                  className="mt-4 h-[14px] w-[5px] rounded-full bg-white/95"
+                  className="mt-4 h-3.5 w-[5px] rounded-full bg-white/95"
                 />
               </div>
             </motion.a>
@@ -515,14 +476,14 @@ export default function LandingPage() {
               className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
             />
 
-            {/* ✅ FIXED GRID LAYOUT */}
+            {/* ? FIXED GRID LAYOUT */}
             <div className="relative grid gap-5 lg:grid-cols-2 items-start">
 
               {/* LEFT - PORTFOLIO */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-                className="rounded-[24px] border border-white/10 bg-[#101827]/85 p-5"
+                className="rounded-3xl border border-white/10 bg-[#101827]/85 p-5"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
@@ -586,7 +547,7 @@ export default function LandingPage() {
                 transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
                 className="grid gap-4 h-full"
               >
-                <div className="h-full rounded-[24px] border border-white/10 bg-black/25 p-4 sm:p-5">
+                <div className="h-full rounded-3xl border border-white/10 bg-black/25 p-4 sm:p-5">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-white">Market Board</p>
@@ -604,8 +565,8 @@ export default function LandingPage() {
                       <span>Price action</span>
                       <span className="text-emerald-300">Bullish bias</span>
                     </div>
-                    <div className="relative mt-4 h-36 min-h-[9rem] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))] sm:h-44">
-                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-25" />
+                    <div className="relative mt-4 h-36 min-h-36 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))] sm:h-44">
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[48px_48px] opacity-25" />
                       <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
                         <motion.path
                           d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
@@ -630,7 +591,7 @@ export default function LandingPage() {
                       <motion.div
                         animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
                         transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
-                        className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-md"
+                        className="absolute top-0 h-full w-20 bg-linear-to-r from-transparent via-white/10 to-transparent blur-md"
                       />
                     </div>
 
@@ -640,7 +601,7 @@ export default function LandingPage() {
                         ['Crypto outlook', 72],
                         ['MF view', 76],
                       ].map(([label, score]) => (
-                        <div key={label} className="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
+                        <div key={label} className="rounded-[18px] border border-white/10 bg-white/4 p-3">
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-slate-300">{label}</span>
                             <span className="font-semibold text-white">{score}</span>
@@ -661,7 +622,7 @@ export default function LandingPage() {
                 </div>
               </motion.div>
 
-              {/* ✅ FULL WIDTH SIGNAL DASHBOARD */}
+              {/* ? FULL WIDTH SIGNAL DASHBOARD */}
               <div className="lg:col-span-2">
                 <SignalDashboardCard />
               </div>
@@ -789,7 +750,7 @@ export default function LandingPage() {
             <motion.div
               variants={revealItem}
               style={{ y: showcaseCardOneY }}
-              className={`${glassCard} relative flex h-full min-w-0 flex-col overflow-hidden rounded-[24px] p-2 sm:p-3`}
+              className={`${glassCard} relative flex h-full min-w-0 flex-col overflow-hidden rounded-3xl p-2 sm:p-3`}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
               <div className="relative min-w-0">
@@ -828,7 +789,7 @@ export default function LandingPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
                     <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">Experience the product in action.</h3>
                   </div>
-                  <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
+                  <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-3xl border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
                     <div className="relative aspect-video h-full min-h-[200px] w-full sm:min-h-[280px]">
                       <video
                         src="/Create_a_premium_202604171446.mp4"
@@ -852,7 +813,7 @@ export default function LandingPage() {
           >
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(28,16,22,0.96),rgba(17,11,18,0.98))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)] lg:col-span-2">
               <div className={`absolute inset-0 ${isAmberTheme ? 'bg-[radial-gradient(circle_at_16%_18%,rgba(255,210,122,0.14),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(251,191,36,0.08),transparent_26%)]' : 'bg-[radial-gradient(circle_at_16%_18%,rgba(124,92,255,0.16),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(56,189,248,0.10),transparent_26%)]'}`} />
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:30px_30px] opacity-40" />
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-size-[30px_30px] opacity-40" />
 
               <div className="relative">
                 <div className="flex flex-wrap items-start justify-between gap-4">
@@ -865,7 +826,7 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-3 py-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
                       <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Bias</p>
                       <motion.p
                         key={bias}
@@ -890,7 +851,7 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-              <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
+              <div className="mt-5 overflow-hidden rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
   
   {/* Header */}
   <div className="mb-3 flex flex-col gap-1 text-[10px] uppercase tracking-[0.24em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
@@ -988,11 +949,11 @@ export default function LandingPage() {
 </div>
 
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
+                  <div className="rounded-[20px] border border-white/10 bg-white/4 px-4 py-3">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Win rate</p>
                     <p className="mt-2 text-2xl font-semibold text-white text-center">XX%</p>
                   </div>
-                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-3">
+                  <div className="rounded-[20px] border border-white/10 bg-white/4 px-4 py-3">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Output style</p>
                     <p className="mt-2 text-base font-semibold text-white text-center">Risk-first output</p>
                   </div>
@@ -1026,7 +987,7 @@ export default function LandingPage() {
                   width={1000}
                   height={800}
                   sizes="(max-width: 1024px) 100vw, 42vw"
-                  className="h-auto w-full max-w-full rounded-[24px] object-contain object-top sm:rounded-[30px]"
+                  className="h-auto w-full max-w-full rounded-3xl object-contain object-top sm:rounded-[30px]"
                   priority
                 />
             </motion.div>
@@ -1057,7 +1018,7 @@ export default function LandingPage() {
                   ['Custom queries', 'Talk to us if you want to explore the right model.'],
                   ['Technical support', 'Connect directly for buying or implementation queries.'],
                 ].map(([title, detail]) => (
-                  <motion.div key={title} variants={revealItem} className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
+                  <motion.div key={title} variants={revealItem} className="rounded-3xl border border-white/10 bg-white/4 p-4">
                     <p className="text-lg font-semibold text-white">{title}</p>
                     <p className="mt-2 text-sm leading-6 text-slate-300">{detail}</p>
                   </motion.div>
@@ -1065,7 +1026,7 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            <motion.div variants={revealItem} className="mt-6 rounded-[24px] border border-amber-300/20 bg-amber-300/10 px-5 py-4">
+            <motion.div variants={revealItem} className="mt-6 rounded-3xl border border-amber-300/20 bg-amber-300/10 px-5 py-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/80">Technical Contact</p>
@@ -1123,7 +1084,7 @@ export default function LandingPage() {
 
         <footer className={`overflow-hidden border-t border-white/10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#05070d]'}`}>
           <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-linear-to-r from-transparent via-white/12 to-transparent" />
             <div
               className={`relative overflow-hidden rounded-[28px] border border-white/10 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 ${
                 isAmberTheme
@@ -1211,7 +1172,7 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
         </div>
 
         <div className="mt-4 grid gap-3 md:grid-cols-[0.8fr_0.8fr]">
-          <div className="rounded-[24px] border border-white/10 bg-[#0D1321]/85 p-4">
+          <div className="rounded-3xl border border-white/10 bg-[#0D1321]/85 p-4">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
                 <p className="text-[11px] uppercase tracking-[0.26em] text-slate-500">Top setup</p>
@@ -1283,3 +1244,4 @@ function SignalDashboardCard({ className = '' }: { className?: string }) {
     </motion.div>
   );
 }
+

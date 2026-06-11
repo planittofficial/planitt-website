@@ -59,8 +59,18 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             subtitle="A showcase of our high-performance websites and mobile applications."
                             accentColor="blue"
                             projects={[
+                                 {
+                                    
+                                    title: "Planitt Signals Website ↗",
+                                    description:
+                                        "A stock market trading website built for our in-house product, Planitt Signals, focused on delivering real-time market insights and a seamless user experience for traders.",
+                                    image: "/trading-website.png",
+                                    liveLink: "https://app.planitt.in/",
+                                    tags: ["In-house", "Fintech", "Trading Platform"],
+                                },
                                 {
-                                    title: "Planitt CRM Website",
+                                    
+                                    title: "Planitt CRM Website ↗",
                                     description:
                                         "A customer relationship management website designed to streamline sales processes and enhance customer engagement.",
                                     image: "/Planitt-CRM.png",

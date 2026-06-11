@@ -2,9 +2,35 @@
 
 import { Mail, Phone, MapPin, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useHomeMode } from "@/context/HomeModeContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const { homeMode } = useHomeMode();
+
+  const isTechnicalContext =
+    pathname.startsWith("/services/technical-services") ||
+    (pathname === "/main" && homeMode === "technical");
+
+  const serviceLinks = isTechnicalContext
+    ? [
+      { label: "App Development", href: "/services/technical-services/app-dev" },
+      { label: "Web Development", href: "/services/technical-services/web-dev" },
+      { label: "Cloud Services", href: "/services/technical-services/cloud-services" },
+      { label: "Digital Marketing", href: "/services/technical-services/digital-marketing" },
+      { label: "DevOps & Automation", href: "/services/technical-services/devops-automation" },
+      { label: "Cyber Security", href: "/services/technical-services/cyber-security" },
+    ]
+    : [
+      { label: "SIP", href: "/main#services" },
+      { label: "SWP", href: "/main#services" },
+      { label: "Goal Setting", href: "/main#services" },
+      { label: "Insurance", href: "/main#services" },
+      { label: "NPS", href: "/main#services" },
+      { label: "Budgeting", href: "/main#services" },
+    ];
 
   return (
     <footer className="bg-gradient-to-r from-[#111111] via-[#1f1f1f] to-[#111111] text-white transition-colors duration-300">
@@ -103,42 +129,15 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-heading text-lg font-semibold">Our Services</h4>
             <div className="grid grid-cols-2 gap-2">
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                SIP
-              </a>
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                SWP
-              </a>
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                Goal Setting
-              </a>
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                Insurance
-              </a>
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                NPS
-              </a>
-              <a
-                href="/main#services"
-                className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-              >
-                Budgeting
-              </a>
+              {serviceLinks.map((service) => (
+                <a
+                  key={service.label}
+                  href={service.href}
+                  className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
+                >
+                  {service.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>
