@@ -139,7 +139,7 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     description:
                                         "Bhav App is mainly designed for jewelery shopkeepers, whose customers will connect with them through this app. Sellers can add products to their inventory and customers can send a purchase or sale request based on the product of their choice. The seller may subsequently review and accept or reject the request.",
                                     image: "/bhav.png",
-                                    liveLink: "https://bhav.in/",
+                                    liveLink: "https://play.google.com/store/apps/details?id=com.vipinsoni.bhav",
                                     imageFit: "cover", // full logo
                                     darkBg: true, // ✅ black background
                                     tags: ["Client-Project", "Gold & Silver"],
