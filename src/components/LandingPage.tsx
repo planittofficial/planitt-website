@@ -7,7 +7,6 @@ import {
   BrainCircuit,
   CandlestickChart,
   Layers3,
-  Phone,
   ShieldCheck,
   Sparkles,
   Target,
@@ -18,6 +17,12 @@ import { useEffect, useRef, useState } from 'react';
 import AnimatedText from './AnimatedText';
 import HeroParticles from './HeroParticles';
 import TradoChatbotShowcase from './TradoChatbotShowcase';
+import TradingAlgorithmsSection from './TradingAlgorithmsSection';
+import HowItWorksSection from './HowItWorksSection';
+import FaqSection from './FaqSection';
+import LearningJourneySection from './LearningJourneySection';
+import MarketTicker from './MarketTicker';
+import CinematicFooter from './CinematicFooter';
 
 const sectionShell =
   'relative mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-8';
@@ -58,39 +63,10 @@ const liveSignals: Array<{
   ];
 
 
-const dashboardMetrics = [
-  { label: 'Live signals', value: '128' },
-  { label: 'Avg score', value: '82' },
-  { label: 'Markets active', value: '5' },
-];
 
-const steps = [
-  {
-    id: '01',
-    title: 'AI scans markets',
-    description: 'PLANITT reads multi-market data, sentiment, and technical pressure in the background.',
-    icon: <BrainCircuit className="h-5 w-5" />,
-  },
-  {
-    id: '02',
-    title: 'Generates signals',
-    description: 'The engine converts market context into confidence-scored, risk-aware opportunities.',
-    icon: <CandlestickChart className="h-5 w-5" />,
-  },
-  {
-    id: '03',
-    title: 'You take decisions',
-    description: 'You get the setup, reasoning, and invalidation so every action starts from clarity.',
-    icon: <Target className="h-5 w-5" />,
-  },
-];
 
-const features = [
-  { title: 'Multi-market coverage', description: 'Stocks, Crypto, Forex, F&O.', icon: <Layers3 className="h-5 w-5" /> },
-  { title: 'AI explanations', description: 'Every signal comes with a reason.', icon: <BrainCircuit className="h-5 w-5" /> },
-  { title: 'Risk management', description: 'Stops and confidence stay visible.', icon: <ShieldCheck className="h-5 w-5" /> },
-  { title: 'Real-time insights', description: 'Live signals update as markets move.', icon: <Sparkles className="h-5 w-5" /> },
-];
+
+
 
 const trustCredentials = [
   {
@@ -116,15 +92,10 @@ export default function LandingPage() {
   const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
   const [confidence, setConfidence] = useState(74);
   const heroRef = useRef<HTMLElement | null>(null);
-  const dashboardRef = useRef<HTMLElement | null>(null);
   const showcaseRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
-  });
-  const { scrollYProgress: dashboardScrollProgress } = useScroll({
-    target: dashboardRef,
-    offset: ['start end', 'end start'],
   });
   const { scrollYProgress: showcaseScrollProgress } = useScroll({
     target: showcaseRef,
@@ -134,12 +105,9 @@ export default function LandingPage() {
   const heroGridY = useTransform(heroScrollProgress, [0, 1], [0, -14]);
   const heroTextY = useTransform(heroScrollProgress, [0, 1], [0, -34]);
   const heroGlowY = useTransform(heroScrollProgress, [0, 1], [0, 80]);
-  const dashboardY = useTransform(dashboardScrollProgress, [0, 1], [18, -18]);
-  const dashboardGlowY = useTransform(dashboardScrollProgress, [0, 1], [24, -24]);
   const showcaseIntroY = useTransform(showcaseScrollProgress, [0, 1], [24, -12]);
   const showcaseCardOneY = useTransform(showcaseScrollProgress, [0, 1], [34, -34]);
   const showcaseCardTwoY = useTransform(showcaseScrollProgress, [0, 1], [12, -18]);
-  const showcaseCardThreeY = useTransform(showcaseScrollProgress, [0, 1], [28, -26]);
   const isAmberTheme = accentTheme === 'amber';
   const accentSoft = isAmberTheme
     ? 'border-[#f5b544]/20 bg-[#f5b544]/10 text-[#f7c86e]'
@@ -213,6 +181,11 @@ export default function LandingPage() {
           style={{ y: heroGridY }}
           className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[110px_110px] opacity-[0.12]"
         />
+
+        {/* Fixed Market Ticker – stays visible below header while scrolling */}
+        <MarketTicker />
+        {/* Spacer: header (64px) + ticker (46px) = 110px */}
+        <div className="h-[110px]" />
 
         <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
           <HeroParticles isAmberTheme={isAmberTheme} />
@@ -426,308 +399,13 @@ export default function LandingPage() {
             ))}
           </motion.div>
         </motion.section>
-  
         <div id="ai">
           <TradoChatbotShowcase />
         </div>
         
-        <motion.section
-          ref={dashboardRef}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          {/* HEADER */}
-          <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl min-w-0">
-              <p className={sectionHeader}>Dashboard Preview</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">
-                Built like a live system.
-              </h2>
-            </motion.div>
+        <HowItWorksSection />
 
-            <motion.div variants={revealSection} className="grid w-full min-w-0 grid-cols-3 gap-2 sm:gap-3">
-              {dashboardMetrics.map((metric) => (
-                <motion.div
-                  key={metric.label}
-                  variants={revealItem}
-                  whileHover={cardHover}
-                  transition={microTransition}
-                  className={`${glassCard} ${softHover} min-w-0 p-3 text-center sm:p-4`}
-                >
-                  <p className="text-[11px] leading-tight text-slate-400 sm:text-xs">{metric.label}</p>
-                  <p className="mt-1.5 text-xl font-semibold sm:mt-2 sm:text-2xl">{metric.value}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
 
-          {/* MAIN CONTAINER */}
-          <motion.div
-            variants={revealItem}
-            style={{ y: dashboardY }}
-            className={`${glassCard} relative mt-10 overflow-hidden p-4 sm:p-5`}
-          >
-            {/* BACKGROUND GLOW */}
-            <motion.div
-              style={{ y: dashboardGlowY }}
-              className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_80%_74%,rgba(56,189,248,0.12),transparent_26%)]"
-            />
-
-            {/* ? FIXED GRID LAYOUT */}
-            <div className="relative grid gap-5 lg:grid-cols-2 items-start">
-
-              {/* LEFT - PORTFOLIO */}
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-                className="rounded-3xl border border-white/10 bg-[#101827]/85 p-5"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff]">
-                    <Wallet className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-white">Portfolio Card</p>
-                    <p className="text-xs text-slate-400">Multi-asset capital view</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-[22px] border border-white/10 bg-black/20 p-4">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
-                    Net portfolio
-                  </p>
-                  <p className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-white">
-                    $<CountUp value={248} />K
-                  </p>
-
-                  <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
-                        Profit / Loss
-                      </p>
-                      <p className="mt-1 text-2xl font-semibold text-white">
-                        +<CountUp value={18} />.4%
-                      </p>
-                    </div>
-                    <div className="text-left sm:text-right">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">
-                        Today
-                      </p>
-                      <p className="mt-1 text-lg font-semibold text-emerald-300">
-                        +$12.8K
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid gap-2">
-                  {[
-                    ['Equity', '44%'],
-                    ['Crypto', '28%'],
-                    ['Forex', '18%'],
-                    ['F&O', '10%'],
-                  ].map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5"
-                    >
-                      <span className="text-sm text-slate-300">{label}</span>
-                      <span className="text-sm font-semibold text-white">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* RIGHT - MARKET BOARD */}
-              <motion.div
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
-                className="grid gap-4 h-full"
-              >
-                <div className="h-full rounded-3xl border border-white/10 bg-black/25 p-4 sm:p-5">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-white">Market Board</p>
-                      <p className="text-xs text-slate-400">
-                        Real-time analytics across active markets
-                      </p>
-                    </div>
-                    <div className="w-fit shrink-0 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                      Synced
-                    </div>
-                  </div>
-
-                  <div className="mt-5 rounded-[22px] border border-white/10 bg-[#0B0F19]/80 p-4 sm:p-6 lg:p-8">
-                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500">
-                      <span>Price action</span>
-                      <span className="text-emerald-300">Bullish bias</span>
-                    </div>
-                    <div className="relative mt-4 h-36 min-h-36 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,rgba(124,92,255,0.12),rgba(11,15,25,0.02))] sm:h-44">
-                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[48px_48px] opacity-25" />
-                      <svg viewBox="0 0 420 176" className="absolute inset-0 h-full w-full">
-                        <motion.path
-                          d="M0 134 C28 142, 54 116, 86 112 C118 108, 150 84, 180 88 C214 92, 240 54, 274 56 C304 58, 330 38, 360 40 C386 42, 402 24, 420 16"
-                          fill="none"
-                          stroke={isAmberTheme ? '#ffd27a' : '#7C5CFF'}
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                          initial={{ pathLength: 0 }}
-                          whileInView={{ pathLength: 1 }}
-                          viewport={{ once: true, amount: 0.6 }}
-                          transition={{ duration: 1.6, ease: 'easeOut' }}
-                        />
-                        <motion.path
-                          d="M0 150 C28 152, 54 126, 86 122 C118 118, 150 96, 180 98 C214 100, 240 66, 274 70 C304 72, 330 50, 360 52 C386 54, 402 34, 420 28 L420 176 L0 176 Z"
-                          fill={isAmberTheme ? 'rgba(245,181,68,0.16)' : 'rgba(124,92,255,0.16)'}
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          viewport={{ once: true, amount: 0.6 }}
-                          transition={{ duration: 1.1, ease: 'easeOut' }}
-                        />
-                      </svg>
-                      <motion.div
-                        animate={{ x: ['-15%', '110%'], opacity: [0, 0.72, 0] }}
-                        transition={{ duration: 3.8, repeat: Number.POSITIVE_INFINITY, ease: 'linear' }}
-                        className="absolute top-0 h-full w-20 bg-linear-to-r from-transparent via-white/10 to-transparent blur-md"
-                      />
-                    </div>
-
-                    <div className="mt-4 grid gap-3 p-5 sm:grid-cols-3">
-                      {[
-                        ['Equity outlook', 84],
-                        ['Crypto outlook', 72],
-                        ['MF view', 76],
-                      ].map(([label, score]) => (
-                        <div key={label} className="rounded-[18px] border border-white/10 bg-white/4 p-3">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">{label}</span>
-                            <span className="font-semibold text-white">{score}</span>
-                          </div>
-                          <div className="mt-3 h-2 rounded-full bg-white/10">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${score}%` }}
-                              viewport={{ once: true, amount: 0.8 }}
-                              transition={{ duration: 1, ease: 'easeOut' }}
-                              className={`h-full rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-[#7C5CFF]'}`}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* ? FULL WIDTH SIGNAL DASHBOARD */}
-              <div className="lg:col-span-2">
-                <SignalDashboardCard />
-              </div>
-
-            </div>
-          </motion.div>
-        </motion.section>
-        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          <div className={`pointer-events-none absolute left-1/2 top-24 h-[220px] w-[420px] -translate-x-1/2 rounded-full blur-3xl ${isAmberTheme ? 'bg-[#f5b544]/12' : 'bg-[#7C5CFF]/12'
-            }`} />
-
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={revealSection}
-              className="mb-12 text-center"
-            >
-              <motion.p variants={revealItem} className={sectionHeader}>How It Works</motion.p>
-              <motion.h2 variants={revealItem} className="mt-3 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                How PLANITT generates signals
-              </motion.h2>
-              <motion.p variants={revealItem} className="mt-4 text-base leading-6 text-slate-300 sm:text-lg">
-                PLANITT moves from market scanning to explainable recommendations, then hands you the context to act with confidence.
-              </motion.p>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={revealSection}
-              className="grid gap-6 lg:grid-cols-3"
-            >
-              {steps.map((step, index) => (
-                <motion.div
-                  key={step.id}
-                  variants={revealItem}
-                  className={`${glassCard} ${softHover} relative overflow-hidden p-6 sm:p-8`}
-                >
-                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
-                  <div className="relative">
-                    <div className="flex items-center gap-4">
-                      <div className={`flex h-14 w-14 flex-none items-center justify-center rounded-2xl ${isAmberTheme ? 'bg-[#f5b544]/12 text-[#ffd27a]' : 'bg-[#7C5CFF]/10 text-[#c9bcff]'
-                        }`}>
-                        {step.icon}
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">{step.id}</p>
-                        <h3 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-white">{step.title}</h3>
-                      </div>
-                    </div>
-
-                    <p className="mt-6 text-sm leading-6 text-slate-300">{step.description}</p>
-
-                    <div className="mt-6 grid gap-3">
-                      {[
-                        ['Input', index === 0 ? 'Market data' : index === 1 ? 'AI model' : 'Signal card'],
-                        ['Focus', index === 0 ? 'Scanning' : index === 1 ? 'Scoring' : 'Decision'],
-                        ['Output', index === 0 ? 'Context' : index === 1 ? 'Setup' : 'Action'],
-                      ].map(([label, value]) => (
-                        <div key={label} className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">{label}</p>
-                          <p className="mt-1 text-sm font-semibold text-white">{value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <motion.div variants={revealItem} className="mx-auto max-w-3xl text-center">
-            <p className={sectionHeader}>Features</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Core features.</h2>
-          </motion.div>
-
-          <motion.div variants={revealSection} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <motion.div
-                key={feature.title}
-                variants={revealItem}
-                // whileHover={cardHover}
-                transition={microTransition}
-                className={`p-4 sm:p-5`}
-              >
-                <div className="flex h-11 w-11 items-center justify-center align-middle rounded-2xl bg-[#7C5CFF]/10 text-[#c9bcff] mx-auto">
-                  {feature.icon}
-                </div>
-                <h3 className="mt-4 text-lg text-center font-semibold tracking-[-0.03em] mx-auto">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-300 text-center">{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.section>
 
         <motion.section
           id="showcase"
@@ -806,315 +484,15 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <motion.div
-            variants={revealItem}
-            style={{ y: showcaseCardThreeY }}
-            className="mt-5 grid gap-4 lg:grid-cols-2"
-          >
-            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(28,16,22,0.96),rgba(17,11,18,0.98))] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)] lg:col-span-2">
-              <div className={`absolute inset-0 ${isAmberTheme ? 'bg-[radial-gradient(circle_at_16%_18%,rgba(255,210,122,0.14),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(251,191,36,0.08),transparent_26%)]' : 'bg-[radial-gradient(circle_at_16%_18%,rgba(124,92,255,0.16),transparent_30%),radial-gradient(circle_at_88%_80%,rgba(56,189,248,0.10),transparent_26%)]'}`} />
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-size-[30px_30px] opacity-40" />
 
-              <div className="relative">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] ${isAmberTheme ? 'border-[#ffd27a]/25 bg-[#ffd27a]/10 text-[#ffe4ad]' : 'border-[#8b7bff]/25 bg-[#8b7bff]/10 text-[#d4ccff]'}`}>
-                      <span className={`h-2 w-2 rounded-full ${isAmberTheme ? 'bg-[#ffd27a]' : 'bg-cyan-300'}`} />
-                      Realtime analytics
-                    </div>
-                    <h4 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">High-conviction market view.</h4>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Bias</p>
-                      <motion.p
-                        key={bias}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mt-1 text-sm font-semibold text-white"
-                      >
-                        {bias}
-                      </motion.p>
-                    </div>
-                    <div className={`rounded-2xl border px-3 py-2 ${isAmberTheme ? 'border-[#ffd27a]/20 bg-[#ffd27a]/10' : 'border-emerald-400/20 bg-emerald-400/10'}`}>
-                      <p className={`text-[10px] uppercase tracking-[0.18em] ${isAmberTheme ? 'text-[#ffe4ad]/80' : 'text-emerald-300/80'}`}>Confidence</p>
-                      <motion.p
-                        key={confidence}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mt-1 text-sm font-semibold text-white"
-                      >
-                        {'XX'}%
-                      </motion.p>
-                    </div>
-                  </div>
-                </div>
-
-              <div className="mt-5 overflow-hidden rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-4">
-  
-  {/* Header */}
-  <div className="mb-3 flex flex-col gap-1 text-[10px] uppercase tracking-[0.24em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-    <span>Momentum tape</span>
-    <span className="text-slate-500">Updated 240 ms ago</span>
-  </div>
-
-  {/* Chart Container */}
-  <div className="relative h-[120px] overflow-hidden rounded-[20px] border border-white/10 bg-[#140f15]/70 px-3 py-1">
-    
-    {/* Background Glow */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_60%)]" />
-
-    {/* SVG Chart */}
-    <svg viewBox="0 0 260 110" className="relative z-30 h-full w-full">
-      
-      <defs>
-        <linearGradient id="analyticsStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={isAmberTheme ? '#f6ad55' : '#67e8f9'} />
-          <stop offset="55%" stopColor={isAmberTheme ? '#ffd27a' : '#8b7bff'} />
-          <stop offset="100%" stopColor={isAmberTheme ? '#fde68a' : '#c4b5fd'} />
-        </linearGradient>
-
-        <linearGradient id="analyticsFill" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor={isAmberTheme ? 'rgba(255,210,122,0.22)' : 'rgba(139,123,255,0.22)'} />
-          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-        </linearGradient>
-      </defs>
-
-      {/* === MAIN PATH (STARTS FROM OPEN) === */}
-      {/*
-        IMPORTANT FIX:
-        - Start from x = 12 (matches px-3 padding)
-        - End slightly before edge for symmetry
-      */}
-      <motion.path
-        d="M12 82 
-           C28 78, 48 66, 74 54 
-           C96 43, 118 44, 138 36 
-           C158 29, 180 30, 198 24 
-           C216 18, 234 22, 248 16"
-        fill="none"
-        stroke="url(#analyticsStroke)"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        whileInView={{ pathLength: 1, opacity: 1 }}
-        viewport={{ once: true, amount: 0.7 }}
-        transition={{ duration: 1.6, ease: 'easeOut' }}
-      />
-
-      {/* === AREA FILL === */}
-      <motion.path
-        d="M12 82 
-           C28 78, 48 66, 74 54 
-           C96 43, 118 44, 138 36 
-           C158 29, 180 30, 198 24 
-           C216 18, 234 22, 248 16
-           L248 110 L12 110 Z"
-        fill="url(#analyticsFill)"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      />
-
-      {/* === GLOW DOTS === */}
-      {[74, 138, 198, 248].map((cx, index) => {
-        const cyValues = [54, 36, 24, 16];
-        return (
-          <motion.circle
-            key={cx}
-            cx={cx}
-            cy={cyValues[index]}
-            r="3"
-            fill={isAmberTheme ? '#ffd27a' : '#8b7bff'}
-            animate={{ scale: [1, 2.6, 1], opacity: [0.55, 1, 0.55] }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              delay: index * 0.2,
-              ease: 'easeInOut',
-            }}
-          />
-        );
-      })}
-    </svg>
-
-    {/* Bottom Labels */}
-    <div className="absolute inset-x-3 bottom-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-500">
-      <span>Open</span>
-      <span>Mid session</span>
-      <span>Close bias</span>
-    </div>
-  </div>
-</div>
-
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[20px] border border-white/10 bg-white/4 px-4 py-3">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Win rate</p>
-                    <p className="mt-2 text-2xl font-semibold text-white text-center">XX%</p>
-                  </div>
-                  <div className="rounded-[20px] border border-white/10 bg-white/4 px-4 py-3">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 text-center">Output style</p>
-                    <p className="mt-2 text-base font-semibold text-white text-center">Risk-first output</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </motion.section>
 
-        <motion.section
-          id="academy"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center py-20">
-            <motion.div variants={revealItem} className="max-w-xl">
-              <p className={sectionHeader}>Academy</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Learn through the real app experience.</h2>
-              <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
-                The academy flow is shown directly from the product so users instantly understand the learning side of PLANITT AI.
-              </p>
-            </motion.div>
+        <LearningJourneySection />
 
-            <motion.div variants={revealItem} whileHover={cardHover} transition={microTransition} className="min-w-0">
-                <Image
-                  src="/Learning.png"
-                  alt="Planitt academy learning screen"
-                  width={1000}
-                  height={800}
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  className="h-auto w-full max-w-full rounded-3xl object-contain object-top sm:rounded-[30px]"
-                  priority
-                />
-            </motion.div>
-          </div>
-        </motion.section>
+        <TradingAlgorithmsSection />
+        <FaqSection />
 
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <div className={`${glassCard} overflow-hidden rounded-[30px] p-6 sm:p-8`}>
-            <motion.div variants={revealItem} className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center py-20">
-              <div className="max-w-2xl">
-                <p className={sectionHeader}>Trading Algorithms</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">We also build and sell trading algorithms.</h2>
-                <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
-                  For teams and traders who want systematic execution, we offer trading algorithm solutions aligned to strategy, speed, and market workflow.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  ['Execution logic', 'Rule-based and signal-driven trading systems.'],
-                  ['Strategy fit', 'Built for multi-market workflows and faster decisions.'],
-                  ['Custom queries', 'Talk to us if you want to explore the right model.'],
-                  ['Technical support', 'Connect directly for buying or implementation queries.'],
-                ].map(([title, detail]) => (
-                  <motion.div key={title} variants={revealItem} className="rounded-3xl border border-white/10 bg-white/4 p-4">
-                    <p className="text-lg font-semibold text-white">{title}</p>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">{detail}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div variants={revealItem} className="mt-6 rounded-3xl border border-amber-300/20 bg-amber-300/10 px-5 py-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/80">Technical Contact</p>
-                  <p className="mt-2 text-base font-medium text-white">
-                    Interested in buying a trading algorithm or have any related queries? Call our technical team.
-                  </p>
-                </div>
-                <a
-                  href="tel:8605727484"
-                  className="inline-flex items-center gap-2 rounded-full border border-amber-200/20 bg-black/20 px-5 py-3 text-sm font-semibold text-amber-100 transition hover:bg-black/30"
-                >
-                  <Phone className="h-4 w-4" />
-                  +91 8605727484
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.25 }}
-          variants={revealSection}
-          className="relative overflow-hidden border-t border-white/10 py-14 sm:py-16 lg:py-20"
-        >
-          <motion.div
-            animate={{ opacity: [0.4, 0.68, 0.4], scale: [0.94, 1.04, 0.94] }}
-            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-            className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7C5CFF]/16 blur-3xl"
-          />
-
-          <motion.div variants={revealItem} className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className={`${glassCard} overflow-hidden px-6 py-9 text-center sm:px-10 sm:py-12`}>
-              <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-[#c9bcff]">PLANITT AI</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] sm:text-4xl lg:text-6xl">Start from the signal.</h2>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">See the product. Move into the platform.</p>
-              <p className="mx-auto mt-3 max-w-lg text-xs font-medium uppercase tracking-[0.22em] text-slate-400">
-                Built with SEBI-compliant advisory standards
-              </p>
-
-              <motion.button
-                type="button"
-                onClick={goToSite}
-                whileHover={buttonHover}
-                transition={microTransition}
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_48px_rgba(124,92,255,0.34)] transition duration-300 hover:shadow-[0_22px_60px_rgba(124,92,255,0.42)]"
-              >
-                Continue to Services
-                <ArrowRight className="h-5 w-5" />
-              </motion.button>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        <footer className={`overflow-hidden border-t border-white/10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#05070d]'}`}>
-          <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-linear-to-r from-transparent via-white/12 to-transparent" />
-            <div
-              className={`relative overflow-hidden rounded-[28px] border border-white/10 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 ${
-                isAmberTheme
-                  ? 'bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))]'
-                  : 'bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))]'
-              }`}
-            >
-              <div
-                className={`pointer-events-none absolute inset-0 ${
-                  isAmberTheme
-                    ? 'bg-[radial-gradient(circle_at_20%_40%,rgba(245,181,68,0.18),transparent_28%),radial-gradient(circle_at_82%_58%,rgba(251,191,36,0.12),transparent_26%)]'
-                    : 'bg-[radial-gradient(circle_at_20%_40%,rgba(124,92,255,0.18),transparent_28%),radial-gradient(circle_at_82%_58%,rgba(56,189,248,0.12),transparent_26%)]'
-                }`}
-              />
-              <div className="relative">
-                <p className="text-center text-[10px] font-medium uppercase tracking-[0.36em] text-slate-500 sm:text-[11px]">
-                  Plan with signal. Move with conviction.
-                </p>
-                <div className="mt-4">
-                  <p className="text-center font-black uppercase leading-none tracking-[0.18em] text-transparent [text-stroke:1px_rgba(255,255,255,0.22)] [-webkit-text-stroke:1px_rgba(255,255,255,0.22)] text-[clamp(3.25rem,14vw,9.5rem)] sm:tracking-[0.24em]">
-                    PLANITT
-                  </p>
-                  <p className="-mt-[0.68em] text-center font-black uppercase leading-none tracking-[0.14em] text-white text-[clamp(2.9rem,12vw,8.5rem)] sm:tracking-[0.2em]">
-                    PLANITT
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <CinematicFooter />
       </main>
     </>
   );
@@ -1144,104 +522,5 @@ function CountUp({ value }: { value: number }) {
   return <span ref={ref}>{displayValue}</span>;
 }
 
-function SignalDashboardCard({ className = '' }: { className?: string }) {
-  return (
-    <motion.div
-      animate={{ y: [0, -10, 0] }}
-      transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-      className={`${glassCard} relative overflow-hidden p-4 shadow-[0_24px_80px_rgba(0,0,0,0.35)] ${className}`}
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(124,92,255,0.18),transparent_28%),radial-gradient(circle_at_84%_72%,rgba(56,189,248,0.14),transparent_26%)]" />
-      <div className="relative">
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-[22px] border border-white/10 bg-black/20 px-4 py-3">
-          <div>
-            <p className="text-sm font-semibold">Signal Dashboard</p>
-            <p className="text-xs text-slate-400">Live AI market board</p>
-          </div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-            <span className="relative flex h-2 w-2">
-              <motion.span
-                animate={{ scale: [1, 2, 1], opacity: [0.8, 0, 0.8] }}
-                transition={{ duration: 1.4, repeat: Number.POSITIVE_INFINITY, ease: 'easeOut' }}
-                className="absolute inline-flex h-full w-full rounded-full bg-emerald-300"
-              />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
-            </span>
-            LIVE
-          </div>
-        </div>
 
-        <div className="mt-4 grid gap-3 md:grid-cols-[0.8fr_0.8fr]">
-          <div className="rounded-3xl border border-white/10 bg-[#0D1321]/85 p-4">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0">
-                <p className="text-[11px] uppercase tracking-[0.26em] text-slate-500">Top setup</p>
-                <h2 className="mt-2 text-xl font-semibold tracking-[-0.04em] sm:text-2xl">NIFTY Breakout</h2>
-                <p className="mt-2 text-sm text-slate-400">AI confidence high. Risk mapped.</p>
-              </div>
-              <div className="w-full shrink-0 rounded-2xl border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-3 py-2 text-left sm:w-auto sm:text-right">
-                <p className="text-[10px] uppercase tracking-[0.18em] text-[#c9bcff]">Confidence</p>
-                <p className="text-xl font-semibold text-white">XX%</p>
-              </div>
-            </div>
-
-            <div className="mt-5 h-32 overflow-hidden rounded-[20px] border border-white/10 bg-black/20 p-2 sm:p-3">
-              <div className="flex h-full items-end gap-2">
-                {[28, 46, 40, 68, 55, 78, 72, 96, 88, 110, 102, 122].map((height, index) => (
-                  <motion.span
-                    key={`${height}-${index}`}
-                    animate={{ height: [height * 0.74, height, height * 0.82] }}
-                    transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, delay: index * 0.06, ease: 'easeInOut' }}
-                    className={`flex-1 rounded-full ${index % 4 === 0 ? 'bg-[#7C5CFF]' : index % 4 === 1 ? 'bg-violet-300' : index % 4 === 2 ? 'bg-cyan-300' : 'bg-emerald-300'}`}
-                    style={{ height }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-3 gap-1.5 sm:gap-2">
-              {[
-                ['Entry', '24,120'],
-                ['Target', '24,480'],
-                ['Stop', '23,940'],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-2xl border border-white/10 bg-white/5 p-2 sm:p-3">
-                  <p className="text-[9px] uppercase tracking-[0.16em] text-slate-500 sm:text-[10px] sm:tracking-[0.2em]">{label}</p>
-                  <p className="mt-1 text-xs font-semibold tabular-nums text-white sm:text-sm">{value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-3">
-            {[
-              ['Signals', '128 live'],
-              ['Markets', '4 active'],
-              ['Risk', 'Guard on'],
-            ].map(([label, value], index) => (
-              <motion.div
-                key={label}
-                animate={{ y: [0, index % 2 === 0 ? -6 : 6, 0] }}
-                transition={{ duration: 6 + index, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-                className="rounded-[22px] border border-white/10 bg-white/5 p-4"
-              >
-                <p className="text-xs text-slate-400">{label}</p>
-                <p className="mt-2 text-base font-semibold text-white">{value}</p>
-              </motion.div>
-            ))}
-
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5.4, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-              className="rounded-[22px] border border-cyan-300/15 bg-cyan-300/10 p-4"
-            >
-              <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">AI Insight</p>
-              <p className="mt-2 text-sm leading-6 text-slate-100">Trend, timing, and invalidation are aligned.</p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
