@@ -1,9 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
-  ArrowRight,
   BrainCircuit,
   CandlestickChart,
   Layers3,
@@ -87,7 +85,6 @@ const trustCredentials = [
 ] as const;
 
 export default function LandingPage() {
-  const router = useRouter();
   const [accentTheme, setAccentTheme] = useState<'violet' | 'amber'>('violet');
   const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
   const [confidence, setConfidence] = useState(74);
@@ -120,7 +117,7 @@ export default function LandingPage() {
     : 'fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.18),transparent_26%),radial-gradient(circle_at_85%_14%,rgba(56,189,248,0.12),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(124,92,255,0.12),transparent_28%)]';
   const heroGlowClass = isAmberTheme ? 'bg-[#f5b544]/16' : 'bg-[#7C5CFF]/16';
 
-  const goToSite = () => router.push('/main');
+
 
   useEffect(() => {
     const applyAccentTheme = (value: string | null) => {
@@ -230,24 +227,15 @@ export default function LandingPage() {
 
               <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
                 <motion.a
-                  href="#live-signals"
+                  href="https://app.planitt.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={buttonHover}
                   transition={microTransition}
                   className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
                 >
                   Explore Signals
                 </motion.a>
-
-                <motion.button
-                  type="button"
-                  onClick={goToSite}
-                  whileHover={buttonHover}
-                  transition={microTransition}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)] sm:min-h-0 sm:px-7"
-                >
-                  Continue to Services
-                  <ArrowRight className="h-4 w-4" />
-                </motion.button>
               </motion.div>
 
               <motion.div
@@ -402,7 +390,7 @@ export default function LandingPage() {
         <div id="ai">
           <TradoChatbotShowcase />
         </div>
-        
+
         <HowItWorksSection />
 
 
