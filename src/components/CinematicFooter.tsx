@@ -379,12 +379,12 @@ export default function CinematicFooter() {
       </motion.div>
 
       {/* ── Layer 5 : Content (Branding reveal & CTA) ──────────────── */}
-      <div className="relative z-10 flex min-h-[140vh] flex-col items-center justify-end pb-12 sm:pb-16 lg:pb-20">
+      <div className="relative z-10 w-full min-h-[140vh]">
         
-        {/* Brand reveal container */}
+        {/* Top/Middle: Brand reveal container (positioned precisely relative to horizon) */}
         <motion.div
           ref={brandRef}
-          className="mb-10 text-center px-4"
+          className="absolute left-0 right-0 text-center px-4 bottom-[460px] sm:bottom-[490px] md:bottom-[510px]"
           style={{ opacity: brandOpacity, y: brandY }}
         >
           {/* Eyebrow */}
@@ -411,86 +411,85 @@ export default function CinematicFooter() {
               PLANITT
             </motion.p>
           </div>
+        </motion.div>
 
+        {/* Bottom: Headline + Tagline + CTA buttons + Copyright (inside Earth shadow) */}
+        <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-12 sm:pb-16 lg:pb-20 z-20">
           {/* Headline */}
           <motion.p
-            className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-slate-300 sm:text-xl lg:text-2xl"
-            initial={{ opacity: 0, y: 16 }}
-            animate={isBrandInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.55, duration: 0.8, ease: 'easeOut' }}
+            className="mx-auto text-center max-w-lg text-lg leading-relaxed text-slate-300 sm:text-xl lg:text-2xl px-4"
+            style={{ opacity: ctaOpacity, y: ctaY }}
           >
             Markets never sleep.
             <br />
-            <span className="bg-gradient-to-r from-[#7C5CFF] via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#7C5CFF] via-indigo-300 to-cyan-400 bg-clip-text text-transparent font-medium">
               Neither does PLANITT.
             </span>
           </motion.p>
 
           {/* Trust tagline */}
           <motion.p
-            className="mx-auto mt-4 max-w-xs text-[10px] font-medium uppercase tracking-[0.28em] text-slate-500 sm:text-[11px]"
-            initial={{ opacity: 0 }}
-            animate={isBrandInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.85, duration: 0.7 }}
+            className="mx-auto mt-4 text-center max-w-xs text-[10px] font-medium uppercase tracking-[0.28em] text-slate-500 sm:text-[11px] px-4"
+            style={{ opacity: ctaOpacity, y: ctaY }}
           >
             SEBI-Registered · AI-Powered · 24/7
           </motion.p>
-        </motion.div>
 
-        {/* CTA buttons */}
-        <motion.div
-          className="flex flex-wrap items-center justify-center gap-3 px-4 sm:gap-4 z-20"
-          style={{ opacity: ctaOpacity, y: ctaY }}
-        >
-          <motion.button
-            type="button"
-            onClick={() => router.push('/main')}
-            whileHover={{ scale: 1.05, boxShadow: '0 24px 64px rgba(124,92,255,0.5)' }}
-            whileTap={{ scale: 0.97 }}
-            className="group relative inline-flex items-center gap-2.5 rounded-full bg-[#7C5CFF] px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_48px_rgba(124,92,255,0.35)] transition-all duration-300 hover:shadow-[0_22px_60px_rgba(124,92,255,0.45)]"
+          {/* CTA buttons */}
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-3 px-4 sm:gap-4 mt-8 z-20"
+            style={{ opacity: ctaOpacity, y: ctaY }}
           >
-            {/* Glow pulse behind button */}
-            <span className="absolute inset-0 -z-10 animate-pulse rounded-full bg-[#7C5CFF]/30 blur-xl" />
-            Get Started
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </motion.button>
+            <motion.button
+              type="button"
+              onClick={() => router.push('/main')}
+              whileHover={{ scale: 1.05, boxShadow: '0 24px 64px rgba(124,92,255,0.5)' }}
+              whileTap={{ scale: 0.97 }}
+              className="group relative inline-flex items-center gap-2.5 rounded-full bg-[#7C5CFF] px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_48px_rgba(124,92,255,0.35)] transition-all duration-300 hover:shadow-[0_22px_60px_rgba(124,92,255,0.45)]"
+            >
+              {/* Glow pulse behind button */}
+              <span className="absolute inset-0 -z-10 animate-pulse rounded-full bg-[#7C5CFF]/30 blur-xl" />
+              Get Started
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </motion.button>
 
-          <motion.a
-            href="https://app.planitt.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.04, borderColor: 'rgba(124,92,255,0.4)' }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(124,92,255,0.15)]"
+            <motion.a
+              href="https://app.planitt.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.04, borderColor: 'rgba(124,92,255,0.4)' }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(124,92,255,0.15)]"
+            >
+              <Sparkles className="h-4 w-4 text-[#c9bcff]" />
+              Explore Signals
+            </motion.a>
+
+            <motion.a
+              href="mailto:planitt.official@gmail.com"
+              whileHover={{ scale: 1.04, borderColor: 'rgba(56,189,248,0.4)' }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(56,189,248,0.15)]"
+            >
+              <MessageCircle className="h-4 w-4 text-cyan-300" />
+              Talk to an Expert
+            </motion.a>
+          </motion.div>
+
+          {/* Bottom copyright */}
+          <motion.div
+            className="mt-16 text-center sm:mt-20 z-20"
+            style={{ opacity: ctaOpacity }}
           >
-            <Sparkles className="h-4 w-4 text-[#c9bcff]" />
-            Explore Signals
-          </motion.a>
-
-          <motion.a
-            href="mailto:planitt.official@gmail.com"
-            whileHover={{ scale: 1.04, borderColor: 'rgba(56,189,248,0.4)' }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(56,189,248,0.15)]"
-          >
-            <MessageCircle className="h-4 w-4 text-cyan-300" />
-            Talk to an Expert
-          </motion.a>
-        </motion.div>
-
-        {/* Bottom copyright */}
-        <motion.div
-          className="mt-16 text-center sm:mt-20 z-20"
-          style={{ opacity: ctaOpacity }}
-        >
-          <div className="mx-auto mb-4 h-px w-32 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          <p className="text-[10px] tracking-[0.22em] text-slate-600 sm:text-[11px]">
-            © {new Date().getFullYear()} PLANITT · All Rights Reserved
-          </p>
-          <p className="mt-1.5 text-[9px] tracking-[0.18em] text-slate-700 sm:text-[10px]">
-            Plan with signal. Move with conviction.
-          </p>
-        </motion.div>
+            <div className="mx-auto mb-4 h-px w-32 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <p className="text-[10px] tracking-[0.22em] text-slate-600 sm:text-[11px]">
+              © {new Date().getFullYear()} PLANITT · All Rights Reserved
+            </p>
+            <p className="mt-1.5 text-[9px] tracking-[0.18em] text-slate-700 sm:text-[10px]">
+              Plan with signal. Move with conviction.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </footer>
   );

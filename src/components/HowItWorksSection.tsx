@@ -40,6 +40,7 @@ const stepsData = [
     output: 'Raw context data',
     color: 'from-purple-500/20 to-indigo-500/20 text-purple-300 border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]',
     accentColor: '#7C5CFF',
+    image: '/scan-markets.png',
   },
   {
     id: 2,
@@ -51,6 +52,7 @@ const stepsData = [
     output: 'Setup parameters',
     color: 'from-blue-500/20 to-indigo-500/20 text-blue-300 border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]',
     accentColor: '#3B82F6',
+    image: '/generate-signals.png',
   },
   {
     id: 3,
@@ -62,6 +64,7 @@ const stepsData = [
     output: 'Executed trade',
     color: 'from-emerald-500/20 to-teal-500/20 text-emerald-300 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]',
     accentColor: '#10B981',
+    image: '/take-action.png',
   },
 ];
 
@@ -172,7 +175,6 @@ export default function HowItWorksSection() {
         >
           {stepsData.map((step, index) => {
             const isActive = activeStep === step.id;
-            const isPrevActive = activeStep === step.id - 1;
 
             return (
               <React.Fragment key={step.id}>
@@ -223,18 +225,13 @@ export default function HowItWorksSection() {
                   {/* Sliced Image Illustration Container */}
                   <div className="relative w-[190px] h-[190px] rounded-[20px] overflow-hidden bg-black/10 border border-white/5 shadow-inner mt-4 flex items-center justify-center">
                     
-                    {/* The cropped graphic from the workflow-steps.png image */}
+                    {/* Individual image instead of sliced workflow-steps.png */}
                     <img 
-                      src="/workflow-steps.png" 
+                      src={step.image} 
                       alt={step.title}
-                      className="absolute max-w-none pointer-events-none select-none"
+                      className="w-full h-full object-cover pointer-events-none select-none transition-all duration-300"
                       style={{
-                        height: '240px',
-                        width: '857px', // Ratio maintained for 1000x280 sized down to 240px height
-                        top: '-25px',
-                        left: step.id === 1 ? '-20px' : step.id === 2 ? '-327px' : '-635px',
-                        filter: isActive ? 'brightness(1.15) saturate(1.1)' : 'brightness(0.7) saturate(0.8)',
-                        transition: 'filter 0.30s ease',
+                        filter: isActive ? 'brightness(1.1) saturate(1.1)' : 'brightness(0.7) saturate(0.8)',
                       }}
                     />
 
@@ -337,19 +334,15 @@ export default function HowItWorksSection() {
                   {step.num}
                 </div>
 
-                {/* Cropped Image Illustration - Centered on Mobile */}
+                {/* Individual Image Illustration - Centered on Mobile */}
                 <div className="flex justify-center md:justify-start items-center">
                   <div className="relative w-[180px] h-[180px] rounded-2xl overflow-hidden bg-black/20 border border-white/5 shadow-inner">
                     <img 
-                      src="/workflow-steps.png" 
+                      src={step.image} 
                       alt={step.title}
-                      className="absolute max-w-none pointer-events-none select-none"
+                      className="w-full h-full object-cover pointer-events-none select-none transition-all duration-300"
                       style={{
-                        height: '220px',
-                        width: '785px', // Sized down proportionally to match height
-                        top: '-20px',
-                        left: step.id === 1 ? '-18px' : step.id === 2 ? '-300px' : '-582px',
-                        filter: isActive ? 'brightness(1.15) saturate(1.1)' : 'brightness(0.7) saturate(0.8)',
+                        filter: isActive ? 'brightness(1.1) saturate(1.1)' : 'brightness(0.7) saturate(0.8)',
                       }}
                     />
 

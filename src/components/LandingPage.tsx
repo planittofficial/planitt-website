@@ -298,12 +298,9 @@ export default function LandingPage() {
 
 
         <div id="ai">
-          <TradoChatbotShowcase />
+          <HowItWorksSection />
         </div>
-
-        <HowItWorksSection />
-
-
+        <TradoChatbotShowcase />
 
         <motion.section
           id="showcase"

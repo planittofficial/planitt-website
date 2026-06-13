@@ -242,85 +242,225 @@ function CodeEditorPanel() {
   );
 }
 
-/** 3D-style animated algorithm illustration — uses only CSS animations */
+/** Premium 3D-style animated algorithm engine illustration */
 function AlgorithmIllustration() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Generate particles for vertical data flow passing through layers
+  const particles = useMemo(() => {
+    return Array.from({ length: 8 }).map((_, i) => ({
+      id: i,
+      delay: i * 0.7,
+      duration: 2.8 + Math.random() * 0.8,
+      xOffset: (Math.random() - 0.5) * 20, // Keep them close to the center axis
+    }));
+  }, []);
+
   return (
-    <div className="relative flex items-center justify-center" aria-hidden="true">
-      {/* Ambient glow */}
-      <div className="absolute h-56 w-56 rounded-full bg-[#7C5CFF]/20 blur-[80px] sm:h-72 sm:w-72" />
-      <div className="absolute h-36 w-36 rounded-full bg-cyan-400/10 blur-[60px] sm:h-48 sm:w-48" />
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative flex items-center justify-center w-full h-[360px] sm:h-[420px] cursor-pointer"
+      aria-hidden="true"
+    >
+      {/* ── Ambient Background Glows ── */}
+      <motion.div
+        animate={{
+          scale: isHovered ? 1.2 : 1.0,
+          opacity: isHovered ? 0.95 : 0.7,
+        }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="absolute h-72 w-72 rounded-full bg-[#7C5CFF]/15 blur-[100px] sm:h-96 sm:w-96"
+      />
+      <motion.div
+        animate={{
+          scale: isHovered ? 1.25 : 1.0,
+          opacity: isHovered ? 0.6 : 0.4,
+        }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="absolute h-52 w-52 rounded-full bg-cyan-400/10 blur-[80px] sm:h-64 sm:w-64"
+      />
 
-      {/* Outer orbit ring — CSS animation */}
+      {/* ── 3D Perspective Wrapper for Orbit Rings ── */}
       <div
-        className="absolute h-52 w-52 rounded-full border border-[#7C5CFF]/20 sm:h-64 sm:w-64"
-        style={{ animation: 'ta-orbit-cw 20s linear infinite' }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        style={{ perspective: '1200px' }}
       >
-        <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-[#7C5CFF] shadow-[0_0_10px_rgba(124,92,255,0.6)]" />
-        <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-      </div>
-
-      {/* Inner orbit ring — CSS animation */}
-      <div
-        className="absolute h-36 w-36 rounded-full border border-cyan-400/15 sm:h-44 sm:w-44"
-        style={{ animation: 'ta-orbit-ccw 14s linear infinite' }}
-      >
-        <span className="absolute -right-1 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#c084fc] shadow-[0_0_8px_rgba(192,132,252,0.5)]" />
-      </div>
-
-      {/* Floating particles — pure CSS */}
-      {[
-        { size: 3, x: -80, y: -60, dur: 4, delay: 0 },
-        { size: 2, x: 70, y: -50, dur: 3.5, delay: 1.2 },
-        { size: 2.5, x: -60, y: 65, dur: 4.5, delay: 0.8 },
-        { size: 2, x: 85, y: 55, dur: 3.8, delay: 2 },
-      ].map((p, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full bg-[#c084fc]"
+        <motion.div
           style={{
-            width: p.size,
-            height: p.size,
-            left: `calc(50% + ${p.x}px)`,
-            top: `calc(50% + ${p.y}px)`,
-            animation: `ta-particle ${p.dur}s ease-in-out ${p.delay}s infinite`,
+            transformStyle: 'preserve-3d',
+            rotateX: 65,
+            rotateY: 0,
           }}
-        />
-      ))}
-
-      {/* Center layered card stack */}
-      <div className="relative flex flex-col items-center">
-        {/* Background layer */}
-        <div
-          className="absolute -bottom-3 h-20 w-28 rounded-xl border border-white/8 bg-[#1a1030]/80 sm:h-24 sm:w-32"
-          style={{ animation: 'ta-float-1 5s ease-in-out infinite' }}
-        />
-
-        {/* Middle layer */}
-        <div
-          className="absolute -bottom-1.5 h-20 w-24 rounded-xl border border-[#7C5CFF]/20 bg-[#1e1540]/90 sm:h-24 sm:w-28"
-          style={{ animation: 'ta-float-2 4.5s ease-in-out 0.3s infinite' }}
-        />
-
-        {/* Main card with icon */}
-        <div
-          className="relative flex h-20 w-20 items-center justify-center rounded-xl border border-[#7C5CFF]/30 bg-gradient-to-br from-[#7C5CFF]/25 to-[#1a1040] shadow-[0_0_40px_rgba(124,92,255,0.25)] sm:h-24 sm:w-24"
-          style={{ animation: 'ta-float-3 4s ease-in-out 0.6s infinite' }}
+          animate={{
+            scale: isHovered ? 1.03 : 1.0,
+          }}
+          transition={{ duration: 0.6 }}
+          className="absolute inset-0 flex items-center justify-center"
         >
-          <Code2 className="h-8 w-8 text-[#c084fc] drop-shadow-[0_0_12px_rgba(192,132,252,0.6)] sm:h-10 sm:w-10" />
+          {/* Outer Dashed Orbit Ring (Outside main glow ring) */}
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{
+              duration: isHovered ? 15 : 30,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute h-[330px] w-[330px] sm:h-[390px] sm:w-[390px] rounded-full border border-dashed border-[#7C5CFF]/20 flex items-center justify-center"
+          >
+            <span className="absolute -top-1 h-2 w-2 rounded-full bg-[#7C5CFF]/60 shadow-[0_0_8px_rgba(124,92,255,0.6)]" />
+          </motion.div>
 
-          {/* Corner glow */}
-          <div className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-[#7C5CFF] blur-sm" />
-          <div className="absolute -bottom-1 -left-1 h-2 w-2 rounded-full bg-cyan-400 blur-sm" />
-        </div>
+          {/* Main Neon Glow Ring (Solid, occupies ~80% of width) */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: isHovered ? 10 : 20,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute h-[270px] w-[270px] sm:h-[320px] sm:w-[320px] rounded-full border-2 border-[#7C5CFF]/40 bg-[#7C5CFF]/2 shadow-[0_0_30px_rgba(124,92,255,0.25)] flex items-center justify-center"
+          >
+            {/* Active glowing nodes on main ring */}
+            <span className="absolute -top-1.5 h-3.5 w-3.5 rounded-full bg-[#7C5CFF] shadow-[0_0_18px_rgba(124,92,255,1)]" />
+            <span className="absolute -bottom-1.5 h-3 w-3 rounded-full bg-[#22d3ee] shadow-[0_0_15px_rgba(34,211,238,0.9)]" />
+          </motion.div>
 
-        {/* Bottom floating label */}
-        <div
-          className="mt-6 rounded-full border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c9bcff] sm:mt-8"
-          style={{ animation: 'ta-float-label 3.5s ease-in-out infinite' }}
-        >
-          Algorithm Engine
-        </div>
+          {/* Inner Dashed Orbit Ring */}
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{
+              duration: isHovered ? 7 : 14,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="absolute h-[190px] w-[190px] sm:h-[220px] sm:w-[220px] rounded-full border border-dashed border-cyan-400/20"
+          >
+            <span className="absolute -left-1 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* ── Central Stack & Vertical Lines ── */}
+      <div className="relative flex items-center justify-center w-[160px] sm:w-[200px] h-full">
+        {/* Central Vertical Connector Beams */}
+        <div className="absolute h-[260px] w-[1.5px] bg-gradient-to-b from-transparent via-[#7C5CFF]/40 to-transparent pointer-events-none" />
+        {/* Off-center guide rails */}
+        <div className="absolute h-[220px] w-[1px] -translate-x-[40px] bg-gradient-to-b from-transparent via-cyan-400/15 to-transparent pointer-events-none" />
+        <div className="absolute h-[220px] w-[1px] translate-x-[40px] bg-gradient-to-b from-transparent via-[#c084fc]/15 to-transparent pointer-events-none" />
+
+        {/* ── Vertical Data Flow Particles (Entering bottom, rising, emerging top) ── */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          {particles.map((p) => (
+            <motion.div
+              key={p.id}
+              initial={{ y: 130, opacity: 0, scale: 0.6 }}
+              animate={{
+                y: [-120, -220],
+                opacity: [0, 1, 1, 0],
+                scale: [0.6, 1.2, 1.2, 0.6],
+              }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                delay: p.delay,
+                ease: 'easeInOut',
+              }}
+              style={{
+                x: p.xOffset,
+                zIndex: 15,
+              }}
+              className="absolute h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,1)]"
+            />
+          ))}
+        </div>
+
+        {/* ── 3. TOP LAYER: Signal Layer (Highest, Brightest Glass) ── */}
+        <motion.div
+          animate={{
+            y: isHovered ? -95 : -60,
+            scale: isHovered ? 1.05 : 1.0,
+          }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="absolute z-30"
+        >
+          {/* Isometric Transform wrapper */}
+          <div
+            style={{ transform: 'rotateX(60deg) rotateZ(-45deg)' }}
+            className="relative h-28 w-28 sm:h-34 sm:w-34 rounded-2xl border-2 border-[#7C5CFF]/70 bg-gradient-to-br from-[#7C5CFF]/35 via-[#22d3ee]/20 to-[#0a0d14]/90 backdrop-blur-lg shadow-[0_25px_60px_rgba(124,92,255,0.45)] flex items-center justify-center"
+          >
+            {/* Center code symbol with intense glow */}
+            <div className="transform rotateZ(45deg) flex items-center justify-center">
+              <Code2 className="h-9 w-9 sm:h-11 sm:w-11 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.9)]" />
+            </div>
+
+            {/* Glowing Corner Dots */}
+            <span className="absolute top-1.5 left-1.5 h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]" />
+            <span className="absolute bottom-1.5 right-1.5 h-2 w-2 rounded-full bg-[#7C5CFF] shadow-[0_0_10px_rgba(124,92,255,1)]" />
+            {/* Inner rim glow */}
+            <div className="absolute inset-px border border-white/10 rounded-2xl pointer-events-none" />
+          </div>
+          {/* Depth shadow below top layer */}
+          <div className="absolute inset-0 rounded-2xl bg-[#7C5CFF]/15 blur-md -z-10 translate-y-6 scale-90" />
+        </motion.div>
+
+        {/* ── 2. MIDDLE LAYER: Processing Layer (Semi-transparent) ── */}
+        <motion.div
+          animate={{
+            y: isHovered ? 5 : 0,
+            scale: isHovered ? 1.02 : 1.0,
+          }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="absolute z-20"
+        >
+          {/* Isometric Transform wrapper */}
+          <div
+            style={{ transform: 'rotateX(60deg) rotateZ(-45deg)' }}
+            className="relative h-28 w-28 sm:h-34 sm:w-34 rounded-2xl border border-[#7C5CFF]/35 bg-gradient-to-br from-[#7C5CFF]/15 to-[#0b0c16]/95 backdrop-blur-md shadow-[0_15px_35px_rgba(124,92,255,0.15)] flex items-center justify-center"
+          >
+            {/* Central holographic design line/pulse */}
+            <div className="absolute w-[80%] h-[1.5px] bg-gradient-to-r from-transparent via-[#7C5CFF]/45 to-transparent rotate-45" />
+            <div className="absolute w-[80%] h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -rotate-45" />
+            <span className="h-3.5 w-3.5 rounded-full bg-cyan-400/40 blur-xs" />
+          </div>
+          {/* Depth shadow below middle layer */}
+          <div className="absolute inset-0 rounded-2xl bg-black/40 blur-sm -z-10 translate-y-6 scale-95" />
+        </motion.div>
+
+        {/* ── 1. BOTTOM LAYER: Base Foundation Layer (Solid Dark) ── */}
+        <motion.div
+          animate={{
+            y: isHovered ? 95 : 60,
+            scale: isHovered ? 0.98 : 1.0,
+          }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="absolute z-10"
+        >
+          {/* Isometric Transform wrapper */}
+          <div
+            style={{ transform: 'rotateX(60deg) rotateZ(-45deg)' }}
+            className="relative h-28 w-28 sm:h-34 sm:w-34 rounded-2xl border border-white/10 bg-[#070911] shadow-[0_20px_45px_rgba(0,0,0,0.75)] flex items-center justify-center overflow-hidden"
+          >
+            {/* Tech grid texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:8px_8px]" />
+            {/* Base glowing core */}
+            <span className="h-5 w-5 rounded-full bg-[#7C5CFF]/45 blur-xs animate-pulse" />
+          </div>
+          {/* Deep shadow under bottom base */}
+          <div className="absolute inset-x-2 bottom-0 h-10 bg-[#7C5CFF]/20 blur-2xl -z-10 translate-y-8" />
+        </motion.div>
+      </div>
+
+      {/* Floating Engine Label */}
+      <motion.div
+        animate={{
+          y: isHovered ? -4 : 0,
+        }}
+        transition={{ duration: 0.5 }}
+        className="absolute bottom-2 rounded-full border border-[#7C5CFF]/20 bg-[#7C5CFF]/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c9bcff]"
+      >
+        Algorithm Engine
+      </motion.div>
     </div>
   );
 }
