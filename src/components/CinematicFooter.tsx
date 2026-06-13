@@ -455,20 +455,17 @@ export default function CinematicFooter() {
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </motion.button>
 
-          <motion.button
-            type="button"
-            onClick={() => {
-              const el = document.getElementById('live-signals');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-              else router.push('/main');
-            }}
+          <motion.a
+            href="https://app.planitt.in/"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.04, borderColor: 'rgba(124,92,255,0.4)' }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(124,92,255,0.15)]"
           >
             <Sparkles className="h-4 w-4 text-[#c9bcff]" />
             Explore Signals
-          </motion.button>
+          </motion.a>
 
           <motion.a
             href="mailto:planitt.official@gmail.com"
