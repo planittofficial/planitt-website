@@ -6,6 +6,7 @@ import { HomeModeProvider } from "@/context/HomeModeContext";
 import ComingSoonPopup from "@/components/ComingSoonPopup";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import DarkModeSplashCursor from "@/components/DarkModeSplashCursor";
+import PremiumScrollProgress from "@/components/PremiumScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +50,7 @@ export default function RootLayout({
         <ThemeProvider>
           <HomeModeProvider>
             <DarkModeSplashCursor />
+            <PremiumScrollProgress />
             <ComingSoonPopup />
             <ConditionalLayout>
               {children}
