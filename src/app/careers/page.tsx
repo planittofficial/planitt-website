@@ -223,7 +223,7 @@ I am ${formData.name}. I am interested in ${formData.position} role. Please find
 Thank You.`;
 
         // Open mailto link
-        window.location.href = `mailto:planitt.official@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = `mailto:planittsolutions@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
         // Show success message
         setFormSubmitted(true);
@@ -618,7 +618,7 @@ Thank You.`;
                             <p className="text-gray-700 dark:text-gray-300 mb-4">The entire process typically takes 4-6 weeks from application to offer.</p>
                             <p className="text-gray-700 dark:text-gray-300">
                                 For any questions about the hiring process, please contact our HR team at{' '}
-                                <a href="mailto:planitt.official@gmail.com" className="text-[#b78622] dark:text-[#e7c973] hover:underline">planitt.official@gmail.com</a>
+                                <a href="mailto:planittsolutions@gmail.com" className="text-[#b78622] dark:text-[#e7c973] hover:underline">planittsolutions@gmail.com</a>
                             </p>
                         </div>
                     </div>

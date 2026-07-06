@@ -466,7 +466,7 @@ export default function CinematicFooter() {
             </motion.a>
 
             <motion.a
-              href="mailto:planitt.official@gmail.com"
+              href="mailto:planittsolutions@gmail.com"
               whileHover={{ scale: 1.04, borderColor: 'rgba(56,189,248,0.4)' }}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-[0_12px_40px_rgba(56,189,248,0.15)]"
