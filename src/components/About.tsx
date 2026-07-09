@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Award, CheckCircle, Code2, Shield, Target } from 'lucide-react';
-import Avatar from './Avatar';
 
 type HomeMode = 'all' | 'financial' | 'technical';
 
@@ -41,7 +40,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const intro = isTechnical
         ? {
             lead: 'Planitt provides modern technical execution led by ',
-            name: 'Sarth Shende',
+            name: 'Parth Shende',
             body: 'We help organizations build digital systems with reliable delivery in app, web, cloud, and automation.',
         }
         : isFinancial
@@ -94,7 +93,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
 
     const profile = isTechnical
         ? {
-            image: null,
+            image: '/sarth_avatar.jpeg',
             alt: 'Sarth Shende',
             name: 'Sarth Shende',
             meta: '',
@@ -184,17 +183,13 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 <div className="mx-auto flex w-full max-w-md flex-col rounded-2xl border border-gray-100 bg-white p-4 shadow-xl transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900 sm:p-6">
                                     <div className="mb-4 text-center">
                                         <div className="relative mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white shadow-xl transition-all duration-300 dark:border-gray-800 dark:bg-gray-800 sm:h-44 sm:w-44">
-                                            {isTechnical ? (
-                                                <Avatar name={profile.name} size={176} className="h-full w-full" />
-                                            ) : (
-                                                <Image
-                                                    src={profile.image}
-                                                    alt={profile.alt}
-                                                    fill
-                                                    className="object-cover"
-                                                    priority
-                                                />
-                                            )}
+                                            <Image
+                                                src={profile.image}
+                                                alt={profile.alt}
+                                                fill
+                                                className="object-cover"
+                                                priority
+                                            />
                                         </div>
                                         <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white sm:text-xl">
                                             {profile.name}
