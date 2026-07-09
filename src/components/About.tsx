@@ -51,7 +51,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
             }
             : {
                 lead: 'Planitt combines financial advisory and technical execution led by ',
-                name: 'Piyush Tembhekar and Parth Shende',
+                name: 'Piyush Tembhekar and Sarth Shende',
                 body: 'We help individuals, families, and organizations with practical financial guidance and reliable digital delivery.',
             };
 
@@ -93,9 +93,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
 
     const profile = isTechnical
         ? {
-            image: '/Parth_shende(Technical_Head).png',
-            alt: 'Parth Shende',
-            name: 'Parth Shende',
+            image: '/sarth_avatar.jpeg',
+            alt: 'Sarth Shende',
+            name: 'Sarth Shende',
             meta: '',
             role: 'CTO',
             roleClass: 'text-[#0b6cb8] dark:text-[#8fd3ff]',

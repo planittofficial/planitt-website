@@ -37,9 +37,9 @@ const teamMembers: TeamMember[] = [
         portfolio: '#',
     },
     {
-        name: 'Parth Shende',
+        name: 'Sarth Shende',
         role: 'CTO, Technical Delivery',
-        image: '/Parth_shende(Technical_Head).png',
+        image: '/sarth_avatar.jpeg',
         portfolio: '#',
     },
     {
