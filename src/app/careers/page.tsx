@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
+import Avatar from '@/components/Avatar';
 
 // Job data structure
 interface Job {
@@ -24,7 +25,7 @@ interface Job {
 interface TeamMember {
     name: string;
     role: string;
-    image: string;
+    image?: string | null;
     portfolio?: string;
 }
 
@@ -37,9 +38,9 @@ const teamMembers: TeamMember[] = [
         portfolio: '#',
     },
     {
-        name: 'Parth Shende',
+        name: 'Sarth Shende',
         role: 'CTO, Technical Delivery',
-        image: '/Parth_shende(Technical_Head).png',
+        image: null,
         portfolio: '#',
     },
     {
@@ -317,12 +318,16 @@ Thank You.`;
                                 className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800 text-center hover:shadow-xl transition-shadow duration-300"
                             >
                                 <div className="relative w-32 h-32 mx-auto mb-6 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-md border-4 border-white dark:border-gray-800">
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        className="object-cover"
-                                    />
+                                    {member.image ? (
+                                        <Image
+                                            src={member.image}
+                                            alt={member.name}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <Avatar name={member.name} size={128} className="h-full w-full" />
+                                    )}
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{member.name}</h3>
                                 <p className="text-[#b78622] dark:text-[#e7c973] font-semibold text-sm mb-6">{member.role}</p>

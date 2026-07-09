@@ -45,7 +45,7 @@ const revealItem: Variants = {
 };
 
 const buttonHover = { scale: 1.03, filter: 'brightness(1.06)' };
-const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14), py-3' };
+const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14)' };
 const microTransition = { duration: 0.24, ease: 'easeOut' as const };
 const scrollCueTransition = { duration: 2.0, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' as const };
 
@@ -172,10 +172,13 @@ export default function LandingPage() {
 
         {/* Fixed Market Ticker – stays visible below header while scrolling */}
         <MarketTicker />
-        {/* Spacer: header (64px) + ticker (46px) = 110px */}
-        <div className="h-[110px]" />
+        {/* Spacer: header + ticker */}
+        <div className="h-[96px] sm:h-[110px]" />
 
-        <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
+        <section
+          ref={heroRef}
+          className="relative overflow-hidden border-b border-white/10"
+        >
           <HeroParticles isAmberTheme={isAmberTheme} />
           <motion.div
             style={{ y: heroGlowY }}
@@ -187,7 +190,7 @@ export default function LandingPage() {
             initial="hidden"
             animate="visible"
             variants={revealSection}
-            className="relative mx-auto max-w-6xl px-4 pb-36 pt-20 sm:px-6 sm:pb-40 sm:pt-24 lg:px-8 lg:pb-29 lg:pt-32"
+            className="relative mx-auto flex min-h-[calc(100svh-96px)] max-w-6xl flex-col justify-center px-4 pb-24 pt-16 sm:min-h-[calc(100svh-110px)] sm:px-6 sm:pb-28 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24"
           >
             <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
               <motion.div
@@ -251,7 +254,7 @@ export default function LandingPage() {
               aria-label="Scroll to chatbot showcase"
               className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
             >
-              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/195 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/20 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
                 <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
                   SCROLL
                 </span>
@@ -311,7 +314,7 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl text-center py-15">
+          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl py-14 text-center">
             <p className={sectionHeader}>Showcase</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Swipe through the product.</h2>
             <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">

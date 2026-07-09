@@ -22,7 +22,7 @@ test.describe('Landing Page and About Component Verification', () => {
     
     // Find images by alt text
     const ceoImage = page.locator('img[alt="Piyush Tembhekar"]');
-    const techLeadImage = page.locator('img[alt="Parth Shende"]');
+    const ctoName = page.getByText('Sarth Shende');
 
     // Wait for images to be visible if they exist on this page
     if (await ceoImage.count() > 0) {
@@ -32,11 +32,6 @@ test.describe('Landing Page and About Component Verification', () => {
       expect(response.status()).toBe(200);
     }
 
-    if (await techLeadImage.count() > 0) {
-      await expect(techLeadImage).toBeVisible();
-      const techLeadSrc = await techLeadImage.getAttribute('src');
-      const response = await page.request.get(techLeadSrc!);
-      expect(response.status()).toBe(200);
-    }
+    await expect(ctoName.first()).toBeVisible();
   });
 });
