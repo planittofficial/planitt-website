@@ -177,6 +177,41 @@ const initialJobs: Job[] = [
             'Opportunity for full-time employment after internship',
             'Exposure to the financial services industry'
         ]
+    },
+    {
+        id: 'software-developer-intern',
+        title: 'Software Developer Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Gain hands-on experience building real-world web and mobile applications alongside our development team.',
+        description: 'We are looking for a motivated Software Developer Intern to join our technology team. You will work on real projects, contribute to our codebase, and learn modern development practices in a collaborative environment.',
+        requirements: [
+            'Currently pursuing a degree in Computer Science, IT, or related field',
+            'Basic knowledge of HTML, CSS, and JavaScript',
+            'Familiarity with at least one programming language (Python, Java, or TypeScript)',
+            'Eagerness to learn and adapt to new technologies'
+        ],
+        niceToHave: [
+            'Experience with React or Next.js',
+            'Understanding of Git and version control',
+            'Personal projects or contributions to open-source',
+            'Interest in fintech or financial applications'
+        ],
+        responsibilities: [
+            'Assist in developing and maintaining web applications',
+            'Write clean, well-documented code under mentorship',
+            'Participate in code reviews and team stand-ups',
+            'Help with bug fixes, testing, and QA processes',
+            'Contribute to technical documentation'
+        ],
+        benefits: [
+            'Stipend',
+            'Flexible work hours',
+            'Mentorship from senior developers',
+            'Opportunity for full-time employment after internship',
+            'Hands-on experience with modern tech stack (React, Next.js, TypeScript)'
+        ]
     }
 ];
 
