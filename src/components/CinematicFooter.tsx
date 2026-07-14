@@ -352,9 +352,9 @@ export default function CinematicFooter() {
                 <div className="h-2 w-2 rounded-full bg-amber-400 ring-2 ring-white/20" />
               </div>
 
-              {/* Elegant City Label Container – hidden on mobile to prevent overlap, visible on sm+ */}
+              {/* Elegant City Label Container with HUD vertical line (Hidden on mobile by default, shown on hover/desktop) */}
               <div
-                className="absolute hidden sm:flex flex-col items-center pointer-events-none transition-all duration-300 group-hover/node:scale-105 opacity-100 group-hover/node:pointer-events-auto"
+                className="absolute flex flex-col items-center pointer-events-none transition-all duration-300 group-hover/node:scale-105 opacity-0 group-hover/node:opacity-100 group-hover/node:pointer-events-auto md:opacity-100 md:pointer-events-auto"
                 style={{
                   bottom: '6px',
                   left: '50%',
@@ -362,11 +362,11 @@ export default function CinematicFooter() {
                 }}
               >
                 {/* HUD Glass Card */}
-                <div className="rounded-md border border-white/10 bg-slate-950/90 px-1.5 py-0.5 sm:px-2 sm:py-1 backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex flex-col items-center gap-0.5 min-w-[60px] sm:min-w-[85px] text-center">
-                  <span className="text-[7px] sm:text-[9px] font-bold tracking-widest text-white uppercase leading-none">{city.name}</span>
+                <div className="rounded-md border border-white/10 bg-slate-950/90 px-2 py-1 backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex flex-col items-center gap-0.5 min-w-[85px] text-center">
+                  <span className="text-[9px] font-bold tracking-widest text-white uppercase leading-none">{city.name}</span>
                   <div className="flex items-center justify-center gap-1 mt-0.5">
-                    <span className="h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[5.5px] sm:text-[6.5px] font-semibold tracking-wider text-slate-400 uppercase leading-none">{city.market}</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[6.5px] font-semibold tracking-wider text-slate-400 uppercase leading-none">{city.market}</span>
                   </div>
                 </div>
 
@@ -415,24 +415,6 @@ export default function CinematicFooter() {
 
         {/* Bottom: Headline + Tagline + CTA buttons + Copyright (inside Earth shadow) */}
         <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-12 sm:pb-16 lg:pb-20 z-20">
-
-          {/* Mobile-only compact city badges – replaces on-globe labels on small screens */}
-          <motion.div
-            className="flex sm:hidden flex-wrap items-center justify-center gap-2 px-4 mb-5"
-            style={{ opacity: ctaOpacity, y: ctaY }}
-          >
-            {CITIES.map((city) => (
-              <div
-                key={city.name}
-                className="flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/80 px-3 py-1.5 backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[9px] font-bold tracking-wider text-white uppercase leading-none">{city.name}</span>
-                <span className="text-[7px] font-medium tracking-wide text-slate-400 uppercase leading-none">{city.market.split(' · ')[0]}</span>
-              </div>
-            ))}
-          </motion.div>
-
           {/* Headline */}
           <motion.p
             className="mx-auto text-center max-w-lg text-lg leading-relaxed text-slate-300 sm:text-xl lg:text-2xl px-4"
