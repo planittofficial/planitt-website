@@ -40,7 +40,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const intro = isTechnical
         ? {
             lead: 'Planitt provides modern technical execution led by ',
-            name: 'Parth Shende',
+            name: 'Sarth Shende',
             body: 'We help organizations build digital systems with reliable delivery in app, web, cloud, and automation.',
         }
         : isFinancial
