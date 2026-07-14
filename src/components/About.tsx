@@ -40,7 +40,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const intro = isTechnical
         ? {
             lead: 'Planitt provides modern technical execution led by ',
-            name: 'Sarth Shende',
+            name: 'Sarth Srivastava',
             body: 'We help organizations build digital systems with reliable delivery in app, web, cloud, and automation.',
         }
         : isFinancial
@@ -51,7 +51,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
             }
             : {
                 lead: 'Planitt combines financial advisory and technical execution led by ',
-                name: 'Piyush Tembhekar and Sarth Shende',
+                name: 'Piyush Tembhekar and Sarth Srivastava',
                 body: 'We help individuals, families, and organizations with practical financial guidance and reliable digital delivery.',
             };
 
@@ -94,8 +94,8 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const profile = isTechnical
         ? {
             image: '/sarth_avatar.jpeg',
-            alt: 'Sarth Shende',
-            name: 'Sarth Shende',
+            alt: 'Sarth Srivastava',
+            name: 'Sarth Srivastava',
             meta: '',
             role: 'CTO',
             roleClass: 'text-[#0b6cb8] dark:text-[#8fd3ff]',

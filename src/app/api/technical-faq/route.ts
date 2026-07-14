@@ -38,7 +38,7 @@ const ctoPromotion = {
   title: "Technical Support",
   lines: [
     "For the next step, if you want help with the technical process, we can assist you.",
-    "Please contact our CTO, Sarth Shende, for further assistance.",
+    "Please contact our CTO, Sarth Srivastava, for further assistance.",
     "Contact Number: +91 9145402183",
   ],
 };
