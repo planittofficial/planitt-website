@@ -1,9 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
-  ArrowRight,
   BrainCircuit,
   CandlestickChart,
   Layers3,
@@ -47,20 +45,11 @@ const revealItem: Variants = {
 };
 
 const buttonHover = { scale: 1.03, filter: 'brightness(1.06)' };
-const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14), py-3' };
+const cardHover = { scale: 1.02, boxShadow: '0 20px 58px rgba(124,92,255,0.14)' };
 const microTransition = { duration: 0.24, ease: 'easeOut' as const };
 const scrollCueTransition = { duration: 2.0, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' as const };
 
-const liveSignals: Array<{
-  asset: string;
-  action: 'Buy' | 'Sell' | 'Hold';
-  confidence: string | number;
-  risk: 'Low' | 'Medium' | 'High';
-}> = [
-    { asset: 'BTC', action: 'Buy', confidence: 'XX', risk: 'Medium' },
-    { asset: 'NIFTY', action: 'Buy', confidence: 'XX', risk: 'Low' },
-    { asset: 'RELIANCE', action: 'Hold', confidence: 'XX', risk: 'High' },
-  ];
+
 
 
 
@@ -87,7 +76,6 @@ const trustCredentials = [
 ] as const;
 
 export default function LandingPage() {
-  const router = useRouter();
   const [accentTheme, setAccentTheme] = useState<'violet' | 'amber'>('violet');
   const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
   const [confidence, setConfidence] = useState(74);
@@ -120,7 +108,7 @@ export default function LandingPage() {
     : 'fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.18),transparent_26%),radial-gradient(circle_at_85%_14%,rgba(56,189,248,0.12),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(124,92,255,0.12),transparent_28%)]';
   const heroGlowClass = isAmberTheme ? 'bg-[#f5b544]/16' : 'bg-[#7C5CFF]/16';
 
-  const goToSite = () => router.push('/main');
+
 
   useEffect(() => {
     const applyAccentTheme = (value: string | null) => {
@@ -184,10 +172,13 @@ export default function LandingPage() {
 
         {/* Fixed Market Ticker – stays visible below header while scrolling */}
         <MarketTicker />
-        {/* Spacer: header (64px) + ticker (46px) = 110px */}
-        <div className="h-[110px]" />
+        {/* Spacer: header + ticker */}
+        <div className="h-[96px] sm:h-[110px]" />
 
-        <section ref={heroRef} className="relative overflow-hidden border-b border-white/10">
+        <section
+          ref={heroRef}
+          className="relative overflow-hidden border-b border-white/10"
+        >
           <HeroParticles isAmberTheme={isAmberTheme} />
           <motion.div
             style={{ y: heroGlowY }}
@@ -199,7 +190,7 @@ export default function LandingPage() {
             initial="hidden"
             animate="visible"
             variants={revealSection}
-            className="relative mx-auto max-w-6xl px-4 pb-36 pt-20 sm:px-6 sm:pb-40 sm:pt-24 lg:px-8 lg:pb-29 lg:pt-32"
+            className="relative mx-auto flex min-h-[calc(100svh-96px)] max-w-6xl flex-col justify-center px-4 pb-24 pt-16 sm:min-h-[calc(100svh-110px)] sm:px-6 sm:pb-28 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24"
           >
             <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
               <motion.div
@@ -230,24 +221,15 @@ export default function LandingPage() {
 
               <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
                 <motion.a
-                  href="#live-signals"
+                  href="https://app.planitt.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={buttonHover}
                   transition={microTransition}
                   className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
                 >
                   Explore Signals
                 </motion.a>
-
-                <motion.button
-                  type="button"
-                  onClick={goToSite}
-                  whileHover={buttonHover}
-                  transition={microTransition}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#7C5CFF] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(124,92,255,0.36)] transition duration-300 hover:shadow-[0_20px_54px_rgba(124,92,255,0.42)] sm:min-h-0 sm:px-7"
-                >
-                  Continue to Services
-                  <ArrowRight className="h-4 w-4" />
-                </motion.button>
               </motion.div>
 
               <motion.div
@@ -265,14 +247,14 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.a
-              href="#live-signals"
+              href="#ai"
               variants={revealItem}
               whileHover={{ scale: 1.06 }}
               transition={microTransition}
-              aria-label="Scroll to live signals"
+              aria-label="Scroll to chatbot showcase"
               className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
             >
-              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/195 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/20 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
                 <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
                   SCROLL
                 </span>
@@ -317,95 +299,11 @@ export default function LandingPage() {
           </motion.div>
         </motion.section>
 
-        <motion.section
-          id="live-signals"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <motion.div variants={revealItem} className="max-w-2xl min-w-0 py-12">
-              <p className={sectionHeader}>Live Signals</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">See what PLANITT does.</h2>
-            </motion.div>
 
-            <motion.div
-              variants={revealItem}
-              className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-emerald-300"
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <motion.span
-                  animate={{ scale: [1, 2.1, 1], opacity: [0.8, 0, 0.8] }}
-                  transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: 'easeOut' }}
-                  className="absolute inline-flex h-full w-full rounded-full bg-emerald-300"
-                />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300" />
-              </span>
-              Live
-            </motion.div>
-          </div>
-
-          <motion.div variants={revealSection} className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {liveSignals.map((signal) => (
-              <motion.article
-                key={signal.asset}
-                variants={revealItem}
-                whileHover={cardHover}
-                transition={microTransition}
-                className={`${glassCard} ${softHover} overflow-hidden p-5`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Asset</p>
-                    <h3 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-white">{signal.asset}</h3>
-                  </div>
-                  <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${signal.action === 'Buy'
-                    ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-300'
-                    : signal.action === 'Sell'
-                      ? 'border-red-400/20 bg-red-400/10 text-red-300'
-                      : 'border-amber-400/20 bg-amber-400/10 text-amber-300'
-                    }`}>
-                    {signal.action}
-                  </span>
-                </div>
-
-                <div className="mt-8 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Confidence</p>
-                    <p className="mt-2 text-3xl font-semibold text-white">
-                      {typeof signal.confidence === 'number' ? (
-                        <CountUp value={signal.confidence} />
-                      ) : (
-                        signal.confidence
-                      )}
-                      %
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Risk</p>
-                    <p className={`mt-2 text-2xl font-semibold ${signal.risk === 'Low'
-                      ? 'text-emerald-300'
-                      : signal.risk === 'High'
-                        ? 'text-red-300'
-                        : 'text-amber-300'
-                      }`}>
-                      {signal.risk}
-                    </p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </motion.div>
-        </motion.section>
         <div id="ai">
-          <TradoChatbotShowcase />
+          <HowItWorksSection />
         </div>
-        
-        <HowItWorksSection />
-
-
+        <TradoChatbotShowcase />
 
         <motion.section
           id="showcase"
@@ -416,7 +314,7 @@ export default function LandingPage() {
           variants={revealSection}
           className={sectionShell}
         >
-          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl text-center py-15">
+          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl py-14 text-center">
             <p className={sectionHeader}>Showcase</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Swipe through the product.</h2>
             <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
@@ -498,29 +396,7 @@ export default function LandingPage() {
   );
 }
 
-function CountUp({ value }: { value: number }) {
-  const ref = useRef<HTMLSpanElement | null>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.7 });
-  const [displayValue, setDisplayValue] = useState(0);
 
-  useEffect(() => {
-    if (!isInView) {
-      return;
-    }
-
-    const controls = animate(0, value, {
-      duration: 1,
-      ease: 'easeOut',
-      onUpdate(latest) {
-        setDisplayValue(Math.round(latest));
-      },
-    });
-
-    return () => controls.stop();
-  }, [isInView, value]);
-
-  return <span ref={ref}>{displayValue}</span>;
-}
 
 
 

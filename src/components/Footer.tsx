@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Mail, Phone, MapPin, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
@@ -73,10 +73,10 @@ const Footer = () => {
                 <div className="flex items-center space-x-3 hover:text-[#f3cf72]">
                   <Mail className="h-5 w-5" />
                   <a
-                    href="mailto:planitt.official@gmail.com"
+                    href="mailto:planittsolutions@gmail.com"
                     className="text-gray-300 text-sm hover:text-[#f3cf72] transition-colors duration-200"
                   >
-                    planitt.official@gmail.com
+                    planittsolutions@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center hover:text-[#f3cf72] space-x-3">

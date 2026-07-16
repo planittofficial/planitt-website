@@ -35,22 +35,46 @@ body {
   font-family: var(--font-poppins), system-ui, sans-serif;
 }
 
-/* Custom scrollbar */
+/* Hide native scrollbar across Chrome, Edge, Safari, and Firefox */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+html,
+body {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--primary-blue);
-  border-radius: 4px;
+/* Premium Scroll Indicator */
+.premium-scroll-indicator {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 300ms ease-in-out;
+  width: 1.5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-navy);
+@media (min-width: 768px) {
+  .premium-scroll-indicator {
+    width: 2px;
+  }
+}
+
+.premium-scroll-bar {
+  width: 100%;
+  height: 100%;
+  transform-origin: top;
+  will-change: transform;
+  background: linear-gradient(to bottom, #8B5CF6, #06B6D4);
+  box-shadow: 
+    0 0 6px rgba(139, 92, 246, 0.4), 
+    0 0 6px rgba(6, 182, 212, 0.4);
 }
 
 /* Custom slider styles with filled track */

@@ -14,7 +14,7 @@ test.describe('Careers Page - Meet Our Team', () => {
     const section = page.locator('section').filter({ hasText: 'Meet Our Team' });
     const teamMembers = [
       { name: 'Piyush Tembhekar', role: 'CEO, Financial Distribution' },
-      { name: 'Parth Shende', role: 'Technical Lead' },
+      { name: 'Sarth Shende', role: 'CTO, Technical Delivery' },
       { name: 'Ansh Mishra', role: 'Software Developer' },
     ];
 

@@ -37,9 +37,9 @@ const teamMembers: TeamMember[] = [
         portfolio: '#',
     },
     {
-        name: 'Parth Shende',
+        name: 'Sarth Srivastava',
         role: 'CTO, Technical Delivery',
-        image: '/Parth_shende(Technical_Head).png',
+        image: '/sarth_avatar.jpeg',
         portfolio: '#',
     },
     {
@@ -177,6 +177,41 @@ const initialJobs: Job[] = [
             'Opportunity for full-time employment after internship',
             'Exposure to the financial services industry'
         ]
+    },
+    {
+        id: 'software-developer-intern',
+        title: 'Software Developer Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Gain hands-on experience building real-world web and mobile applications alongside our development team.',
+        description: 'We are looking for a motivated Software Developer Intern to join our technology team. You will work on real projects, contribute to our codebase, and learn modern development practices in a collaborative environment.',
+        requirements: [
+            'Currently pursuing a degree in Computer Science, IT, or related field',
+            'Basic knowledge of HTML, CSS, and JavaScript',
+            'Familiarity with at least one programming language (Python, Java, or TypeScript)',
+            'Eagerness to learn and adapt to new technologies'
+        ],
+        niceToHave: [
+            'Experience with React or Next.js',
+            'Understanding of Git and version control',
+            'Personal projects or contributions to open-source',
+            'Interest in fintech or financial applications'
+        ],
+        responsibilities: [
+            'Assist in developing and maintaining web applications',
+            'Write clean, well-documented code under mentorship',
+            'Participate in code reviews and team stand-ups',
+            'Help with bug fixes, testing, and QA processes',
+            'Contribute to technical documentation'
+        ],
+        benefits: [
+            'Stipend',
+            'Flexible work hours',
+            'Mentorship from senior developers',
+            'Opportunity for full-time employment after internship',
+            'Hands-on experience with modern tech stack (React, Next.js, TypeScript)'
+        ]
     }
 ];
 
@@ -223,7 +258,7 @@ I am ${formData.name}. I am interested in ${formData.position} role. Please find
 Thank You.`;
 
         // Open mailto link
-        window.location.href = `mailto:planitt.official@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = `mailto:planittsolutions@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
         // Show success message
         setFormSubmitted(true);
@@ -415,29 +450,64 @@ Thank You.`;
                             </div>
                         </div>
                     ) : (
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {jobs.map((job) => (
-                                <div key={job.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-950/50 overflow-hidden border border-transparent dark:border-gray-700">
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold mb-2 dark:text-white">{job.title}</h3>
-                                        <div className="flex flex-wrap gap-2 mb-3">
-                                            <span className="bg-[#fff1cf] dark:bg-[#4a3818]/60 text-[#8f651a] dark:text-[#e7c973] text-xs px-2 py-1 rounded-full">{job.department}</span>
-                                            <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full">{job.location}</span>
-                                            <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-2 py-1 rounded-full">{job.type}</span>
+                        <div className="space-y-12">
+                            {/* Full-time Roles Section */}
+                            <div>
+                                <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200 border-b pb-2 border-gray-200 dark:border-gray-700">Full-Time Roles</h3>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {jobs.filter(job => job.type !== 'Internship').map((job) => (
+                                        <div key={job.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-950/50 overflow-hidden border border-transparent dark:border-gray-700">
+                                            <div className="p-6">
+                                                <h3 className="text-xl font-bold mb-2 dark:text-white">{job.title}</h3>
+                                                <div className="flex flex-wrap gap-2 mb-3">
+                                                    <span className="bg-[#fff1cf] dark:bg-[#4a3818]/60 text-[#8f651a] dark:text-[#e7c973] text-xs px-2 py-1 rounded-full">{job.department}</span>
+                                                    <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full">{job.location}</span>
+                                                    <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-2 py-1 rounded-full">{job.type}</span>
+                                                </div>
+                                                <p className="text-gray-600 dark:text-gray-400 mb-4">{job.snippet}</p>
+                                                <button
+                                                    onClick={() => setSelectedJob(job)}
+                                                    className="text-[#b78622] dark:text-[#e7c973] hover:text-[#8f651a] dark:hover:text-[#f0d996] font-medium flex items-center transition-colors"
+                                                >
+                                                    View Details
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <p className="text-gray-600 dark:text-gray-400 mb-4">{job.snippet}</p>
-                                        <button
-                                            onClick={() => setSelectedJob(job)}
-                                            className="text-[#b78622] dark:text-[#e7c973] hover:text-[#8f651a] dark:hover:text-[#f0d996] font-medium flex items-center transition-colors"
-                                        >
-                                            View Details
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+
+                            {/* Internships Section */}
+                            <div>
+                                <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200 border-b pb-2 border-gray-200 dark:border-gray-700">Internships</h3>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {jobs.filter(job => job.type === 'Internship').map((job) => (
+                                        <div key={job.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-950/50 overflow-hidden border border-transparent dark:border-gray-700">
+                                            <div className="p-6">
+                                                <h3 className="text-xl font-bold mb-2 dark:text-white">{job.title}</h3>
+                                                <div className="flex flex-wrap gap-2 mb-3">
+                                                    <span className="bg-[#fff1cf] dark:bg-[#4a3818]/60 text-[#8f651a] dark:text-[#e7c973] text-xs px-2 py-1 rounded-full">{job.department}</span>
+                                                    <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full">{job.location}</span>
+                                                    <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 text-xs px-2 py-1 rounded-full">{job.type}</span>
+                                                </div>
+                                                <p className="text-gray-600 dark:text-gray-400 mb-4">{job.snippet}</p>
+                                                <button
+                                                    onClick={() => setSelectedJob(job)}
+                                                    className="text-[#b78622] dark:text-[#e7c973] hover:text-[#8f651a] dark:hover:text-[#f0d996] font-medium flex items-center transition-colors"
+                                                >
+                                                    View Details
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -618,7 +688,7 @@ Thank You.`;
                             <p className="text-gray-700 dark:text-gray-300 mb-4">The entire process typically takes 4-6 weeks from application to offer.</p>
                             <p className="text-gray-700 dark:text-gray-300">
                                 For any questions about the hiring process, please contact our HR team at{' '}
-                                <a href="mailto:planitt.official@gmail.com" className="text-[#b78622] dark:text-[#e7c973] hover:underline">planitt.official@gmail.com</a>
+                                <a href="mailto:planittsolutions@gmail.com" className="text-[#b78622] dark:text-[#e7c973] hover:underline">planittsolutions@gmail.com</a>
                             </p>
                         </div>
                     </div>
