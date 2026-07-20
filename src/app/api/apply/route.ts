@@ -10,12 +10,13 @@ export async function POST(request: NextRequest) {
         const phone = formData.get('phone') as string;
         const linkedin = (formData.get('linkedin') as string) || 'Not provided';
         const position = formData.get('position') as string;
+        const about = formData.get('about') as string;
         const resume = formData.get('resume') as File | null;
 
         // Validate required fields
-        if (!name || !email || !phone || !position) {
+        if (!name || !email || !phone || !position || !about) {
             return NextResponse.json(
-                { error: 'Missing required fields: name, email, phone, and position are required.' },
+                { error: 'Missing required fields: name, email, phone, position, and about are required.' },
                 { status: 400 }
             );
         }
@@ -102,6 +103,10 @@ export async function POST(request: NextRequest) {
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Position</td>
                                 <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${position}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">About</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; white-space: pre-wrap;">${about}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Resume</td>

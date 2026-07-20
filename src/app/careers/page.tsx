@@ -448,6 +448,7 @@ export default function CareersPage() {
         phone: '',
         linkedin: '',
         position: '',
+        about: '',
         resume: null as File | null,
     });
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -508,6 +509,7 @@ export default function CareersPage() {
             payload.append('phone', formData.phone);
             payload.append('linkedin', formData.linkedin);
             payload.append('position', formData.position);
+            payload.append('about', formData.about);
             if (formData.resume) {
                 payload.append('resume', formData.resume);
             }
@@ -535,6 +537,7 @@ export default function CareersPage() {
                     phone: '',
                     linkedin: '',
                     position: '',
+                    about: '',
                     resume: null,
                 });
                 // Reset the file input
@@ -889,6 +892,20 @@ export default function CareersPage() {
                                         <option key={job.id} value={job.title}>{job.title}</option>
                                     ))}
                                 </select>
+                            </div>
+
+                            <div className="mb-6">
+                                <label htmlFor="about" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">About You *</label>
+                                <textarea
+                                    id="about"
+                                    name="about"
+                                    value={formData.about}
+                                    onChange={handleInputChange}
+                                    required
+                                    rows={4}
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b78622] text-gray-900 dark:text-white resize-y"
+                                    placeholder="Tell us a bit about yourself, your experience, or why you'd be a great fit for this role."
+                                ></textarea>
                             </div>
 
                             <div className="mb-8">
