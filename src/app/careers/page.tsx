@@ -451,6 +451,8 @@ export default function CareersPage() {
         resume: null as File | null,
     });
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -458,46 +460,93 @@ export default function CareersPage() {
             ...formData,
             [name]: value,
         });
+        // Clear error when user starts typing again
+        if (submitError) setSubmitError(null);
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+
+            // Client-side file size validation (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                setSubmitError('File size must be under 5MB. Please choose a smaller file.');
+                e.target.value = '';
+                return;
+            }
+
+            // Client-side file type validation
+            const allowedTypes = [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            ];
+            if (!allowedTypes.includes(file.type)) {
+                setSubmitError('Only PDF, DOC, and DOCX files are allowed.');
+                e.target.value = '';
+                return;
+            }
+
             setFormData({
                 ...formData,
-                resume: e.target.files[0],
+                resume: file,
             });
+            if (submitError) setSubmitError(null);
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitError(null);
 
-        // Create email template
-        const emailSubject = `Job Application for ${formData.position}`;
-        const emailBody = `Hello Planitt,
+        try {
+            // Build FormData to send to the API (includes the file)
+            const payload = new FormData();
+            payload.append('name', formData.name);
+            payload.append('email', formData.email);
+            payload.append('phone', formData.phone);
+            payload.append('linkedin', formData.linkedin);
+            payload.append('position', formData.position);
+            if (formData.resume) {
+                payload.append('resume', formData.resume);
+            }
 
-I am ${formData.name}. I am interested in ${formData.position} role. Please find my attached resume with this mail.
-
-Thank You.`;
-
-        // Open mailto link
-        window.location.href = `mailto:planittsolutions@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-        // Show success message
-        setFormSubmitted(true);
-
-        // Reset form after submission
-        setTimeout(() => {
-            setFormSubmitted(false);
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                linkedin: '',
-                position: '',
-                resume: null,
+            const response = await fetch('/api/apply', {
+                method: 'POST',
+                body: payload,
             });
-        }, 5000);
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Something went wrong. Please try again.');
+            }
+
+            // Success
+            setFormSubmitted(true);
+
+            // Reset form after showing success
+            setTimeout(() => {
+                setFormSubmitted(false);
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    linkedin: '',
+                    position: '',
+                    resume: null,
+                });
+                // Reset the file input
+                const fileInput = document.getElementById('resume') as HTMLInputElement;
+                if (fileInput) fileInput.value = '';
+            }, 5000);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'Failed to submit application. Please try again or email us directly at planittsolutions@gmail.com.';
+            setSubmitError(message);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -856,12 +905,34 @@ Thank You.`;
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Maximum file size: 5MB</p>
                             </div>
 
+                            {submitError && (
+                                <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                                    <div className="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 dark:text-red-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                        </svg>
+                                        <p className="text-red-700 dark:text-red-300 text-sm">{submitError}</p>
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="text-center">
                                 <button
                                     type="submit"
-                                    className="bg-[#b78622] hover:bg-[#9f7220] text-white font-medium py-2 px-6 rounded-md transition-colors duration-300"
+                                    disabled={isSubmitting}
+                                    className="bg-[#b78622] hover:bg-[#9f7220] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium py-2 px-6 rounded-md transition-colors duration-300 inline-flex items-center gap-2"
                                 >
-                                    Submit Application
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Submitting...
+                                        </>
+                                    ) : (
+                                        'Submit Application'
+                                    )}
                                 </button>
                             </div>
                         </form>
