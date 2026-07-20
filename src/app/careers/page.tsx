@@ -18,6 +18,7 @@ interface Job {
     niceToHave: string[];
     responsibilities: string[];
     benefits: string[];
+    contact?: string;
 }
 
 // Team member data structure
@@ -112,37 +113,256 @@ const initialJobs: Job[] = [
         ]
     },
     {
-        id: 'software-developer',
-        title: 'Software Developer',
+        id: 'app-development-intern',
+        title: 'App Development Intern',
         department: 'Technology',
         location: 'Nagpur/Work from office',
-        type: 'Full-time',
-        snippet: 'Build & maintain our financial tools and client-facing applications. Work with talented developers to create innovative solutions.',
-        description: 'We are seeking a talented Software Developer to help build and enhance our financial planning tools and client-facing applications. You will work in a collaborative environment to create innovative solutions that help our clients achieve their financial goals.',
+        type: 'Internship',
+        snippet: 'Build cross-platform mobile applications and gain real-world experience in app development with our technology team.',
+        description: 'Join our technology team as an App Development Intern and work on building and maintaining cross-platform mobile applications. You will collaborate with experienced developers, contribute to live projects, and gain hands-on experience with modern mobile development frameworks.',
         requirements: [
-            'Bachelor\'s degree in Computer Science or related field',
-            'Atleast one year of experience in fullstack development',
-            'Proficiency in React, TypeScript, and Next.js',
-            'Experience with RESTful APIs and database design'
+            'Currently pursuing a degree in Computer Science, IT, or related field',
+            'Basic knowledge of mobile app development (Flutter, React Native, or native Android/iOS)',
+            'Familiarity with Dart, JavaScript, or Swift/Kotlin',
+            'Eagerness to learn and adapt to new technologies'
         ],
         niceToHave: [
-            'Experience with financial software',
-            'Knowledge of data visualization libraries',
-            'Understanding of financial concepts and terminology'
+            'Published apps on Play Store or App Store',
+            'Experience with state management solutions',
+            'Understanding of RESTful APIs and backend integration',
+            'Interest in fintech or financial applications'
         ],
         responsibilities: [
-            'Develop and maintain our financial planning applications',
-            'Collaborate with product managers and designers to implement new features',
-            'Ensure code quality through testing and code reviews',
-            'Optimize applications for maximum speed and scalability',
-            'Stay up-to-date with emerging trends and technologies'
+            'Assist in building and maintaining mobile applications',
+            'Collaborate with the design team to implement pixel-perfect UI',
+            'Write clean, well-documented, and testable code',
+            'Participate in code reviews and team stand-ups',
+            'Help with bug fixes, testing, and QA processes'
         ],
         benefits: [
-            'Competitive salary',
-            'Flexible work arrangements',
-            'Professional development budget',
-            'Modern office environment'
-        ]
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'web-development-intern',
+        title: 'Web Development Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Gain hands-on experience building real-world web applications using modern frameworks alongside our development team.',
+        description: 'We are looking for a motivated Web Development Intern to join our technology team. You will work on real projects, contribute to our codebase, and learn modern web development practices in a collaborative environment.',
+        requirements: [
+            'Currently pursuing a degree in Computer Science, IT, or related field',
+            'Basic knowledge of HTML, CSS, and JavaScript',
+            'Familiarity with at least one frontend framework (React, Next.js, or Angular)',
+            'Eagerness to learn and adapt to new technologies'
+        ],
+        niceToHave: [
+            'Experience with TypeScript and Next.js',
+            'Understanding of Git and version control',
+            'Personal projects or contributions to open-source',
+            'Interest in fintech or financial applications'
+        ],
+        responsibilities: [
+            'Assist in developing and maintaining web applications',
+            'Write clean, well-documented, and responsive code',
+            'Participate in code reviews and team stand-ups',
+            'Help with bug fixes, testing, and QA processes',
+            'Contribute to technical documentation'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'digital-marketing-intern',
+        title: 'Digital Marketing Intern',
+        department: 'Marketing',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Learn and execute digital marketing strategies including SEO, social media, and content marketing for financial services.',
+        description: 'We are looking for an enthusiastic Digital Marketing Intern to join our marketing team. This position offers hands-on experience in digital marketing, SEO, social media management, content creation, and campaign analytics for financial services.',
+        requirements: [
+            'Currently pursuing a degree in Marketing, Communications, or related field',
+            'Strong written and verbal communication skills',
+            'Familiarity with social media platforms and digital marketing concepts',
+            'Basic understanding of content creation and copywriting'
+        ],
+        niceToHave: [
+            'Experience with marketing automation tools (Google Ads, Meta Ads)',
+            'Knowledge of SEO best practices and analytics tools',
+            'Interest in financial services industry',
+            'Basic understanding of graphic design (Canva, Figma)'
+        ],
+        responsibilities: [
+            'Assist in creating content for social media and blog posts',
+            'Help monitor and analyze marketing campaign performance',
+            'Support the team in organizing marketing events and campaigns',
+            'Conduct market research and competitor analysis',
+            'Contribute ideas for digital marketing initiatives'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'ui-ux-design-intern',
+        title: 'UI/UX Design Intern',
+        department: 'Design',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Create intuitive and visually stunning user interfaces and experiences for our financial planning platform.',
+        description: 'Join our design team as a UI/UX Design Intern and help shape the user experience of our financial planning platform. You will work on wireframing, prototyping, and designing beautiful interfaces that make complex financial tools simple and delightful to use.',
+        requirements: [
+            'Currently pursuing a degree in Design, HCI, or related field',
+            'Proficiency in design tools such as Figma, Adobe XD, or Sketch',
+            'Basic understanding of UI/UX design principles and user-centered design',
+            'An eye for clean and modern aesthetics'
+        ],
+        niceToHave: [
+            'Experience with design systems and component libraries',
+            'Knowledge of prototyping and interaction design',
+            'Portfolio showcasing personal or academic design projects',
+            'Understanding of front-end development basics (HTML, CSS)'
+        ],
+        responsibilities: [
+            'Assist in designing wireframes, mockups, and prototypes',
+            'Conduct user research and usability testing',
+            'Collaborate with developers to implement design specifications',
+            'Help maintain and evolve the design system',
+            'Contribute to improving the overall user experience'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'ai-ml-intern',
+        title: 'AI & ML Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Explore and apply artificial intelligence and machine learning techniques to solve real-world financial problems.',
+        description: 'We are seeking a curious and driven AI & ML Intern to join our technology team. You will work on building intelligent models, analyzing data, and developing AI-powered features that enhance our financial planning platform with smart insights and automation.',
+        requirements: [
+            'Currently pursuing a degree in Computer Science, Data Science, AI/ML, or related field',
+            'Basic knowledge of Python and machine learning libraries (NumPy, Pandas, Scikit-learn)',
+            'Understanding of fundamental ML concepts (regression, classification, clustering)',
+            'Eagerness to learn and experiment with new AI technologies'
+        ],
+        niceToHave: [
+            'Experience with deep learning frameworks (TensorFlow, PyTorch)',
+            'Knowledge of NLP or computer vision techniques',
+            'Familiarity with data visualization tools',
+            'Interest in applying AI to financial data and analytics'
+        ],
+        responsibilities: [
+            'Assist in building and training machine learning models',
+            'Perform data cleaning, preprocessing, and feature engineering',
+            'Help evaluate model performance and iterate on improvements',
+            'Collaborate with the development team to integrate ML features',
+            'Document experiments, findings, and model architectures'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'python-development-intern',
+        title: 'Python Development Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Develop backend services, automation scripts, and data-driven solutions using Python for our financial platform.',
+        description: 'Join our technology team as a Python Development Intern and work on building robust backend services, automation tools, and data pipelines. You will gain hands-on experience writing production-quality Python code in a collaborative environment.',
+        requirements: [
+            'Currently pursuing a degree in Computer Science, IT, or related field',
+            'Proficiency in Python programming fundamentals',
+            'Basic understanding of data structures and algorithms',
+            'Eagerness to learn and adapt to new frameworks and tools'
+        ],
+        niceToHave: [
+            'Experience with Django, Flask, or FastAPI',
+            'Familiarity with databases (SQL, MongoDB)',
+            'Knowledge of web scraping or data processing libraries',
+            'Understanding of REST APIs and microservices architecture'
+        ],
+        responsibilities: [
+            'Assist in developing backend services and APIs',
+            'Write automation scripts and data processing pipelines',
+            'Participate in code reviews and agile team meetings',
+            'Help with debugging, testing, and optimization',
+            'Contribute to technical documentation and best practices'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
+    },
+    {
+        id: 'business-development-associate-intern',
+        title: 'Business Development Associate (BDA)',
+        department: 'Business Development',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Drive business growth by identifying new opportunities, building client relationships, and supporting strategic initiatives.',
+        description: 'We are looking for a proactive Business Development Associate (BDA) Intern to help us expand our market presence. You will assist in identifying potential clients, building relationships, and supporting the team in executing growth strategies for our financial services.',
+        requirements: [
+            'Currently pursuing a degree in Business Administration, Marketing, Finance, or related field',
+            'Strong communication and interpersonal skills',
+            'Basic understanding of sales processes and business development concepts',
+            'Self-motivated with a results-oriented mindset'
+        ],
+        niceToHave: [
+            'Experience in sales, client interaction, or business development',
+            'Knowledge of CRM tools (Salesforce, HubSpot)',
+            'Interest in financial services and fintech industry',
+            'Understanding of market research and lead generation techniques'
+        ],
+        responsibilities: [
+            'Assist in identifying and researching potential business opportunities',
+            'Help generate and qualify leads through various channels',
+            'Support the team in client outreach and relationship management',
+            'Conduct market research and competitive analysis',
+            'Prepare presentations and proposals for potential clients'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
     },
     {
         id: 'marketing-intern',
@@ -150,18 +370,19 @@ const initialJobs: Job[] = [
         department: 'Marketing',
         location: 'Nagpur/Work from office',
         type: 'Internship',
-        snippet: 'Assist in creating and implementing marketing strategies for our financial services.',
-        description: 'We are looking for an enthusiastic Marketing Intern to join our team. This position offers hands-on experience in digital marketing, content creation, and campaign management for financial services.',
+        snippet: 'Assist in creating and implementing marketing strategies, campaigns, and brand initiatives for our financial services.',
+        description: 'We are looking for an enthusiastic Marketing Intern to join our team. This position offers hands-on experience in marketing strategy, content creation, campaign management, and brand building for financial services.',
         requirements: [
             'Currently pursuing a degree in Marketing, Communications, or related field',
             'Strong written and verbal communication skills',
-            'Familiarity with social media platforms and digital marketing concepts',
+            'Familiarity with social media platforms and marketing concepts',
             'Basic understanding of graphic design principles'
         ],
         niceToHave: [
             'Experience with marketing automation tools',
             'Knowledge of SEO best practices',
-            'Interest in financial services industry'
+            'Interest in financial services industry',
+            'Experience with Canva, Figma, or Adobe Creative Suite'
         ],
         responsibilities: [
             'Assist in creating content for social media and blog posts',
@@ -171,12 +392,13 @@ const initialJobs: Job[] = [
             'Contribute ideas for marketing initiatives'
         ],
         benefits: [
-            'Stipend',
-            'Flexible work hours',
-            'Mentorship from experienced marketing professionals',
-            'Opportunity for full-time employment after internship',
-            'Exposure to the financial services industry'
-        ]
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
     },
     {
         id: 'software-developer-intern',
@@ -206,12 +428,13 @@ const initialJobs: Job[] = [
             'Contribute to technical documentation'
         ],
         benefits: [
-            'Stipend',
-            'Flexible work hours',
-            'Mentorship from senior developers',
-            'Opportunity for full-time employment after internship',
-            'Hands-on experience with modern tech stack (React, Next.js, TypeScript)'
-        ]
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
     }
 ];
 
@@ -434,14 +657,30 @@ Thank You.`;
                                 </ul>
                             </div>
 
-                            <div className="mb-8">
-                                <h4 className="text-lg font-semibold mb-2 dark:text-white">Benefits</h4>
+                            <div className="mb-6">
+                                <h4 className="text-lg font-semibold mb-2 dark:text-white">{selectedJob.type === 'Internship' ? 'What you\'ll get' : 'Benefits'}</h4>
                                 <ul className="list-disc pl-5 space-y-1">
                                     {selectedJob.benefits.map((item, index) => (
                                         <li key={index} className="text-gray-700 dark:text-gray-300">{item}</li>
                                     ))}
                                 </ul>
                             </div>
+
+                            {selectedJob.contact && (
+                                <div className="mb-8 bg-gradient-to-r from-[#fff8e7] to-[#fff1cf] dark:from-[#4a3818]/30 dark:to-[#3d2e12]/30 rounded-lg p-4 border border-[#e9c978]/30 dark:border-[#e7c973]/20">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#b78622]/10 dark:bg-[#e7c973]/10">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#b78622] dark:text-[#e7c973]" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Contact for more details</p>
+                                            <a href={`tel:${selectedJob.contact}`} className="text-lg font-bold text-[#b78622] dark:text-[#e7c973] hover:underline">{selectedJob.contact}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="text-center">
                                 <a href="#application-form" className="inline-block bg-[#b78622] hover:bg-[#9f7220] text-white font-medium py-2 px-6 rounded-md transition-colors duration-300">
