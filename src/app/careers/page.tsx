@@ -435,6 +435,43 @@ const initialJobs: Job[] = [
             'Hands-on experience with Live Projects'
         ],
         contact: '8275441457'
+    },
+    {
+        id: 'data-analytics-intern',
+        title: 'Data Analytics Intern',
+        department: 'Technology',
+        location: 'Nagpur/Work from office',
+        type: 'Internship',
+        snippet: 'Analyze complex financial datasets, build dynamic dashboards, and extract insights to drive business and product decisions.',
+        description: 'We are looking for a passionate Data Analytics Intern to join our team. In this role, you will work closely with the technology, product, and business teams to transform raw data into actionable insights, build interactive reports, and support data-driven decision-making for our financial services platform.',
+        requirements: [
+            'Currently pursuing a degree in Data Science, Statistics, Mathematics, Computer Science, or related field',
+            'Strong understanding of database concepts and proficiency in writing SQL queries',
+            'Solid programming skills in Python (specifically Pandas, NumPy) or R for data manipulation',
+            'Familiarity with data visualization tools (Tableau, Power BI, or Python visualization libraries)',
+            'Analytical mindset with strong problem-solving skills and attention to detail'
+        ],
+        niceToHave: [
+            'Basic understanding of statistical concepts and predictive modeling',
+            'Familiarity with Excel (advanced functions, pivot tables)',
+            'Interest in personal finance, investing, or fintech industries',
+            'Experience with Git and version control'
+        ],
+        responsibilities: [
+            'Perform exploratory data analysis to discover trends, patterns, and insights',
+            'Design, develop, and maintain clean, interactive dashboards for internal stakeholders',
+            'Extract and clean data from various sources using SQL and Python',
+            'Collaborate with product and marketing teams to define and track key business metrics',
+            'Document analysis methodologies and present findings clearly to team members'
+        ],
+        benefits: [
+            'Official Offer Letter',
+            'Completion Certificate',
+            'Dedicated Mentor Support',
+            'Live Learning Sessions',
+            'Hands-on experience with Live Projects'
+        ],
+        contact: '8275441457'
     }
 ];
 
