@@ -438,7 +438,7 @@ const initialJobs: Job[] = [
     },
     {
         id: 'data-analytics-intern',
-        title: 'Data Analytics Intern',
+        title: 'Data Science/Data Analytics Intern',
         department: 'Technology',
         location: 'Nagpur/Work from office',
         type: 'Internship',

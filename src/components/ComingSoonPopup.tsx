@@ -58,7 +58,7 @@ export default function ComingSoonPopup() {
                 </div>
 
                 <h2 className="font-heading text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-2 sm:mb-3 pr-8">
-                  Now Live 🚀
+                  Now Live
                 </h2>
                 <p className="max-w-xl text-sm sm:text-lg text-zinc-200 leading-relaxed mb-4 sm:mb-6">
                   A recommendation app that recommends stocks, mutual funds,
