@@ -485,6 +485,7 @@ export default function CareersPage() {
         phone: '',
         linkedin: '',
         position: '',
+        duration: '',
         about: '',
         resume: null as File | null,
     });
@@ -546,6 +547,7 @@ export default function CareersPage() {
             payload.append('phone', formData.phone);
             payload.append('linkedin', formData.linkedin);
             payload.append('position', formData.position);
+            if (formData.duration) payload.append('duration', formData.duration);
             payload.append('about', formData.about);
             if (formData.resume) {
                 payload.append('resume', formData.resume);
@@ -574,6 +576,7 @@ export default function CareersPage() {
                     phone: '',
                     linkedin: '',
                     position: '',
+                    duration: '',
                     about: '',
                     resume: null,
                 });
@@ -930,6 +933,25 @@ export default function CareersPage() {
                                     ))}
                                 </select>
                             </div>
+
+                            {jobs.find(j => j.title === formData.position)?.type === 'Internship' && (
+                                <div className="mb-6">
+                                    <label htmlFor="duration" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Duration of Internship *</label>
+                                    <select
+                                        id="duration"
+                                        name="duration"
+                                        value={formData.duration}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b78622] text-gray-900 dark:text-white"
+                                    >
+                                        <option value="">Select duration</option>
+                                        <option value="1 month">1 month</option>
+                                        <option value="2/3 months">2/3 months</option>
+                                        <option value="6 months">6 months</option>
+                                    </select>
+                                </div>
+                            )}
 
                             <div className="mb-6">
                                 <label htmlFor="about" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">About You *</label>

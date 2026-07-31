@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
         const linkedin = (formData.get('linkedin') as string) || 'Not provided';
         const position = formData.get('position') as string;
         const about = formData.get('about') as string;
+        const duration = (formData.get('duration') as string) || 'Not provided';
         const resume = formData.get('resume') as File | null;
 
         // Validate required fields
@@ -103,6 +104,10 @@ export async function POST(request: NextRequest) {
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Position</td>
                                 <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${position}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Duration (Internship)</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${duration}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">About</td>
