@@ -176,222 +176,222 @@ export default function LandingPage() {
         {/* Spacer: header + ticker */}
         <div className="h-[96px] sm:h-[110px]" />
 
-        {false && (
+        {true && (
           <>
             <section
               ref={heroRef}
               className="relative overflow-hidden border-b border-white/10"
             >
               <HeroParticles isAmberTheme={isAmberTheme} />
-          <motion.div
-            style={{ y: heroGlowY }}
-            className={`absolute left-1/2 top-20 h-[min(28rem,92vw)] w-[min(28rem,92vw)] -translate-x-1/2 rounded-full blur-3xl sm:top-28 sm:h-[520px] sm:w-[520px] ${heroGlowClass}`}
-          />
-          <div className="absolute right-4 top-20 h-48 w-48 rounded-full bg-cyan-300/10 blur-3xl md:right-10 md:top-24 md:h-60 md:w-60" />
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={revealSection}
-            className="relative mx-auto flex min-h-[calc(100svh-96px)] max-w-6xl flex-col justify-center px-4 pb-24 pt-16 sm:min-h-[calc(100svh-110px)] sm:px-6 sm:pb-28 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24"
-          >
-            <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
               <motion.div
-                variants={revealItem}
-                className={`mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em] ${accentSoft}`}
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                PLANITT RECOMMENDATION SYSTEM
-              </motion.div>
-
-              <motion.div variants={revealItem} className="mt-6">
-                <AnimatedText
-                  text={'Stop Guessing,\nStart Investing.'}
-                  className="mx-auto max-w-[min(100%,calc(100vw-2rem))] text-balance text-center text-4xl font-extrabold leading-[0.92] tracking-[-0.055em] text-white sm:text-5xl sm:tracking-[-0.065em] md:text-6xl lg:text-[6.5rem] lg:leading-[0.9] xl:text-[7rem]"
-                />
-              </motion.div>
+                style={{ y: heroGlowY }}
+                className={`absolute left-1/2 top-20 h-[min(28rem,92vw)] w-[min(28rem,92vw)] -translate-x-1/2 rounded-full blur-3xl sm:top-28 sm:h-[520px] sm:w-[520px] ${heroGlowClass}`}
+              />
+              <div className="absolute right-4 top-20 h-48 w-48 rounded-full bg-cyan-300/10 blur-3xl md:right-10 md:top-24 md:h-60 md:w-60" />
 
               <motion.div
-                variants={revealItem}
-                className="mt-4 inline-flex max-w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-2 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-slate-300 sm:px-4 sm:text-[11px] sm:tracking-[0.22em]"
+                initial="hidden"
+                animate="visible"
+                variants={revealSection}
+                className="relative mx-auto flex min-h-[calc(100svh-96px)] max-w-6xl flex-col justify-center px-4 pb-24 pt-16 sm:min-h-[calc(100svh-110px)] sm:px-6 sm:pb-28 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24"
               >
-                SEBI Registered Investment Platform
-              </motion.div>
+                <motion.div style={{ y: heroTextY }} className="mx-auto max-w-5xl min-w-0 text-center">
+                  <motion.div
+                    variants={revealItem}
+                    className={`mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em] ${accentSoft}`}
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    PLANITT RECOMMENDATION SYSTEM
+                  </motion.div>
 
-              <motion.p variants={revealItem} className="mx-auto mt-5 max-w-xl px-1 text-base leading-7 text-slate-300 sm:px-0 sm:text-lg">
-                AI-powered decisions across Stocks, Crypto, Forex &amp; F&amp;O
-              </motion.p>
+                  <motion.div variants={revealItem} className="mt-6">
+                    <AnimatedText
+                      text={'Stop Guessing,\nStart Investing.'}
+                      className="mx-auto max-w-[min(100%,calc(100vw-2rem))] text-balance text-center text-4xl font-extrabold leading-[0.92] tracking-[-0.055em] text-white sm:text-5xl sm:tracking-[-0.065em] md:text-6xl lg:text-[6.5rem] lg:leading-[0.9] xl:text-[7rem]"
+                    />
+                  </motion.div>
 
-              <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
+                  <motion.div
+                    variants={revealItem}
+                    className="mt-4 inline-flex max-w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-2 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-slate-300 sm:px-4 sm:text-[11px] sm:tracking-[0.22em]"
+                  >
+                    SEBI Registered Investment Platform
+                  </motion.div>
+
+                  <motion.p variants={revealItem} className="mx-auto mt-5 max-w-xl px-1 text-base leading-7 text-slate-300 sm:px-0 sm:text-lg">
+                    AI-powered decisions across Stocks, Crypto, Forex &amp; F&amp;O
+                  </motion.p>
+
+                  <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
+                    <motion.a
+                      href="https://app.planitt.in/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={buttonHover}
+                      transition={microTransition}
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
+                    >
+                      Explore Signals
+                    </motion.a>
+                  </motion.div>
+
+                  <motion.div
+                    variants={revealItem}
+                    className="mt-6 inline-flex max-w-full items-center gap-3 rounded-[20px] border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-left backdrop-blur-xl"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-300/15 text-amber-200">
+                      <ShieldCheck className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-amber-200/80">Trust Marker</p>
+                      <p className="text-sm font-semibold text-white">SEBI Registered</p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
                 <motion.a
-                  href="https://app.planitt.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={buttonHover}
+                  href="#ai"
+                  variants={revealItem}
+                  whileHover={{ scale: 1.06 }}
                   transition={microTransition}
-                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/10 sm:min-h-0 sm:px-7"
+                  aria-label="Scroll to chatbot showcase"
+                  className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
                 >
-                  Explore Signals
+                  <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/20 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+                    <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
+                      SCROLL
+                    </span>
+                    <motion.div
+                      animate={{ y: [0, 14, 0] }}
+                      transition={scrollCueTransition}
+                      className="mt-4 h-3.5 w-[5px] rounded-full bg-white/95"
+                    />
+                  </div>
                 </motion.a>
               </motion.div>
+            </section>
 
-              <motion.div
-                variants={revealItem}
-                className="mt-6 inline-flex max-w-full items-center gap-3 rounded-[20px] border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-left backdrop-blur-xl"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-300/15 text-amber-200">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-amber-200/80">Trust Marker</p>
-                  <p className="text-sm font-semibold text-white">SEBI Registered</p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            <motion.a
-              href="#ai"
-              variants={revealItem}
-              whileHover={{ scale: 1.06 }}
-              transition={microTransition}
-              aria-label="Scroll to chatbot showcase"
-              className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center text-white/85 transition hover:text-white sm:bottom-7 lg:bottom-10"
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.35 }}
+              variants={revealSection}
+              className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8"
             >
-              <div className="relative flex h-16 w-11 items-start justify-center rounded-full border-2 border-white/20 bg-black/10 pt-2 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
-                <span className="pointer-events-none absolute top-[9px] text-[7px] font-medium uppercase tracking-[0.16em] text-white/92">
-                  SCROLL
-                </span>
+              <motion.div variants={revealSection} className="grid gap-3 md:grid-cols-3">
+                {trustCredentials.map((item) => (
+                  <motion.div
+                    key={item.title}
+                    variants={revealItem}
+                    whileHover={cardHover}
+                    transition={microTransition}
+                    className="rounded-[26px] border border-amber-300/20 bg-[linear-gradient(180deg,rgba(255,214,102,0.08),rgba(255,255,255,0.03))] p-4 backdrop-blur-xl"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-14 w-14 flex-none items-center justify-center rounded-[20px] bg-[#f5b544]/14 text-[#f7c86e]">
+                        <ShieldCheck className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#f7c86e]/80">{item.eyebrow}</p>
+                        <p className="mt-1 text-xl font-semibold tracking-[-0.03em] text-white">{item.title}</p>
+                        <p className="mt-1 text-sm text-slate-400">{item.detail}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.section>
+
+
+            <div id="ai">
+              <HowItWorksSection />
+            </div>
+            <TradoChatbotShowcase />
+
+            <motion.section
+              id="showcase"
+              ref={showcaseRef}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={revealSection}
+              className={sectionShell}
+            >
+              <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl py-14 text-center">
+                <p className={sectionHeader}>Showcase</p>
+                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Swipe through the product.</h2>
+                <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
+                  Real screens, real dashboard surfaces, and grounded analytics layered like a live operating system.
+                </p>
+              </motion.div>
+
+              <div className="mt-10 grid min-w-0 gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
                 <motion.div
-                  animate={{ y: [0, 14, 0] }}
-                  transition={scrollCueTransition}
-                  className="mt-4 h-3.5 w-[5px] rounded-full bg-white/95"
-                />
-              </div>
-            </motion.a>
-          </motion.div>
-        </section>
+                  variants={revealItem}
+                  style={{ y: showcaseCardOneY }}
+                  className={`${glassCard} relative flex h-full min-w-0 flex-col overflow-hidden rounded-3xl p-2 sm:p-3`}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
+                  <div className="relative min-w-0">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="min-w-0">
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Forecast Dashboard</p>
+                        <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">High-conviction market view.</h3>
+                      </div>
+                      <div className="w-full shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left sm:w-auto sm:text-right">
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Live P/L</p>
+                        <p className="mt-1 text-lg font-semibold text-emerald-300">+18.4%</p>
+                      </div>
+                    </div>
 
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          variants={revealSection}
-          className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8"
-        >
-          <motion.div variants={revealSection} className="grid gap-3 md:grid-cols-3">
-            {trustCredentials.map((item) => (
-              <motion.div
-                key={item.title}
-                variants={revealItem}
-                whileHover={cardHover}
-                transition={microTransition}
-                className="rounded-[26px] border border-amber-300/20 bg-[linear-gradient(180deg,rgba(255,214,102,0.08),rgba(255,255,255,0.03))] p-4 backdrop-blur-xl"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 flex-none items-center justify-center rounded-[20px] bg-[#f5b544]/14 text-[#f7c86e]">
-                    <ShieldCheck className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#f7c86e]/80">{item.eyebrow}</p>
-                    <p className="mt-1 text-xl font-semibold tracking-[-0.03em] text-white">{item.title}</p>
-                    <p className="mt-1 text-sm text-slate-400">{item.detail}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.section>
-
-
-        <div id="ai">
-          <HowItWorksSection />
-        </div>
-        <TradoChatbotShowcase />
-
-        <motion.section
-          id="showcase"
-          ref={showcaseRef}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={revealSection}
-          className={sectionShell}
-        >
-          <motion.div variants={revealItem} style={{ y: showcaseIntroY }} className="mx-auto max-w-3xl py-14 text-center">
-            <p className={sectionHeader}>Showcase</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Swipe through the product.</h2>
-            <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
-              Real screens, real dashboard surfaces, and grounded analytics layered like a live operating system.
-            </p>
-          </motion.div>
-
-          <div className="mt-10 grid min-w-0 gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
-            <motion.div
-              variants={revealItem}
-              style={{ y: showcaseCardOneY }}
-              className={`${glassCard} relative flex h-full min-w-0 flex-col overflow-hidden rounded-3xl p-2 sm:p-3`}
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,181,68,0.14),transparent_58%),radial-gradient(circle_at_80%_18%,rgba(124,92,255,0.14),transparent_24%)]" />
-              <div className="relative min-w-0">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="min-w-0">
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Forecast Dashboard</p>
-                    <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">High-conviction market view.</h3>
-                  </div>
-                  <div className="w-full shrink-0 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left sm:w-auto sm:text-right">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Live P/L</p>
-                    <p className="mt-1 text-lg font-semibold text-emerald-300">+18.4%</p>
-                  </div>
-                </div>
-
-                <div className="relative mt-2 min-h-[220px] flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] sm:min-h-[360px]">
-                  <Image
-                    src="/Forcast_Dashboard.jpg"
-                    alt="Planitt forecast dashboard"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="space-y-5">
-              <motion.div
-                variants={revealItem}
-                style={{ y: showcaseCardTwoY }}
-                className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5 h-full flex flex-col`}
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,92,255,0.16),transparent_28%)]" />
-                <div className="relative min-w-0">
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
-                    <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">Experience the product in action.</h3>
-                  </div>
-                  <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-3xl border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
-                    <div className="relative aspect-video h-full min-h-[200px] w-full sm:min-h-[280px]">
-                      <video
-                        src="/Create_a_premium_202604171446.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="h-full w-full object-contain"
+                    <div className="relative mt-2 min-h-[220px] flex-1 overflow-hidden rounded-[20px] border border-white/10 bg-[#0B0F19] sm:min-h-[360px]">
+                      <Image
+                        src="/Forcast_Dashboard.jpg"
+                        alt="Planitt forecast dashboard"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover"
                       />
                     </div>
                   </div>
+                </motion.div>
+
+                <div className="space-y-5">
+                  <motion.div
+                    variants={revealItem}
+                    style={{ y: showcaseCardTwoY }}
+                    className={`${glassCard} relative overflow-hidden rounded-[28px] p-4 sm:p-5 h-full flex flex-col`}
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,92,255,0.16),transparent_28%)]" />
+                    <div className="relative min-w-0">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">App Screens</p>
+                        <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-2xl">Experience the product in action.</h3>
+                      </div>
+                      <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-3xl border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
+                        <div className="relative aspect-video h-full min-h-[200px] w-full sm:min-h-[280px]">
+                          <video
+                            src="/Create_a_premium_202604171446.mp4"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
-              </motion.div>
-            </div>
-          </div>
+              </div>
 
 
-        </motion.section>
+            </motion.section>
 
-        <LearningJourneySection />
+            <LearningJourneySection />
 
-        <TradingAlgorithmsSection />
-        <FaqSection />
+            <TradingAlgorithmsSection />
+            <FaqSection />
           </>
         )}
 
