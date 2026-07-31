@@ -158,7 +158,8 @@ export default function LandingPage() {
 
   return (
     <>
-      <main className={`min-h-screen overflow-x-hidden text-white ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`}>
+      <main ref={heroRef} className={`min-h-screen overflow-x-hidden text-white ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`}>
+        <div ref={showcaseRef} className="absolute top-0 w-full h-px opacity-0 pointer-events-none" />
         <div className={`fixed inset-0 -z-10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`} />
         <div className={pageGradientClass} />
         <motion.div
@@ -175,11 +176,13 @@ export default function LandingPage() {
         {/* Spacer: header + ticker */}
         <div className="h-[96px] sm:h-[110px]" />
 
-        <section
-          ref={heroRef}
-          className="relative overflow-hidden border-b border-white/10"
-        >
-          <HeroParticles isAmberTheme={isAmberTheme} />
+        {false && (
+          <>
+            <section
+              ref={heroRef}
+              className="relative overflow-hidden border-b border-white/10"
+            >
+              <HeroParticles isAmberTheme={isAmberTheme} />
           <motion.div
             style={{ y: heroGlowY }}
             className={`absolute left-1/2 top-20 h-[min(28rem,92vw)] w-[min(28rem,92vw)] -translate-x-1/2 rounded-full blur-3xl sm:top-28 sm:h-[520px] sm:w-[520px] ${heroGlowClass}`}
@@ -389,6 +392,8 @@ export default function LandingPage() {
 
         <TradingAlgorithmsSection />
         <FaqSection />
+          </>
+        )}
 
         <CinematicFooter />
       </main>
