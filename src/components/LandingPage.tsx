@@ -80,7 +80,7 @@ export default function LandingPage() {
   const [bias, setBias] = useState<'Bullish' | 'Bearish' | 'Neutral'>('Bullish');
   const [confidence, setConfidence] = useState(74);
   const heroRef = useRef<HTMLElement | null>(null);
-  const showcaseRef = useRef<HTMLElement | null>(null);
+  const showcaseRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
