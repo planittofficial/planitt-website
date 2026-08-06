@@ -21,6 +21,7 @@ import FaqSection from './FaqSection';
 import LearningJourneySection from './LearningJourneySection';
 import MarketTicker from './MarketTicker';
 import CinematicFooter from './CinematicFooter';
+import AboutPage from './about/AboutPage';
 
 const sectionShell =
   'relative mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-8';
@@ -176,7 +177,9 @@ export default function LandingPage() {
         {/* Spacer: header + ticker */}
         <div className="h-[96px] sm:h-[110px]" />
 
-        {true && (
+        <AboutPage />
+
+        {false && (
           <>
             <section
               ref={heroRef}
