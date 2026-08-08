@@ -47,8 +47,8 @@ const Footer = () => {
                     alt="Planitt Logo"
                     width={30}
                     height={30}
-                    className="h-6 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]"
-                    style={{ width: 'auto' }}
+                    className="object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+                    style={{ width: 'auto', height: '24px' }}
                   />
                 </div>
               </div>

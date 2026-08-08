@@ -72,8 +72,8 @@ export default function Header({ variant = 'main' }: HeaderProps) {
               width={120}
               height={40}
               priority
-              className="h-10 w-auto transition-transform duration-200 hover:scale-105"
-              style={{ width: 'auto' }}
+              className="transition-transform duration-200 hover:scale-105"
+              style={{ width: 'auto', height: '40px' }}
             />
           </Link>
 

@@ -72,7 +72,8 @@ function MilestoneCard({ ms, isLeft, index }: { ms: Milestone; isLeft: boolean; 
     >
       {/* Dot marker */}
       <motion.div
-        whileInView={{ scale: [0, 1.2, 1] }}
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ type: 'spring', stiffness: 200, delay: index * 0.15 + 0.2 }}
         className={`absolute top-1/2 -translate-y-1/2 z-20 flex h-[20px] w-[20px] items-center justify-center

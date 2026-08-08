@@ -159,7 +159,7 @@ export default function LandingPage() {
 
   return (
     <>
-      <main ref={heroRef} className={`min-h-screen overflow-x-hidden text-white ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`}>
+      <main ref={heroRef} className={`relative min-h-screen overflow-x-hidden text-white ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`}>
         <div ref={showcaseRef} className="absolute top-0 w-full h-px opacity-0 pointer-events-none" />
         <div className={`fixed inset-0 -z-10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`} />
         <div className={pageGradientClass} />

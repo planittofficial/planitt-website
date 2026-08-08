@@ -144,6 +144,7 @@ function CredentialCard({ cred, index }: { cred: Credential; index: number }) {
                 src={cred.image}
                 alt={cred.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-contain"
               />
             </motion.div>

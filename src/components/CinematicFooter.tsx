@@ -26,11 +26,11 @@ function generateStars(count: number): Star[] {
   const stars: Star[] = [];
   for (let i = 0; i < count; i++) {
     stars.push({
-      x: seededRandom(i * 1.31) * 100,
-      y: seededRandom(i * 2.47) * 100,
-      size: seededRandom(i * 3.83) * 1.5 + 0.4,
-      opacity: seededRandom(i * 4.19) * 0.5 + 0.15,
-      delay: seededRandom(i * 5.67) * 6,
+      x: Number((seededRandom(i * 1.31) * 100).toFixed(4)),
+      y: Number((seededRandom(i * 2.47) * 100).toFixed(4)),
+      size: Number((seededRandom(i * 3.83) * 1.5 + 0.4).toFixed(4)),
+      opacity: Number((seededRandom(i * 4.19) * 0.5 + 0.15).toFixed(4)),
+      delay: Number((seededRandom(i * 5.67) * 6).toFixed(4)),
     });
   }
   return stars;
