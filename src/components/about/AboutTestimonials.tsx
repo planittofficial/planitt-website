@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { GraduationCap, Briefcase, Quote, Star } from 'lucide-react';
+import React, { MouseEvent } from 'react';
 import {
   sectionShell,
   eyebrow,
   sectionHeading,
-  glassCard,
-  goldHover,
   revealSection,
   revealItem,
+  cardHover,
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -91,6 +91,92 @@ const tracks: { key: Track; label: string; icon: React.ElementType }[] = [
   { key: 'services', label: 'Technical & Financial', icon: Briefcase },
 ];
 
+function TestimonialCard({ t, activeTrack, index }: { t: TestimonialCard; activeTrack: Track; index: number }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const isCourses = activeTrack === 'courses';
+  const accentColor = isCourses ? 'rgba(124, 92, 255,' : 'rgba(245, 181, 68,';
+  const hexColor = isCourses ? '#7C5CFF' : '#f5b544';
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      whileHover={cardHover}
+      transition={{ type: 'spring', stiffness: 100, damping: 20, delay: index * 0.1 }}
+      onMouseMove={handleMouseMove}
+      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-8 shadow-2xl backdrop-blur-2xl transition-colors duration-500 hover:border-white/20"
+    >
+      {/* Dynamic Hover Background Glow */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              400px circle at ${mouseX}px ${mouseY}px,
+              ${accentColor} 0.15),
+              transparent 40%
+            )
+          `,
+        }}
+      />
+      {/* Animated Border Reveal on Hover */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              250px circle at ${mouseX}px ${mouseY}px,
+              ${accentColor} 0.5),
+              transparent 40%
+            )
+          `,
+          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+          padding: '1px',
+        }}
+      />
+
+      {/* Decorative gradient */}
+      <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-[40px] opacity-40 transition-opacity duration-500 group-hover:opacity-60" style={{ backgroundColor: hexColor }} />
+
+      <div className="relative z-10 flex flex-1 flex-col">
+        {/* Quote icon */}
+        <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl shadow-inner ring-1 ring-white/10 transition-transform duration-500 group-hover:scale-110" style={{ backgroundColor: `${accentColor} 0.1)` }}>
+          <Quote className="h-6 w-6" style={{ color: hexColor }} />
+        </div>
+
+        {/* Quote text */}
+        <p className="flex-1 text-base italic leading-relaxed text-slate-300 transition-colors duration-300 group-hover:text-white">
+          &ldquo;{t.quote}&rdquo;
+        </p>
+
+        {/* Stars */}
+        <div className="mt-8 flex gap-1.5">
+          {Array.from({ length: 5 }).map((_, s) => (
+            <Star key={s} className="h-4 w-4" style={{ fill: hexColor, color: hexColor }} />
+          ))}
+        </div>
+
+        {/* Attribution */}
+        <div className="mt-5 border-t border-white/10 pt-5">
+          <p className="text-base font-semibold tracking-tight text-white">{t.name}</p>
+          <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: hexColor }}>{t.role}</p>
+          <p className="mt-1 text-xs text-slate-500 transition-colors duration-300 group-hover:text-slate-400">{t.location}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AboutTestimonials() {
   const [active, setActive] = useState<Track>('courses');
   const testimonials = active === 'courses' ? coursesTestimonials : servicesTestimonials;
@@ -100,32 +186,42 @@ export default function AboutTestimonials() {
       id="about-testimonials"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, margin: '-100px' }}
       variants={revealSection}
       className={sectionShell}
     >
       {/* Header */}
-      <motion.div variants={revealItem} className="mx-auto max-w-3xl text-center">
+      <motion.div variants={revealItem} className="relative z-10 mx-auto max-w-3xl text-center">
         <p className={eyebrow}>What People Say</p>
         <h2 className={sectionHeading}>Testimonials</h2>
-        <p className="mt-4 max-w-2xl mx-auto text-sm leading-6 text-slate-400 sm:text-base">
+        <p className="mt-6 max-w-2xl mx-auto text-base leading-relaxed text-slate-400 sm:text-lg">
           Hear from our students, learners, and service clients about their experience with Planitt.
         </p>
       </motion.div>
 
-      {/* Track toggle */}
-      <motion.div variants={revealItem} className="mx-auto mt-10 flex max-w-md items-center justify-center">
-        <div className="inline-flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-xl">
+      {/* Segmented Control Toggle */}
+      <motion.div variants={revealItem} className="relative z-10 mx-auto mt-12 flex max-w-md items-center justify-center">
+        <div className="relative inline-flex rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-2xl shadow-xl">
           {tracks.map((t) => (
             <button
               key={t.key}
               onClick={() => setActive(t.key)}
-              className={`relative flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition-all duration-300
-                ${active === t.key
-                  ? 'bg-gradient-to-r from-[#f5b544]/90 to-[#f7c86e]/80 text-[#0B0F19] shadow-[0_8px_30px_rgba(245,181,68,0.3)]'
-                  : 'text-slate-400 hover:text-white'
-                }`}
+              className={`relative z-10 flex items-center gap-2 rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors duration-300
+                ${active === t.key ? 'text-[#0B0F19]' : 'text-slate-400 hover:text-white'}
+              `}
             >
+              {active === t.key && (
+                <motion.div
+                  layoutId="active-testimonial-pill"
+                  className="absolute inset-0 -z-10 rounded-full"
+                  style={{
+                    background: t.key === 'courses' 
+                      ? 'linear-gradient(90deg, #7C5CFF, #9a82ff)' 
+                      : 'linear-gradient(90deg, #f5b544, #f7c86e)'
+                  }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
               <t.icon className="h-4 w-4" />
               {t.label}
             </button>
@@ -134,52 +230,15 @@ export default function AboutTestimonials() {
       </motion.div>
 
       {/* Testimonial cards */}
-      <div className="mt-12 min-h-[360px]">
-        <AnimatePresence mode="wait">
+      <div className="relative z-10 mx-auto mt-16 max-w-7xl min-h-[400px]">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="grid gap-6 md:grid-cols-3"
+            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
             {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
-                className={`${glassCard} ${goldHover} relative flex flex-col overflow-hidden p-7`}
-              >
-                {/* Decorative gradient */}
-                <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#f5b544]/5 blur-3xl" />
-
-                <div className="relative flex flex-1 flex-col">
-                  {/* Quote icon */}
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f5b544]/10">
-                    <Quote className="h-5 w-5 text-[#f7c86e]" />
-                  </div>
-
-                  {/* Quote text */}
-                  <p className="flex-1 text-sm italic leading-7 text-slate-300">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-
-                  {/* Stars */}
-                  <div className="mt-5 flex gap-1">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Star key={s} className="h-4 w-4 fill-[#f5b544] text-[#f5b544]" />
-                    ))}
-                  </div>
-
-                  {/* Attribution */}
-                  <div className="mt-4 border-t border-white/10 pt-4">
-                    <p className="text-sm font-semibold text-white">{t.name}</p>
-                    <p className="mt-0.5 text-xs text-[#f7c86e]/80">{t.role}</p>
-                    <p className="mt-0.5 text-xs text-slate-500">{t.location}</p>
-                  </div>
-                </div>
+              <motion.div key={i} className="h-full">
+                <TestimonialCard t={t} activeTrack={active} index={i} />
               </motion.div>
             ))}
           </motion.div>

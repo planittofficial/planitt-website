@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import {
   BarChart3,
   Bot,
@@ -12,12 +12,12 @@ import {
   Landmark,
   LineChart,
 } from 'lucide-react';
+import React, { MouseEvent } from 'react';
 import {
   sectionShell,
   eyebrow,
   sectionHeading,
   glassCard,
-  goldHover,
   revealSection,
   revealItem,
   cardHover,
@@ -72,10 +72,80 @@ const technicalCapabilities: CapabilityCard[] = [
   },
 ];
 
-const pillars: { key: Pillar; label: string; icon: React.ElementType }[] = [
-  { key: 'financial', label: 'Financial & Advisory', icon: BarChart3 },
-  { key: 'technical', label: 'Technical & Education', icon: BrainCircuit },
+const pillars: { key: Pillar; label: string; icon: React.ElementType; color: string }[] = [
+  { key: 'financial', label: 'Financial & Advisory', icon: BarChart3, color: 'rgba(245, 181, 68,' },
+  { key: 'technical', label: 'Technical & Education', icon: BrainCircuit, color: 'rgba(124, 92, 255,' },
 ];
+
+function CapCard({ cap, activePillar }: { cap: CapabilityCard; activePillar: Pillar }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const isFinancial = activePillar === 'financial';
+  const accentColor = isFinancial ? 'rgba(245, 181, 68,' : 'rgba(124, 92, 255,';
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      whileHover={cardHover}
+      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      onMouseMove={handleMouseMove}
+      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-7 shadow-2xl backdrop-blur-2xl transition-colors duration-500 hover:border-white/20`}
+    >
+      {/* Dynamic Hover Background Glow */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              400px circle at ${mouseX}px ${mouseY}px,
+              ${accentColor} 0.15),
+              transparent 40%
+            )
+          `,
+        }}
+      />
+      {/* Animated Border Reveal on Hover */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              250px circle at ${mouseX}px ${mouseY}px,
+              ${accentColor} 0.5),
+              transparent 40%
+            )
+          `,
+          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+          padding: '1px',
+        }}
+      />
+
+      <div className="relative z-10">
+        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.04] shadow-inner shadow-white/10 ring-1 ring-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:bg-white/[0.08]">
+           {/* Soft pulse glow behind icon */}
+           <div className="absolute inset-0 rounded-2xl bg-current opacity-20 blur-xl transition-opacity duration-500 group-hover:opacity-40" style={{ color: `${accentColor} 1)` }} />
+           <cap.icon className="relative z-10 h-7 w-7 text-white transition-colors duration-300" style={{ color: `${accentColor} 1)` }} />
+        </div>
+        <h3 className="mt-6 text-xl font-semibold tracking-tight text-white transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60">
+          {cap.title}
+        </h3>
+        <p className="mt-3 text-base leading-relaxed text-slate-400 transition-colors duration-300 group-hover:text-slate-300">
+          {cap.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function WhatWeDo() {
   const [active, setActive] = useState<Pillar>('financial');
@@ -86,33 +156,43 @@ export default function WhatWeDo() {
       id="what-we-do"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, margin: '-100px' }}
       variants={revealSection}
       className={sectionShell}
     >
       {/* Header */}
-      <motion.div variants={revealItem} className="mx-auto max-w-3xl text-center">
+      <motion.div variants={revealItem} className="relative z-10 mx-auto max-w-3xl text-center">
         <p className={eyebrow}>What We Do</p>
         <h2 className={sectionHeading}>One Platform, Two Engines</h2>
-        <p className="mt-4 max-w-2xl mx-auto text-sm leading-6 text-slate-400 sm:text-base">
+        <p className="mt-6 max-w-2xl mx-auto text-base leading-relaxed text-slate-400 sm:text-lg">
           Planitt operates across two interconnected pillars — financial advisory powered by AI,
           and end-to-end technical services for the digital age.
         </p>
       </motion.div>
 
-      {/* Toggle */}
-      <motion.div variants={revealItem} className="mx-auto mt-10 flex max-w-md items-center justify-center">
-        <div className="inline-flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-xl">
+      {/* Segmented Control Toggle */}
+      <motion.div variants={revealItem} className="relative z-10 mx-auto mt-12 flex max-w-md items-center justify-center">
+        <div className="relative inline-flex rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-2xl shadow-xl">
           {pillars.map((p) => (
             <button
               key={p.key}
               onClick={() => setActive(p.key)}
-              className={`relative flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition-all duration-300
-                ${active === p.key
-                  ? 'bg-gradient-to-r from-[#f5b544]/90 to-[#f7c86e]/80 text-[#0B0F19] shadow-[0_8px_30px_rgba(245,181,68,0.3)]'
-                  : 'text-slate-400 hover:text-white'
-                }`}
+              className={`relative z-10 flex items-center gap-2 rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors duration-300
+                ${active === p.key ? 'text-[#0B0F19]' : 'text-slate-400 hover:text-white'}
+              `}
             >
+              {active === p.key && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute inset-0 -z-10 rounded-full"
+                  style={{
+                    background: p.key === 'financial' 
+                      ? 'linear-gradient(90deg, #f5b544, #f7c86e)' 
+                      : 'linear-gradient(90deg, #7C5CFF, #9a82ff)'
+                  }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
               <p.icon className="h-4 w-4" />
               {p.label}
             </button>
@@ -121,46 +201,22 @@ export default function WhatWeDo() {
       </motion.div>
 
       {/* Capability cards */}
-      <div className="mt-12 min-h-[320px]">
-        <AnimatePresence mode="wait">
+      <div className="relative z-10 mx-auto mt-16 max-w-6xl min-h-[360px]">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
             className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {capabilities.map((cap, i) => (
-              <motion.div
+              <motion.div 
                 key={cap.title}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
-                whileHover={cardHover}
-                className={`${glassCard} ${goldHover} relative overflow-hidden p-7`}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.1 }}
+                className="h-full"
               >
-                {/* Subtle accent glow */}
-                <div
-                  className={`absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl ${
-                    active === 'financial' ? 'bg-[#f5b544]/6' : 'bg-[#7C5CFF]/6'
-                  }`}
-                />
-                <div className="relative">
-                  <div
-                    className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
-                      active === 'financial'
-                        ? 'bg-[#f5b544]/10 text-[#f7c86e]'
-                        : 'bg-[#7C5CFF]/10 text-[#c9bcff]'
-                    }`}
-                  >
-                    <cap.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold tracking-[-0.02em] text-white">
-                    {cap.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">{cap.description}</p>
-                </div>
+                <CapCard cap={cap} activePillar={active} />
               </motion.div>
             ))}
           </motion.div>
