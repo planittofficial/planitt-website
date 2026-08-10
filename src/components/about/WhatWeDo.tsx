@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   BarChart3,
   Bot,
@@ -11,216 +11,285 @@ import {
   GraduationCap,
   Landmark,
   LineChart,
+  ChevronRight,
+  Sparkles,
 } from 'lucide-react';
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import {
   sectionShell,
   eyebrow,
-  sectionHeading,
-  glassCard,
   revealSection,
   revealItem,
-  cardHover,
-  microTransition,
+  springSmooth,
+  MagneticWrapper,
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 2 — What Planitt Does
+   Interactive Dual-Engine Showcase (Financial vs Technical)
    ───────────────────────────────────────────────────────────────────────────── */
 
 type Pillar = 'financial' | 'technical';
 
-interface CapabilityCard {
+interface CapabilityItem {
+  index: string;
   icon: React.ElementType;
   title: string;
+  subtitle: string;
   description: string;
+  tags: string[];
 }
 
-const financialCapabilities: CapabilityCard[] = [
+const financialCapabilities: CapabilityItem[] = [
   {
+    index: '01',
     icon: Landmark,
-    title: 'Advisory',
-    description: '[Financial advisory services — placeholder description to be refined]',
+    title: 'Advisory & Portfolio Structuring',
+    subtitle: 'Goal-Oriented Asset Management',
+    description:
+      'Structured financial advisory across SIPs, mutual funds, equity allocations, and risk management tailored to long-term wealth objectives.',
+    tags: ['Wealth Planning', 'SIP Strategy', 'Risk Hedging'],
   },
   {
+    index: '02',
     icon: LineChart,
     title: 'Multi-Asset Recommendation System',
-    description: '[AI-driven signals across Stocks, Crypto, Forex, F&O, IPO — placeholder]',
+    subtitle: 'AI-Driven Market Intelligence',
+    description:
+      'Advanced forecasting and signal generation across Stocks, Crypto, Forex, F&O, and IPOs powered by proprietary quantitative models.',
+    tags: ['Stocks & F&O', 'Crypto & Forex', 'IPO Signals'],
   },
   {
+    index: '03',
     icon: Bot,
-    title: 'Automation & Trading Bots',
-    description: '[Trading algorithms, execution automation & strategy bots — placeholder]',
+    title: 'Automation & Trading Algorithms',
+    subtitle: 'Institutional Execution Bots',
+    description:
+      'Automated strategy execution, rule-based algorithmic triggers, and real-time risk controls built for consistency and discipline.',
+    tags: ['Algo Bots', 'API Execution', 'Risk Protocols'],
   },
 ];
 
-const technicalCapabilities: CapabilityCard[] = [
+const technicalCapabilities: CapabilityItem[] = [
   {
+    index: '01',
     icon: Code2,
-    title: 'Technical Services',
-    description: '[App, Web, Cloud, DevOps, Cybersecurity & Digital Marketing — placeholder]',
+    title: 'Technical Delivery & Engineering',
+    subtitle: 'Full-Stack Software Architecture',
+    description:
+      'Custom web & mobile app engineering, enterprise backend design, API integration, and scalable digital product delivery.',
+    tags: ['Web & Mobile', 'API Systems', 'Scalable Code'],
   },
   {
+    index: '02',
     icon: GraduationCap,
-    title: 'Courses & Academy',
-    description: '[Financial & technical courses, training programs — placeholder]',
+    title: 'Planitt Academy & Mentorship',
+    subtitle: 'Practical Skills Training',
+    description:
+      'Hands-on masterclasses in algorithmic trading, personal finance management, and full-stack software development.',
+    tags: ['Algo Trading', 'Fintech Bootcamp', 'Live Mentorship'],
   },
   {
+    index: '03',
     icon: Cloud,
-    title: 'Cloud & Infrastructure',
-    description: '[Cloud architecture, hosting, CI/CD & scalable deployments — placeholder]',
+    title: 'Cloud, Infrastructure & Security',
+    subtitle: 'DevOps & Cyber Safeguards',
+    description:
+      'Cloud hosting, CI/CD automation pipelines, infrastructure optimization, and end-to-end security compliance.',
+    tags: ['AWS/Cloud', 'CI/CD Pipelines', 'Cyber Security'],
   },
 ];
 
-const pillars: { key: Pillar; label: string; icon: React.ElementType; color: string }[] = [
-  { key: 'financial', label: 'Financial & Advisory', icon: BarChart3, color: 'rgba(245, 181, 68,' },
-  { key: 'technical', label: 'Technical & Education', icon: BrainCircuit, color: 'rgba(124, 92, 255,' },
+const pillars: { key: Pillar; label: string; icon: React.ElementType }[] = [
+  { key: 'financial', label: 'Engine A: Financial & Advisory', icon: BarChart3 },
+  { key: 'technical', label: 'Engine B: Technical & Education', icon: BrainCircuit },
 ];
-
-function CapCard({ cap, activePillar }: { cap: CapabilityCard; activePillar: Pillar }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const isFinancial = activePillar === 'financial';
-  const accentColor = isFinancial ? 'rgba(245, 181, 68,' : 'rgba(124, 92, 255,';
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      whileHover={cardHover}
-      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-      onMouseMove={handleMouseMove}
-      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-7 shadow-2xl backdrop-blur-2xl transition-colors duration-500 hover:border-white/20`}
-    >
-      {/* Dynamic Hover Background Glow */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              400px circle at ${mouseX}px ${mouseY}px,
-              ${accentColor} 0.15),
-              transparent 40%
-            )
-          `,
-        }}
-      />
-      {/* Animated Border Reveal on Hover */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              250px circle at ${mouseX}px ${mouseY}px,
-              ${accentColor} 0.5),
-              transparent 40%
-            )
-          `,
-          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-          padding: '1px',
-        }}
-      />
-
-      <div className="relative z-10">
-        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.04] shadow-inner shadow-white/10 ring-1 ring-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:bg-white/[0.08]">
-           {/* Soft pulse glow behind icon */}
-           <div className="absolute inset-0 rounded-2xl bg-current opacity-20 blur-xl transition-opacity duration-500 group-hover:opacity-40" style={{ color: `${accentColor} 1)` }} />
-           <cap.icon className="relative z-10 h-7 w-7 text-white transition-colors duration-300" style={{ color: `${accentColor} 1)` }} />
-        </div>
-        <h3 className="mt-6 text-xl font-semibold tracking-tight text-white transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60">
-          {cap.title}
-        </h3>
-        <p className="mt-3 text-base leading-relaxed text-slate-400 transition-colors duration-300 group-hover:text-slate-300">
-          {cap.description}
-        </p>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function WhatWeDo() {
-  const [active, setActive] = useState<Pillar>('financial');
-  const capabilities = active === 'financial' ? financialCapabilities : technicalCapabilities;
+  const [activePillar, setActivePillar] = useState<Pillar>('financial');
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+
+  const capabilities = activePillar === 'financial' ? financialCapabilities : technicalCapabilities;
+  const activeCap = capabilities[activeStepIndex] || capabilities[0];
+  const isFinancial = activePillar === 'financial';
+  const accentColor = isFinancial ? '#f5b544' : '#7C5CFF';
 
   return (
     <motion.section
       id="what-we-do"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-80px' }}
       variants={revealSection}
       className={sectionShell}
     >
-      {/* Header */}
-      <motion.div variants={revealItem} className="relative z-10 mx-auto max-w-3xl text-center">
-        <p className={eyebrow}>What We Do</p>
-        <h2 className={sectionHeading}>One Platform, Two Engines</h2>
-        <p className="mt-6 max-w-2xl mx-auto text-base leading-relaxed text-slate-400 sm:text-lg">
-          Planitt operates across two interconnected pillars — financial advisory powered by AI,
-          and end-to-end technical services for the digital age.
-        </p>
-      </motion.div>
-
-      {/* Segmented Control Toggle */}
-      <motion.div variants={revealItem} className="relative z-10 mx-auto mt-12 flex max-w-md items-center justify-center">
-        <div className="relative inline-flex rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-2xl shadow-xl">
-          {pillars.map((p) => (
-            <button
-              key={p.key}
-              onClick={() => setActive(p.key)}
-              className={`relative z-10 flex items-center gap-2 rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors duration-300
-                ${active === p.key ? 'text-[#0B0F19]' : 'text-slate-400 hover:text-white'}
-              `}
-            >
-              {active === p.key && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute inset-0 -z-10 rounded-full"
-                  style={{
-                    background: p.key === 'financial' 
-                      ? 'linear-gradient(90deg, #f5b544, #f7c86e)' 
-                      : 'linear-gradient(90deg, #7C5CFF, #9a82ff)'
-                  }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                />
-              )}
-              <p.icon className="h-4 w-4" />
-              {p.label}
-            </button>
-          ))}
+      {/* Editorial Header Block */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/[0.08] pb-12">
+        <div>
+          <span className={eyebrow}>
+            <Sparkles className="h-3.5 w-3.5" /> 02 / Operational Capabilities
+          </span>
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            One Platform.{' '}
+            <span className="bg-gradient-to-r from-[#f5b544] via-[#f7c86e] to-[#7C5CFF] bg-clip-text text-transparent">
+              Two Specialized Engines.
+            </span>
+          </h2>
         </div>
-      </motion.div>
 
-      {/* Capability cards */}
-      <div className="relative z-10 mx-auto mt-16 max-w-6xl min-h-[360px]">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={active}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {capabilities.map((cap, i) => (
-              <motion.div 
-                key={cap.title}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.1 }}
-                className="h-full"
+        {/* Segmented Control Pill Toggle */}
+        <div className="relative inline-flex shrink-0 rounded-full border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-md">
+          {pillars.map((p) => {
+            const isActive = activePillar === p.key;
+            return (
+              <button
+                key={p.key}
+                onClick={() => {
+                  setActivePillar(p.key);
+                  setActiveStepIndex(0);
+                }}
+                className={`relative z-10 flex items-center gap-2.5 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
+                  isActive ? 'text-[#0B0F19]' : 'text-slate-400 hover:text-white'
+                }`}
               >
-                <CapCard cap={cap} activePillar={active} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    layoutId="activeEnginePill"
+                    className="absolute inset-0 -z-10 rounded-full"
+                    style={{
+                      background: p.key === 'financial'
+                        ? 'linear-gradient(90deg, #f5b544, #f7c86e)'
+                        : 'linear-gradient(90deg, #7C5CFF, #9a82ff)',
+                    }}
+                    transition={springSmooth}
+                  />
+                )}
+                <p.icon className="h-4 w-4" />
+                {p.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Interactive Showcase Grid */}
+      <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
+        {/* LEFT COLUMN: Vertical Step Indexing List */}
+        <motion.div variants={revealItem} className="lg:col-span-5 space-y-3">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 mb-4">
+            Select Core Capability
+          </p>
+
+          {capabilities.map((cap, i) => {
+            const isSelected = activeStepIndex === i;
+            return (
+              <button
+                key={cap.index}
+                onClick={() => setActiveStepIndex(i)}
+                className={`group relative flex w-full items-center justify-between p-5 text-left transition-all duration-300 rounded-2xl ${
+                  isSelected
+                    ? 'bg-white/[0.05] border border-white/15'
+                    : 'border border-transparent hover:bg-white/[0.02] text-slate-400'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`text-lg font-mono font-extrabold tracking-widest ${
+                      isSelected ? 'text-[#f5b544]' : 'text-slate-600'
+                    }`}
+                  >
+                    {cap.index}
+                  </span>
+                  <div>
+                    <h3 className={`text-base font-semibold tracking-tight ${isSelected ? 'text-white' : 'text-slate-300'}`}>
+                      {cap.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">{cap.subtitle}</p>
+                  </div>
+                </div>
+
+                <ChevronRight
+                  className={`h-4 w-4 transition-transform duration-300 ${
+                    isSelected ? 'translate-x-1 text-[#f5b544]' : 'opacity-30'
+                  }`}
+                />
+
+                {isSelected && (
+                  <motion.div
+                    layoutId="activeCapBorder"
+                    className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
+                    style={{ backgroundColor: accentColor }}
+                    transition={springSmooth}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </motion.div>
+
+        {/* RIGHT COLUMN: Illuminated Dynamic Spotlight Panel */}
+        <motion.div variants={revealItem} className="lg:col-span-7">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activePillar}-${activeCap.index}`}
+              initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
+              transition={{ duration: 0.4 }}
+              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-12 backdrop-blur-xl"
+            >
+              {/* Top Bar with Icon */}
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-6">
+                <div className="flex items-center gap-4">
+                  <div
+                    className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10"
+                    style={{ backgroundColor: `${accentColor}15` }}
+                  >
+                    <activeCap.icon className="h-7 w-7" style={{ color: accentColor }} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
+                      Module {activeCap.index} / 03
+                    </span>
+                    <h4 className="text-xl font-bold tracking-tight text-white">
+                      {activeCap.subtitle}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Content */}
+              <div className="mt-8 space-y-4">
+                <h3 className="text-2xl font-bold tracking-tight text-white leading-snug sm:text-3xl">
+                  {activeCap.title}
+                </h3>
+                <p className="text-base leading-relaxed text-slate-300">
+                  {activeCap.description}
+                </p>
+              </div>
+
+              {/* Floating Metallic Tags */}
+              <div className="mt-10 pt-6 border-t border-white/[0.08]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 mb-3">
+                  Core Highlights & Deliverables
+                </p>
+                <div className="flex flex-wrap gap-2.5">
+                  {activeCap.tags.map((tag) => (
+                    <MagneticWrapper key={tag} strength={0.12}>
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-slate-200">
+                        <span
+                          className="h-1.5 w-1.5 rounded-full"
+                          style={{ backgroundColor: accentColor }}
+                        />
+                        {tag}
+                      </span>
+                    </MagneticWrapper>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.section>
   );

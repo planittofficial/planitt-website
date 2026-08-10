@@ -1,100 +1,67 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import React, { MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Sparkles, TrendingUp } from 'lucide-react';
 import {
   sectionShell,
   eyebrow,
-  sectionHeading,
   revealSection,
   revealItem,
-  cardHover,
+  MagneticWrapper,
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Section 5 — Achievements (Stat Grid)
+   Section 5 — Achievements
+   Large Editorial Metric Showcase & Live Counter Engine
    ───────────────────────────────────────────────────────────────────────────── */
 
 interface StatSlot {
-  value: string;
+  numericValue: number;
+  prefix?: string;
+  suffix: string;
   label: string;
+  sublabel: string;
 }
 
 const stats: StatSlot[] = [
-  { value: '50+', label: 'Happy Clients' },
-  { value: 'Rs 50L+', label: 'Portfolio Managed' },
-  { value: '30+', label: 'Tech Deliveries' },
-  { value: '6+', label: 'Years Experience' },
+  { numericValue: 50, suffix: '+', label: 'Happy Clients', sublabel: 'Across Wealth & Tech' },
+  { numericValue: 50, prefix: 'Rs ', suffix: 'L+', label: 'Portfolio Managed', sublabel: 'Systematic Guidance' },
+  { numericValue: 30, suffix: '+', label: 'Tech Deliveries', sublabel: 'Apps, Web & Cloud' },
+  { numericValue: 6, suffix: '+', label: 'Years Experience', sublabel: 'Proven Leadership' },
 ];
 
-function StatCard({ stat, index }: { stat: StatSlot; index: number }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+function AnimatedNumber({ stat }: { stat: StatSlot }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const [displayValue, setDisplayValue] = useState(0);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+  useEffect(() => {
+    if (!isInView) return;
+    const duration = 1600;
+    const startTime = Date.now();
+    const target = stat.numericValue;
+
+    function tick() {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }, [isInView, stat.numericValue]);
 
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { type: 'spring', stiffness: 100, damping: 20, delay: index * 0.1 },
-        },
-      }}
-      whileHover={cardHover}
-      onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-8 text-center shadow-2xl backdrop-blur-2xl transition-colors duration-500 hover:border-white/20 sm:p-10"
+    <p
+      ref={ref}
+      className="font-mono text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl bg-gradient-to-r from-[#f5b544] via-[#f7c86e] to-white bg-clip-text text-transparent"
     >
-      {/* Dynamic Hover Background Glow */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              300px circle at ${mouseX}px ${mouseY}px,
-              rgba(245, 181, 68, 0.15),
-              transparent 40%
-            )
-          `,
-        }}
-      />
-      {/* Animated Border Reveal on Hover */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              200px circle at ${mouseX}px ${mouseY}px,
-              rgba(245, 181, 68, 0.5),
-              transparent 40%
-            )
-          `,
-          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-          padding: '1px',
-        }}
-      />
-
-      {/* Subtle static glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,181,68,0.04),transparent_70%)]" />
-      
-      <div className="relative z-10 flex flex-col items-center justify-center">
-        <p className="bg-gradient-to-br from-[#f5b544] to-[#f7c86e] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent drop-shadow-sm transition-transform duration-500 group-hover:scale-110 sm:text-5xl">
-          {stat.value}
-        </p>
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors duration-300 group-hover:text-slate-300">
-          {stat.label}
-        </p>
-      </div>
-    </motion.div>
+      {stat.prefix ?? ''}
+      {displayValue}
+      {stat.suffix}
+    </p>
   );
 }
 
@@ -104,27 +71,56 @@ export default function Achievements() {
       id="achievements"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-80px' }}
       variants={revealSection}
       className={sectionShell}
     >
-      {/* Header */}
-      <motion.div variants={revealItem} className="relative z-10 mx-auto max-w-3xl text-center">
-        <p className={eyebrow}>Milestones</p>
-        <h2 className={sectionHeading}>Our Achievements</h2>
-        <p className="mt-6 max-w-2xl mx-auto text-base leading-relaxed text-slate-400 sm:text-lg">
-          Numbers that reflect the trust our clients place in us — and the impact we&apos;ve delivered.
-        </p>
-      </motion.div>
+      {/* Top Divider */}
+      <div className="mb-12 h-px w-full bg-gradient-to-r from-transparent via-[#f5b544]/30 to-transparent" />
 
-      {/* Stat grid */}
-      <motion.div
-        variants={revealSection}
-        className="relative z-10 mx-auto mt-20 grid max-w-5xl grid-cols-2 gap-6 lg:grid-cols-4"
-      >
-        {stats.map((stat, i) => (
-          <StatCard key={i} stat={stat} index={i} />
-        ))}
+      {/* Editorial Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div>
+          <span className={eyebrow}>
+            <Sparkles className="h-3.5 w-3.5" /> 05 / Verified Milestones
+          </span>
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Numbers That Reflect{' '}
+            <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
+              Client Trust.
+            </span>
+          </h2>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 border border-white/10 px-4 py-2 rounded-full bg-white/[0.02]">
+          <TrendingUp className="h-4 w-4 text-[#f5b544]" />
+          <span>QUANTIFIABLE IMPACT</span>
+        </div>
+      </div>
+
+      {/* Edge-to-Edge Metric Strip Composition */}
+      <motion.div variants={revealItem} className="relative rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-12 backdrop-blur-xl">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-white/[0.08] sm:divide-y-0 sm:divide-x sm:divide-white/[0.08]">
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className={`flex flex-col items-center text-center ${
+                i > 0 ? 'pt-8 sm:pt-0 sm:pl-8' : ''
+              }`}
+            >
+              <MagneticWrapper strength={0.15}>
+                <AnimatedNumber stat={stat} />
+              </MagneticWrapper>
+
+              <h3 className="mt-4 text-base font-bold tracking-tight text-white">
+                {stat.label}
+              </h3>
+              <p className="mt-1 text-xs text-slate-400 font-mono">
+                {stat.sublabel}
+              </p>
+            </div>
+          ))}
+        </div>
       </motion.div>
     </motion.section>
   );

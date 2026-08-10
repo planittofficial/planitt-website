@@ -1,85 +1,65 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import React, { MouseEvent } from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles, Building, Handshake } from 'lucide-react';
 import {
   sectionShell,
   eyebrow,
-  sectionHeading,
   revealSection,
   revealItem,
-  cardHover,
+  MagneticWrapper,
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 4 — Supporters & Collaborators
+   Dual-Row Infinite Motion Marquee with Magnetic Hover Feedback
    ───────────────────────────────────────────────────────────────────────────── */
 
-const PLACEHOLDER_COUNT = 8;
+const row1Logos = [
+  'Institutional Partner 01',
+  'Fintech Capital',
+  'Technology Incubator',
+  'Strategic Alliance',
+  'RTMNU Incubation',
+];
 
-function SupporterCard({ index }: { index: number }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+const row2Logos = [
+  'DPIIT Startup India',
+  'Wealth Advisory Corp',
+  'Cloud Infrastructure Partner',
+  'Algorithmic Trading Hub',
+  'Planitt Ecosystem Partner',
+];
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+function MarqueeRow({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
+  const duplicated = [...items, ...items, ...items, ...items];
 
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { type: 'spring', stiffness: 100, damping: 20, delay: index * 0.05 },
-        },
-      }}
-      whileHover={{ y: -5, scale: 1.05 }}
-      onMouseMove={handleMouseMove}
-      className="group relative flex h-24 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-xl backdrop-blur-2xl transition-colors duration-500 hover:border-white/20 sm:h-28"
-    >
-      {/* Dynamic Hover Background Glow */}
+    <div className="flex overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              150px circle at ${mouseX}px ${mouseY}px,
-              rgba(245, 181, 68, 0.15),
-              transparent 40%
-            )
-          `,
+        animate={{
+          x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
         }}
-      />
-      {/* Animated Border Reveal on Hover */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-500 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              150px circle at ${mouseX}px ${mouseY}px,
-              rgba(245, 181, 68, 0.5),
-              transparent 40%
-            )
-          `,
-          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-          padding: '1px',
+        transition={{
+          duration: 25,
+          ease: 'linear',
+          repeat: Infinity,
         }}
-      />
-
-      <div className="relative z-10 flex h-full w-full items-center justify-center p-4">
-        {/* Placeholder — swap with <Image src="/supporters/logo-N.png" /> later */}
-        <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-300 group-hover:text-[#f7c86e]">
-          Logo
-        </span>
-      </div>
-    </motion.div>
+        className="flex shrink-0 items-center gap-6 py-3"
+      >
+        {duplicated.map((item, idx) => (
+          <MagneticWrapper key={`${item}-${idx}`} strength={0.2}>
+            <div className="group relative flex h-20 w-56 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.02] px-6 backdrop-blur-md transition-all duration-300 hover:border-[#f5b544]/40 hover:bg-white/[0.05] hover:scale-105">
+              {/* Subtle Icon Indicator */}
+              <Building className="h-4 w-4 text-slate-600 group-hover:text-[#f5b544] transition-colors mr-2.5" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 group-hover:text-white transition-colors">
+                {item}
+              </span>
+            </div>
+          </MagneticWrapper>
+        ))}
+      </motion.div>
+    </div>
   );
 }
 
@@ -89,27 +69,34 @@ export default function Supporters() {
       id="supporters"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-80px' }}
       variants={revealSection}
       className={sectionShell}
     >
-      {/* Header */}
-      <motion.div variants={revealItem} className="relative z-10 mx-auto max-w-3xl text-center">
-        <p className={eyebrow}>Backed By</p>
-        <h2 className={sectionHeading}>Our Supporters & Collaborators</h2>
-        <p className="mt-6 max-w-2xl mx-auto text-base leading-relaxed text-slate-400 sm:text-lg">
-          Trusted by organizations and partners who share our vision for innovation.
-        </p>
-      </motion.div>
+      {/* Editorial Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-white/[0.08] pb-12">
+        <div>
+          <span className={eyebrow}>
+            <Sparkles className="h-3.5 w-3.5" /> 04 / Backed By & Partnered
+          </span>
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Our Supporters &{' '}
+            <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
+              Collaborators.
+            </span>
+          </h2>
+        </div>
 
-      {/* Logo grid */}
-      <motion.div
-        variants={revealSection}
-        className="relative z-10 mx-auto mt-20 grid max-w-5xl grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4"
-      >
-        {Array.from({ length: PLACEHOLDER_COUNT }).map((_, i) => (
-          <SupporterCard key={i} index={i} />
-        ))}
+        <div className="flex items-center gap-3 text-xs font-mono text-slate-400 border border-white/10 px-4 py-2 rounded-full bg-white/[0.02]">
+          <Handshake className="h-4 w-4 text-[#f5b544]" />
+          <span>STRATEGIC ECOSYSTEM</span>
+        </div>
+      </div>
+
+      {/* Infinite Marquee Composition */}
+      <motion.div variants={revealItem} className="space-y-6">
+        <MarqueeRow items={row1Logos} direction="left" />
+        <MarqueeRow items={row2Logos} direction="right" />
       </motion.div>
     </motion.section>
   );
