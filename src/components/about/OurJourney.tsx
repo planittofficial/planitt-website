@@ -97,14 +97,14 @@ export default function OurJourney() {
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 03 / Our Growth Journey
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             The Chronological{' '}
             <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
               Planitt Story.
             </span>
           </h2>
         </div>
-        <p className="max-w-md text-base leading-relaxed text-slate-400">
+        <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
           From a focused advisory firm to an incubated dual-engine platform — tracing our milestones from inception to ecosystem scale.
         </p>
       </div>
@@ -113,23 +113,23 @@ export default function OurJourney() {
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
         {/* LEFT STICKY COLUMN: Timeline Spine Overview */}
         <motion.div variants={revealItem} className="lg:col-span-4 lg:sticky lg:top-32 space-y-6">
-          <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl">
-            <div className="flex items-center gap-3 text-[#f5b544] mb-4">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.02] transition-colors duration-300">
+            <div className="flex items-center gap-3 text-[#b78622] dark:text-[#f5b544] mb-4">
               <Calendar className="h-5 w-5" />
               <span className="text-xs font-mono font-bold tracking-widest uppercase">
                 2020 — 2024 Epoch
               </span>
             </div>
 
-            <h3 className="text-2xl font-bold tracking-tight text-white">
+            <h3 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               5 Years of Continuous Execution
             </h3>
 
-            <p className="mt-3 text-sm text-slate-400 leading-relaxed">
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Each milestone represents a major step in expanding our financial intelligence and technology capabilities.
             </p>
 
-            <div className="mt-6 pt-6 border-t border-white/[0.08] flex items-center justify-between text-xs text-slate-500 font-mono">
+            <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 font-mono">
               <span>MILESTONES: 05</span>
               <span>STATUS: SCALING</span>
             </div>
@@ -145,18 +145,18 @@ export default function OurJourney() {
             <motion.div
               key={m.year}
               variants={revealItem}
-              className="relative group flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]"
+              className="relative group flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-8 shadow-lg transition-all duration-300 hover:border-slate-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.04]"
             >
               {/* Spine Node Marker */}
-              <div className="absolute -left-[31px] sm:-left-[47px] top-8 h-4 w-4 rounded-full border-2 border-[#0B0F19] bg-[#f5b544] shadow-[0_0_12px_rgba(245,181,68,0.6)]" />
+              <div className="absolute -left-[31px] sm:-left-[47px] top-8 h-4 w-4 rounded-full border-2 border-slate-50 dark:border-[#0B0F19] bg-[#f5b544] shadow-[0_0_12px_rgba(245,181,68,0.6)]" />
 
               {/* Header Bar */}
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl font-extrabold font-mono tracking-tight text-[#f5b544]">
+                  <span className="text-2xl font-extrabold font-mono tracking-tight text-[#b78622] dark:text-[#f5b544]">
                     {m.year}
                   </span>
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                     / {m.phase}
                   </span>
                 </div>
@@ -168,27 +168,27 @@ export default function OurJourney() {
 
               {/* Title & Description */}
               <div>
-                <h4 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                <h4 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
                   {m.title}
                 </h4>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-300">
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
                   {m.description}
                 </p>
               </div>
 
               {/* Floating Metric Badge */}
-              <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-200 dark:border-white/[0.06] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-extrabold text-[#f7c86e] font-mono">
+                  <span className="text-lg font-extrabold text-[#b78622] dark:text-[#f7c86e] font-mono">
                     {m.metric}
                   </span>
-                  <span className="text-xs text-slate-400 uppercase tracking-wider">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     {m.metricLabel}
                   </span>
                 </div>
 
                 <MagneticWrapper strength={0.15}>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-[#f5b544] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center gap-1 text-xs font-semibold text-[#b78622] dark:text-[#f5b544] opacity-0 group-hover:opacity-100 transition-opacity">
                     <span>Explore</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>

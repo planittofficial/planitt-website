@@ -159,9 +159,9 @@ export default function LandingPage() {
 
   return (
     <>
-      <main ref={heroRef} className={`relative min-h-screen overflow-x-hidden text-white ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`}>
+      <main ref={heroRef} className={`relative min-h-screen overflow-x-hidden text-slate-900 dark:text-white bg-slate-50 dark:bg-[#0B0F19] transition-colors duration-300`}>
         <div ref={showcaseRef} className="absolute top-0 w-full h-px opacity-0 pointer-events-none" />
-        <div className={`fixed inset-0 -z-10 ${isAmberTheme ? 'bg-[#12070a]' : 'bg-[#0B0F19]'}`} />
+        <div className={`fixed inset-0 -z-10 bg-slate-50 dark:bg-[#0B0F19] transition-colors duration-300`} />
         <div className={pageGradientClass} />
         <motion.div
           style={{ y: heroBackdropY }}

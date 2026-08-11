@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useHomeMode } from '@/context/HomeModeContext';
 import {
     Target,
     Heart,
@@ -19,7 +20,7 @@ import {
 } from 'lucide-react';
 
 type ServiceDomain = 'financial' | 'technical';
-type HomeMode = 'all' | 'financial' | 'technical';
+type ServiceHomeMode = 'all' | 'financial' | 'technical';
 
 type ServiceItem = {
     icon: LucideIcon;
@@ -30,10 +31,11 @@ type ServiceItem = {
 };
 
 type ServicesProps = {
-    mode?: HomeMode;
+    mode?: ServiceHomeMode;
 };
 
 const Services = ({ mode = 'all' }: ServicesProps) => {
+    const { homeMode, setHomeMode } = useHomeMode();
     const financialServices: ServiceItem[] = [
         {
             icon: Target,
@@ -142,7 +144,7 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
 
     const [active, setActive] = useState<'all' | 'financial' | 'technical'>('all');
 
-    const effectiveMode = mode === 'all' ? active : mode;
+    const effectiveMode: ServiceHomeMode = mode === 'all' ? active : mode;
 
     const visibleServices =
         effectiveMode === 'all'
@@ -181,30 +183,39 @@ const Services = ({ mode = 'all' }: ServicesProps) => {
 
                 {mode === 'all' && (
                     <motion.div className="w-full mb-6">
-                        <div className="bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-sm border border-gray-100 dark:border-gray-700 grid grid-cols-1 sm:grid-cols-3 gap-2 transition-colors duration-300">
+                        <div className="bg-slate-100/90 dark:bg-gray-800/90 rounded-2xl p-2 shadow-sm border border-slate-200 dark:border-gray-700 grid grid-cols-1 sm:grid-cols-3 gap-2 transition-colors duration-300">
                             <button
+                                type="button"
                                 onClick={() => setActive('all')}
-                                className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 ${active === 'all'
-                                    ? 'bg-gradient-to-r from-[#b78622] to-zinc-600 text-white shadow-lg'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 cursor-pointer ${active === 'all'
+                                    ? 'bg-gradient-to-r from-[#b78622] to-slate-700 dark:from-[#c9952d] dark:to-slate-600 text-white shadow-lg'
+                                    : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700'
                                     }`}
                             >
                                 All Solutions
                             </button>
                             <button
-                                onClick={() => setActive('financial')}
-                                className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 ${active === 'financial'
-                                    ? 'bg-gradient-to-r from-[#b78622] to-[#d8b35c] text-white shadow-lg'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                type="button"
+                                onClick={() => {
+                                    setActive('financial');
+                                    setHomeMode('financial');
+                                }}
+                                className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 cursor-pointer ${active === 'financial'
+                                    ? 'bg-gradient-to-r from-[#b78622] to-[#d8b35c] dark:from-[#c9952d] dark:to-[#e5c26b] text-white shadow-lg shadow-amber-500/20'
+                                    : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700'
                                     }`}
                             >
                                 Financial
                             </button>
                              <button
-                                 onClick={() => setActive('technical')}
-                                 className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 ${active === 'technical'
-                                     ? 'bg-gradient-to-r from-cyan-500 to-sky-600 text-white shadow-lg'
-                                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                 type="button"
+                                 onClick={() => {
+                                     setActive('technical');
+                                     setHomeMode('technical');
+                                 }}
+                                 className={`py-3 px-4 text-center rounded-lg font-medium transition-all duration-200 cursor-pointer ${active === 'technical'
+                                     ? 'bg-gradient-to-r from-cyan-600 to-sky-600 dark:from-cyan-500 dark:to-sky-500 text-white shadow-lg shadow-cyan-500/20'
+                                     : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700'
                                      }`}
                              >
                                 Technical

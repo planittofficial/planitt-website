@@ -84,7 +84,7 @@ export default function Achievements() {
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 05 / Verified Milestones
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             Numbers That Reflect{' '}
             <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
               Client Trust.
@@ -92,15 +92,15 @@ export default function Achievements() {
           </h2>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 border border-white/10 px-4 py-2 rounded-full bg-white/[0.02]">
-          <TrendingUp className="h-4 w-4 text-[#f5b544]" />
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-full bg-white dark:bg-white/[0.02] shadow-sm">
+          <TrendingUp className="h-4 w-4 text-[#b78622] dark:text-[#f5b544]" />
           <span>QUANTIFIABLE IMPACT</span>
         </div>
       </div>
 
       {/* Edge-to-Edge Metric Strip Composition */}
-      <motion.div variants={revealItem} className="relative rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-12 backdrop-blur-xl">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-white/[0.08] sm:divide-y-0 sm:divide-x sm:divide-white/[0.08]">
+      <motion.div variants={revealItem} className="relative rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.02]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-slate-200 dark:divide-white/[0.08] sm:divide-y-0 sm:divide-x sm:divide-slate-200 dark:sm:divide-white/[0.08]">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
@@ -112,10 +112,10 @@ export default function Achievements() {
                 <AnimatedNumber stat={stat} />
               </MagneticWrapper>
 
-              <h3 className="mt-4 text-base font-bold tracking-tight text-white">
+              <h3 className="mt-4 text-base font-bold tracking-tight text-slate-900 dark:text-white">
                 {stat.label}
               </h3>
-              <p className="mt-1 text-xs text-slate-400 font-mono">
+              <p className="mt-1 text-xs text-slate-600 dark:text-slate-400 font-mono">
                 {stat.sublabel}
               </p>
             </div>

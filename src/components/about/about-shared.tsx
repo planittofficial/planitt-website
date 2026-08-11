@@ -20,10 +20,10 @@ export const eyebrow =
   'inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#f5b544]';
 
 export const sectionHeading =
-  'mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]';
+  'mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl leading-[1.1]';
 
 export const sectionSubtext =
-  'mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg';
+  'mt-6 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg';
 
 // Animation Spring Configs
 export const springSmooth = { type: 'spring' as const, stiffness: 300, damping: 30 };

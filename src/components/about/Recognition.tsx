@@ -72,7 +72,7 @@ export default function Recognition() {
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 08 / Institutional Validation
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             Recognized &{' '}
             <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
               Certified.
@@ -80,7 +80,7 @@ export default function Recognition() {
           </h2>
         </div>
 
-        <p className="max-w-md text-base leading-relaxed text-slate-400">
+        <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
           Backed by institutional incubation and government certifications that validate our technical and advisory standards.
         </p>
       </div>
@@ -91,14 +91,14 @@ export default function Recognition() {
           <motion.div
             key={cred.title}
             variants={revealItem}
-            className="group relative flex flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-10 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]"
+            className="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-slate-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.04]"
           >
             {/* Header Line & Icon */}
             <div>
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-6">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-6">
                 <div className="flex items-center gap-3.5">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10"
+                    className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10"
                     style={{ backgroundColor: `${cred.accent}15` }}
                   >
                     <cred.icon className="h-6 w-6" style={{ color: cred.accent }} />
@@ -110,7 +110,7 @@ export default function Recognition() {
                     >
                       {cred.badge}
                     </span>
-                    <h3 className="text-xl font-bold tracking-tight text-white">
+                    <h3 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                       {cred.title}
                     </h3>
                   </div>
@@ -121,19 +121,19 @@ export default function Recognition() {
 
               {/* Subtitle & Description */}
               <div className="mt-6 space-y-2">
-                <p className="text-xs font-mono text-[#f7c86e]">
+                <p className="text-xs font-mono text-[#b78622] dark:text-[#f7c86e]">
                   {cred.subtitle}
                 </p>
-                <p className="text-sm leading-relaxed text-slate-300">
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   {cred.description}
                 </p>
               </div>
             </div>
 
             {/* Logo Presenter & Tags */}
-            <div className="mt-8 pt-6 border-t border-white/[0.08] space-y-6">
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/[0.08] space-y-6">
               {/* Logo Frame */}
-              <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-2xl border border-white/[0.06] bg-black/30 p-4">
+              <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-white/[0.06] dark:bg-black/30 p-4">
                 {cred.image ? (
                   <div className="relative h-16 w-40 transition-transform duration-300 group-hover:scale-105">
                     <Image
@@ -155,7 +155,7 @@ export default function Recognition() {
               <div className="flex flex-wrap gap-2">
                 {cred.tags.map((t) => (
                   <MagneticWrapper key={t} strength={0.12}>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-medium text-slate-400">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 dark:border-white/10 dark:bg-white/[0.03] px-3 py-1 text-[11px] font-medium text-slate-600 dark:text-slate-400">
                       <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: cred.accent }} />
                       {t}
                     </span>

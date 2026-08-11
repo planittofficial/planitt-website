@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Code2, Cpu, Landmark, Shield, TrendingUp, Users } from 'lucide-react';
 import Link from 'next/link';
+import { useHomeMode } from '@/context/HomeModeContext';
 
 type HomeMode = 'technical' | 'financial';
 
@@ -11,22 +12,31 @@ type HeroProps = {
     onModeChange?: (mode: HomeMode) => void;
 };
 
-const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
-    const isTechnical = mode === 'technical';
+const Hero = ({ mode, onModeChange }: HeroProps) => {
+    const { homeMode, setHomeMode } = useHomeMode();
+    const effectiveMode = mode || homeMode;
+    const handleModeChange = (newMode: HomeMode) => {
+        setHomeMode(newMode);
+        if (onModeChange) {
+            onModeChange(newMode);
+        }
+    };
+    const isTechnical = effectiveMode === 'technical';
     const palette = isTechnical
         ? {
             bg: 'from-sky-50 via-white to-cyan-100 dark:from-[#0b1220] dark:via-[#0d1727] dark:to-[#122235]',
             orbA: 'bg-sky-200 dark:bg-cyan-900/50',
             orbB: 'bg-cyan-300 dark:bg-sky-900/50',
             orbC: 'bg-sky-300 dark:bg-cyan-800/50',
-            toggleBorder: 'border-cyan-300/70 dark:border-cyan-700/60',
-            toggleShadow: 'shadow-[0_8px_30px_rgba(6,182,212,0.24)]',
-            toggleActive: 'from-cyan-400 to-sky-500',
+            toggleContainerBg: 'bg-slate-100/90 dark:bg-gray-900/80',
+            toggleBorder: 'border-cyan-300/80 dark:border-cyan-700/60',
+            toggleShadow: 'shadow-[0_8px_25px_rgba(6,182,212,0.2)] dark:shadow-[0_0_25px_rgba(6,182,212,0.35)]',
+            toggleActive: 'from-cyan-600 to-sky-600 dark:from-cyan-400 dark:to-sky-500',
             heading: 'from-sky-700 to-cyan-500 dark:from-sky-300 dark:to-cyan-300',
             shield: 'text-cyan-500 dark:text-cyan-300',
             secondary: 'text-sky-600 dark:text-sky-300',
             people: 'text-cyan-600 dark:text-cyan-300',
-            primaryBtn: 'from-cyan-500 to-sky-600 hover:from-cyan-600 hover:to-sky-700',
+            primaryBtn: 'from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 dark:from-cyan-500 dark:to-sky-600',
             secondaryBtn: 'from-sky-600 to-cyan-700 hover:from-sky-700 hover:to-cyan-800',
             cardBg: 'from-sky-50 to-cyan-100 dark:from-sky-950/70 dark:to-cyan-950/70',
             cardBorder: 'border-cyan-300/50 dark:border-cyan-700/60',
@@ -37,9 +47,10 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
             orbA: 'bg-[#f1d58c] dark:bg-[#7a5b22]',
             orbB: 'bg-[#f5c867] dark:bg-[#7a642f]',
             orbC: 'bg-[#dfb35d] dark:bg-[#6b5221]',
-            toggleBorder: 'border-[#eccd7e]/70 dark:border-[#7a642f]/60',
-            toggleShadow: 'shadow-[0_8px_30px_rgba(201,158,67,0.24)]',
-            toggleActive: 'from-[#c9952d] to-[#e5c26b]',
+            toggleContainerBg: 'bg-amber-50/90 dark:bg-[#1c1a14]/80',
+            toggleBorder: 'border-[#eccd7e]/90 dark:border-[#7a642f]/60',
+            toggleShadow: 'shadow-[0_8px_25px_rgba(183,134,34,0.25)] dark:shadow-[0_0_25px_rgba(201,149,45,0.35)]',
+            toggleActive: 'from-[#b78622] to-[#d8b35c] dark:from-[#c9952d] dark:to-[#e5c26b]',
             heading: 'from-[#b78622] to-[#d9b051] dark:from-[#f3dc9a] dark:to-[#e7c973]',
             shield: 'text-[#b78622] dark:text-[#e7c973]',
             secondary: 'text-[#a27015] dark:text-[#ddbc66]',
@@ -78,10 +89,10 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-12 lg:pb-24">
                 <div className="w-full max-w-md mx-auto mb-10 lg:mb-14">
-                    <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400 mb-2 mt-10">
+                    <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 dark:text-gray-400 mb-2 mt-10">
                         Select Focus
                     </p>
-                    <div className={`relative rounded-2xl border ${palette.toggleBorder} bg-white/80 dark:bg-gray-900/70 backdrop-blur-xl p-1.5 ${palette.toggleShadow}`}>
+                    <div className={`relative rounded-2xl border ${palette.toggleBorder} ${palette.toggleContainerBg} backdrop-blur-xl p-1.5 ${palette.toggleShadow} transition-all duration-300`}>
                         <motion.div
                             className={`absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] rounded-xl bg-gradient-to-r ${palette.toggleActive} shadow-lg`}
                             animate={{ x: isTechnical ? 0 : '100%' }}
@@ -89,22 +100,24 @@ const Hero = ({ mode = 'technical', onModeChange }: HeroProps) => {
                         />
                         <div className="relative grid grid-cols-2 gap-1">
                             <button
-                                onClick={() => onModeChange?.('technical')}
+                                type="button"
+                                onClick={() => handleModeChange('technical')}
                                 suppressHydrationWarning
-                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${isTechnical
-                                    ? 'text-white'
-                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
+                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer ${isTechnical
+                                    ? 'text-white font-bold drop-shadow-xs'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                                     }`}
                             >
                                 <Cpu className="h-4 w-4" />
                                 Technical
                             </button>
                             <button
-                                onClick={() => onModeChange?.('financial')}
+                                type="button"
+                                onClick={() => handleModeChange('financial')}
                                 suppressHydrationWarning
-                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${!isTechnical
-                                    ? 'text-white'
-                                    : 'text-gray-700 dark:text-gray-300 hover:text-[#4b4e4e] dark:hover:text-[#c7cccc]'
+                                className={`h-12 rounded-xl px-4 text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer ${!isTechnical
+                                    ? 'text-white font-bold drop-shadow-xs'
+                                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                                     }`}
                             >
                                 <Landmark className="h-4 w-4" />

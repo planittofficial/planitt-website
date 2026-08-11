@@ -85,7 +85,7 @@ export default function OurTeam() {
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 07 / The Planitt Team
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             The People Behind{' '}
             <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
               Planitt.
@@ -93,8 +93,8 @@ export default function OurTeam() {
           </h2>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 border border-white/10 px-4 py-2 rounded-full bg-white/[0.02]">
-          <Users className="h-4 w-4 text-[#f5b544]" />
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-full bg-white dark:bg-white/[0.02] shadow-sm">
+          <Users className="h-4 w-4 text-[#b78622] dark:text-[#f5b544]" />
           <span>7 CORE CONTRIBUTORS</span>
         </div>
       </div>
@@ -110,9 +110,9 @@ export default function OurTeam() {
             className={index === 6 ? 'sm:col-span-2 lg:col-span-1 lg:col-start-2' : ''}
           >
             <MagneticWrapper strength={0.12}>
-              <div className="group relative flex flex-col items-center text-center rounded-3xl border border-white/10 bg-white/[0.02] p-7 backdrop-blur-xl transition-all duration-300 hover:border-[#f5b544]/40 hover:bg-white/[0.04] hover:-translate-y-1 h-full">
+              <div className="group relative flex flex-col items-center text-center rounded-3xl border border-slate-200 bg-white p-7 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-[#b78622]/40 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-[#f5b544]/40 dark:hover:bg-white/[0.04] hover:-translate-y-1 h-full">
                 {/* Member Image Frame */}
-                <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.02] shadow-lg group-hover:scale-105 group-hover:border-[#f5b544]/50 transition-all duration-400">
+                <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-white/15 dark:bg-white/[0.02] shadow-lg group-hover:scale-105 group-hover:border-[#b78622]/50 dark:group-hover:border-[#f5b544]/50 transition-all duration-400">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -124,14 +124,14 @@ export default function OurTeam() {
 
                 {/* Info */}
                 <div className="mt-5 space-y-1.5 flex flex-col items-center">
-                  <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider text-[#f5b544]">
+                  <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-wider text-[#b78622] dark:text-[#f5b544]">
                     {member.role}
                   </span>
-                  <h3 className="text-lg font-bold tracking-tight text-white group-hover:text-[#f7c86e] transition-colors">
+                  <h3 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-[#b78622] dark:group-hover:text-[#f7c86e] transition-colors">
                     {member.name}
                   </h3>
                   {member.focus && (
-                    <p className="text-xs text-slate-400 leading-relaxed font-mono pt-1 max-w-[220px]">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-mono pt-1 max-w-[220px]">
                       {member.focus}
                     </p>
                   )}

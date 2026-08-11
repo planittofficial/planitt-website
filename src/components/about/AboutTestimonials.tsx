@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, LayoutGroup } from 'framer-motion';
 import { GraduationCap, Briefcase, Quote, Star, Sparkles, UserCheck } from 'lucide-react';
 import React from 'react';
+import { useHomeMode } from '@/context/HomeModeContext';
 import {
   sectionShell,
   eyebrow,
@@ -90,17 +91,18 @@ const servicesTestimonials: Testimonial[] = [
 ];
 
 const tracks: { key: Track; label: string; icon: React.ElementType }[] = [
-  { key: 'courses', label: 'Courses & Academy', icon: GraduationCap },
-  { key: 'services', label: 'Technical & Advisory Services', icon: Briefcase },
+  { key: 'courses', label: 'Courses & Technical', icon: GraduationCap },
+  { key: 'services', label: 'Financial & Advisory', icon: Briefcase },
 ];
 
 export default function AboutTestimonials() {
-  const [activeTrack, setActiveTrack] = useState<Track>('courses');
+  const { homeMode, setHomeMode } = useHomeMode();
+  const activeTrack: Track = homeMode === 'technical' ? 'courses' : 'services';
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const testimonials = activeTrack === 'courses' ? coursesTestimonials : servicesTestimonials;
   const current = testimonials[activeIndex] || testimonials[0];
-  const accentColor = activeTrack === 'courses' ? '#7C5CFF' : '#f5b544';
+  const accentColor = activeTrack === 'courses' ? '#06b6d4' : '#b78622';
 
   return (
     <motion.section
@@ -117,53 +119,57 @@ export default function AboutTestimonials() {
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 06 / User Testimonials
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             Real Stories From{' '}
-            <span className="bg-gradient-to-r from-[#f5b544] via-[#f7c86e] to-[#7C5CFF] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#b78622] via-[#d8b35c] to-[#06b6d4] bg-clip-text text-transparent">
               Our Community.
             </span>
           </h2>
         </div>
 
         {/* Track Control Switcher */}
-        <div className="relative inline-flex shrink-0 rounded-full border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-md">
-          {tracks.map((t) => {
-            const isActive = activeTrack === t.key;
-            return (
-              <button
-                key={t.key}
-                onClick={() => {
-                  setActiveTrack(t.key);
-                  setActiveIndex(0);
-                }}
-                className={`relative z-10 flex items-center gap-2.5 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
-                  isActive ? 'text-[#0B0F19]' : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTrackPill"
-                    className="absolute inset-0 -z-10 rounded-full"
-                    style={{
-                      background: t.key === 'courses'
-                        ? 'linear-gradient(90deg, #7C5CFF, #9a82ff)'
-                        : 'linear-gradient(90deg, #f5b544, #f7c86e)',
-                    }}
-                    transition={springSmooth}
-                  />
-                )}
-                <t.icon className="h-4 w-4" />
-                {t.label}
-              </button>
-            );
-          })}
-        </div>
+        <LayoutGroup id="testimonials-track-toggle">
+          <div className="relative inline-flex shrink-0 rounded-full border border-slate-200 bg-slate-100/90 dark:border-white/10 dark:bg-white/[0.04] p-1.5 backdrop-blur-xl shadow-lg transition-colors duration-300">
+            {tracks.map((t) => {
+              const isActive = activeTrack === t.key;
+              return (
+                <button
+                  key={t.key}
+                  type="button"
+                  onClick={() => {
+                    setHomeMode(t.key === 'courses' ? 'technical' : 'financial');
+                    setActiveIndex(0);
+                  }}
+                  className={`relative overflow-hidden flex items-center gap-2.5 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 cursor-pointer ${
+                    isActive ? 'text-white drop-shadow-xs' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTrackPill"
+                      className={`absolute inset-0 z-0 rounded-full ${
+                        t.key === 'courses'
+                          ? 'bg-gradient-to-r from-cyan-600 to-sky-600 dark:from-cyan-500 dark:to-sky-500 shadow-[0_4px_16px_rgba(6,182,212,0.4)]'
+                          : 'bg-gradient-to-r from-[#b78622] to-[#d8b35c] dark:from-[#c9952d] dark:to-[#e5c26b] shadow-[0_4px_16px_rgba(183,134,34,0.4)]'
+                      }`}
+                      transition={springSmooth}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2.5">
+                    <t.icon className="h-4 w-4" />
+                    {t.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
       </div>
 
       {/* Main Quote Spotlight Composition */}
-      <motion.div variants={revealItem} className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-14 backdrop-blur-xl">
+      <motion.div variants={revealItem} className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 sm:p-14 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.02] transition-colors duration-300">
         {/* Oversized Background Quote Watermark */}
-        <div className="pointer-events-none absolute -left-6 -top-6 text-white/[0.03] select-none">
+        <div className="pointer-events-none absolute -left-6 -top-6 text-slate-100 dark:text-white/[0.03] select-none">
           <Quote className="h-48 w-48" />
         </div>
 
@@ -184,21 +190,21 @@ export default function AboutTestimonials() {
             </div>
 
             {/* Giant Quotation */}
-            <blockquote className="text-2xl font-serif italic text-white sm:text-3xl lg:text-4xl leading-relaxed">
+            <blockquote className="text-2xl font-serif italic text-slate-900 dark:text-white sm:text-3xl lg:text-4xl leading-relaxed">
               &ldquo;{current.quote}&rdquo;
             </blockquote>
 
             {/* Author Metadata Bar */}
-            <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="pt-6 border-t border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-lg font-bold text-white">{current.name}</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{current.name}</h3>
                 <p className="text-xs font-bold uppercase tracking-wider mt-0.5" style={{ color: accentColor }}>
                   {current.role} • {current.location}
                 </p>
               </div>
 
               <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
-                <UserCheck className="h-4 w-4 text-[#f5b544]" />
+                <UserCheck className="h-4 w-4 text-[#b78622] dark:text-[#f5b544]" />
                 <span>VERIFIED REVIEWS</span>
               </div>
             </div>
@@ -206,25 +212,25 @@ export default function AboutTestimonials() {
         </AnimatePresence>
 
         {/* Interactive Author Selector Pins */}
-        <div className="mt-10 pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-3">
+        <div className="mt-10 pt-6 border-t border-slate-200 dark:border-white/[0.08] flex flex-wrap items-center gap-3">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mr-2">
             Select Reviewer:
           </span>
           {testimonials.map((t, i) => {
             const isSelected = activeIndex === i;
             return (
-              <MagneticWrapper key={t.id} strength={0.15}>
-                <button
-                  onClick={() => setActiveIndex(i)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
-                    isSelected
-                      ? 'bg-white/10 text-white border border-white/20'
-                      : 'bg-white/[0.02] text-slate-400 hover:text-white border border-transparent'
-                  }`}
-                >
-                  {t.name}
-                </button>
-              </MagneticWrapper>
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setActiveIndex(i)}
+                className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                  isSelected
+                    ? 'bg-slate-900 text-white shadow-md dark:bg-white dark:text-slate-900'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/[0.05] dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white'
+                }`}
+              >
+                {t.name}
+              </button>
             );
           })}
         </div>
