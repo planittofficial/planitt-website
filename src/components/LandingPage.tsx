@@ -374,13 +374,16 @@ export default function LandingPage() {
                       <div className="mt-5 min-h-[200px] flex-1 overflow-hidden rounded-3xl border border-white/10 bg-[#0B0F19] sm:min-h-[280px]">
                         <div className="relative aspect-video h-full min-h-[200px] w-full sm:min-h-[280px]">
                           <video
-                            src="/Create_a_premium_202604171446.mp4"
                             autoPlay
                             loop
                             muted
                             playsInline
+                            preload="metadata"
                             className="h-full w-full object-contain"
-                          />
+                          >
+                            <source src="/planitt-animated-video-remake.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
                         </div>
                       </div>
                     </div>

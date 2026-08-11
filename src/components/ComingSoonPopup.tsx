@@ -78,13 +78,15 @@ export default function ComingSoonPopup() {
                   <div className="relative w-full overflow-hidden rounded-2xl bg-white/10 border border-white/20 mb-4">
                     <video
                       className="w-full h-36 sm:h-44 lg:h-52 object-cover"
-                      src="/planitt-animated-video-remake.mp4"
                       autoPlay
                       muted
                       loop
                       playsInline
                       preload="metadata"
-                    />
+                    >
+                      <source src="/planitt-animated-video-remake.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
 
                   <p className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Product Status</p>
