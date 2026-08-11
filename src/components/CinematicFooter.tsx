@@ -454,7 +454,7 @@ export default function CinematicFooter() {
             </motion.button>
 
             <motion.a
-              href="https://app.planitt.in/"
+              href="https://www.alvestt.com/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, borderColor: 'rgba(124,92,255,0.4)' }}

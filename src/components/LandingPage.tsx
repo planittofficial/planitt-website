@@ -227,7 +227,7 @@ export default function LandingPage() {
 
                   <motion.div variants={revealItem} className="mt-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mx-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
                     <motion.a
-                      href="https://app.planitt.in/"
+                      href="https://www.alvestt.com/"
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={buttonHover}

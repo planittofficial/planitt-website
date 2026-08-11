@@ -65,7 +65,7 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     description:
                                         "A stock market trading website built for our in-house product, Planitt Signals, focused on delivering real-time market insights and a seamless user experience for traders.",
                                     image: "/trading-website.png",
-                                    liveLink: "https://app.planitt.in/",
+                                    liveLink: "https://www.alvestt.com/",
                                     tags: ["In-house", "Fintech", "Trading Platform"],
                                 },
                                 {

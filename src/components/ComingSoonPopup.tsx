@@ -91,7 +91,7 @@ export default function ComingSoonPopup() {
                   <p className="text-xl sm:text-2xl font-bold text-[#f2d789] mb-1">Live Now</p>
                   <p className="text-xs sm:text-sm text-zinc-300">Explore the platform and start investing smarter.</p>
                   <a
-                    href="https://alvest.planitt.in/"
+                    href="https://www.alvestt.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setOpen(false)}
