@@ -84,7 +84,7 @@ export default function ComingSoonPopup() {
                       playsInline
                       preload="metadata"
                     >
-                      <source src="/planitt-animated-video-remake.mp4" type="video/mp4" />
+                      <source src="/Alvestt_Animate_t.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
