@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Sparkles, Building, Handshake } from 'lucide-react';
+import Image from 'next/image';
+import { Sparkles, Handshake } from 'lucide-react';
 import {
   sectionShell,
   eyebrow,
@@ -12,30 +13,30 @@ import {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 4 — Supporters & Collaborators
-   Dual-Row Infinite Motion Marquee with Magnetic Hover Feedback
+   Dual-Theme Adaptive Marquee displaying exclusively requested 7 partners:
+   AMFI, Ancrew Global, AWS, CoinDCX, Razorpay, RTMNU, NISM
    ───────────────────────────────────────────────────────────────────────────── */
 
-const row1Logos = [
-  'Institutional Partner 01',
-  'Fintech Capital',
-  'Technology Incubator',
-  'Strategic Alliance',
-  'RTMNU Incubation',
+interface PartnerLogo {
+  name: string;
+  image: string;
+}
+
+const partnerLogos: PartnerLogo[] = [
+  { name: 'AMFI', image: '/amfi.svg' },
+  { name: 'Ancrew Global', image: '/ancrewglobal.png' },
+  { name: 'AWS Cloud', image: '/aws.png' },
+  { name: 'CoinDCX', image: '/coindcx.svg' },
+  { name: 'Razorpay', image: '/razorpay.png' },
+  { name: 'RTMNU Incubation', image: '/rtmnu.png' },
+  { name: 'NISM', image: '/nism.png' },
 ];
 
-const row2Logos = [
-  'DPIIT Startup India',
-  'Wealth Advisory Corp',
-  'Cloud Infrastructure Partner',
-  'Algorithmic Trading Hub',
-  'Planitt Ecosystem Partner',
-];
-
-function MarqueeRow({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
+function MarqueeRow({ items, direction = 'left' }: { items: PartnerLogo[]; direction?: 'left' | 'right' }) {
   const duplicated = [...items, ...items, ...items, ...items];
 
   return (
-    <div className="flex overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+    <div className="flex overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
       <motion.div
         animate={{
           x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
@@ -48,13 +49,23 @@ function MarqueeRow({ items, direction = 'left' }: { items: string[]; direction?
         className="flex shrink-0 items-center gap-6 py-3"
       >
         {duplicated.map((item, idx) => (
-          <MagneticWrapper key={`${item}-${idx}`} strength={0.2}>
-            <div className="group relative flex h-20 w-56 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm px-6 backdrop-blur-md transition-all duration-300 hover:border-[#b78622]/40 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-[#f5b544]/40 dark:hover:bg-white/[0.05] hover:scale-105">
-              {/* Subtle Icon Indicator */}
-              <Building className="h-4 w-4 text-slate-400 group-hover:text-[#b78622] dark:text-slate-600 dark:group-hover:text-[#f5b544] transition-colors mr-2.5" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-700 group-hover:text-slate-900 dark:text-slate-400 dark:group-hover:text-white transition-colors">
-                {item}
-              </span>
+          <MagneticWrapper key={`${item.name}-${idx}`} strength={0.15}>
+            <div className="group relative flex h-24 w-56 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white p-3 shadow-sm backdrop-blur-xl transition-all duration-300 hover:border-[#b78622]/50 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#f5b544]/50 dark:hover:bg-white/[0.06] hover:scale-105">
+              {/* Theme-Adaptive Explicit Container */}
+              <div className="relative h-16 w-44 flex items-center justify-center">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  sizes="200px"
+                  className={`object-contain transition-all duration-300 group-hover:scale-105 ${
+                    item.image === '/aws.png' ? 'invert dark:invert-0' : ''
+                  } ${
+                    item.image === '/rtmnu.png' ? 'dark:invert dark:brightness-200' : ''
+                  }`}
+                  priority={idx < 7}
+                />
+              </div>
             </div>
           </MagneticWrapper>
         ))}
@@ -95,8 +106,8 @@ export default function Supporters() {
 
       {/* Infinite Marquee Composition */}
       <motion.div variants={revealItem} className="space-y-6">
-        <MarqueeRow items={row1Logos} direction="left" />
-        <MarqueeRow items={row2Logos} direction="right" />
+        <MarqueeRow items={partnerLogos} direction="left" />
+        <MarqueeRow items={partnerLogos} direction="right" />
       </motion.div>
     </motion.section>
   );

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Award, Building2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Award, Building2, ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 import React from 'react';
 import {
   sectionShell,
@@ -13,8 +13,8 @@ import {
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Section 8 — Recognition (RTMNU & DPIIT)
-   Dual Institutional Prestige Showcase
+   Section 8 — Recognition (RTMNU, DPIIT & AMFI)
+   Triple Institutional Prestige Showcase with Large Full-Frame Certificate Seals
    ───────────────────────────────────────────────────────────────────────────── */
 
 interface Credential {
@@ -44,12 +44,23 @@ const credentials: Credential[] = [
     icon: Award,
     badge: 'Government Certification',
     title: 'DPIIT Recognition',
+    subtitle: 'Startup India Flagship Program',
     description:
       'Officially recognized by the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce & Industry, Government of India.',
-    subtitle: 'Startup India Flagship Program',
     image: '/dpiit.png',
     accent: '#38bdf8',
     tags: ['Govt Certified', 'Startup India', 'Validated Innovation'],
+  },
+  {
+    icon: ShieldCheck,
+    badge: 'Mutual Fund Certification',
+    title: 'AMFI Registration',
+    subtitle: 'ARN - 338883',
+    description:
+      'Registered with the Association of Mutual Funds in India (AMFI) under ARN-338883, ensuring regulatory compliance and investor protection.',
+    image: '/amfi.svg',
+    accent: '#10b981',
+    tags: ['AMFI Registered', 'ARN-338883', 'Regulatory Compliant'],
   },
 ];
 
@@ -63,9 +74,6 @@ export default function Recognition() {
       variants={revealSection}
       className={sectionShell}
     >
-      {/* Top Divider */}
-      <div className="mb-12 h-px w-full bg-gradient-to-r from-transparent via-[#f5b544]/30 to-transparent" />
-
       {/* Editorial Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
         <div>
@@ -81,17 +89,17 @@ export default function Recognition() {
         </div>
 
         <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
-          Backed by institutional incubation and government certifications that validate our technical and advisory standards.
+          Backed by institutional incubation, government recognition, and regulatory certifications that validate our standards.
         </p>
       </div>
 
-      {/* Credentials Dual Showcase */}
-      <div className="grid gap-8 md:grid-cols-2">
-        {credentials.map((cred, index) => (
+      {/* Credentials Triple Showcase */}
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {credentials.map((cred) => (
           <motion.div
             key={cred.title}
             variants={revealItem}
-            className="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-slate-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.04]"
+            className="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-slate-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.04]"
           >
             {/* Header Line & Icon */}
             <div>
@@ -132,18 +140,16 @@ export default function Recognition() {
 
             {/* Logo Presenter & Tags */}
             <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/[0.08] space-y-6">
-              {/* Logo Frame */}
-              <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-white/[0.06] dark:bg-black/30 p-4">
+              {/* Prominent Full-Frame Logo Box */}
+              <div className="relative flex h-36 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 dark:border-white/20 dark:bg-white shadow-sm">
                 {cred.image ? (
-                  <div className="relative h-16 w-40 transition-transform duration-300 group-hover:scale-105">
-                    <Image
-                      src={cred.image}
-                      alt={cred.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 300px"
-                      className="object-contain"
-                    />
-                  </div>
+                  <Image
+                    src={cred.image}
+                    alt={cred.title}
+                    fill
+                    sizes="300px"
+                    className="object-contain p-2 scale-110 group-hover:scale-120 transition-transform duration-300"
+                  />
                 ) : (
                   <span className="text-xs font-mono uppercase text-slate-500">
                     Official Seal
@@ -166,9 +172,6 @@ export default function Recognition() {
           </motion.div>
         ))}
       </div>
-
-      {/* Structural Accent Bottom Line */}
-      <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </motion.section>
   );
 }
