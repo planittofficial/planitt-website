@@ -13,14 +13,13 @@ import {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 7 — Our Team
-   3, 3, 1 Grid Layout — All 7 Members Share Identical Styling
+   3, 3, 1 Grid Layout — All 7 Members Share Identical Styling & Height
    ───────────────────────────────────────────────────────────────────────────── */
 
 interface TeamMember {
   name: string;
   role: string;
   image: string;
-  focus?: string;
 }
 
 const allMembers: TeamMember[] = [
@@ -29,13 +28,11 @@ const allMembers: TeamMember[] = [
     name: 'Piyush Tembhekar',
     role: 'CEO & FOUNDER',
     image: '/CEO_Photo.png',
-    focus: 'Financial Advisory & Strategic Distribution',
   },
   {
     name: 'Sarth Srivastava',
     role: 'CTO & CO-FOUNDER',
     image: '/sarth_avatar.jpeg',
-    focus: 'Technical Delivery & Systems Architecture',
   },
   {
     name: 'Om Shrikhande',
@@ -80,7 +77,7 @@ export default function OurTeam() {
       <div className="mb-12 h-px w-full bg-gradient-to-r from-transparent via-[#f5b544]/30 to-transparent" />
 
       {/* Editorial Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
         <div>
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 07 / The Planitt Team
@@ -99,7 +96,7 @@ export default function OurTeam() {
         </div>
       </div>
 
-      {/* 3, 3, 1 Grid — First 6 members in two rows of 3, 7th member centered in 3rd row */}
+      {/* 3, 3, 1 Grid — All 7 members share identical card height and structure */}
       <motion.div
         variants={revealItem}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
@@ -109,8 +106,8 @@ export default function OurTeam() {
             key={member.name}
             className={index === 6 ? 'sm:col-span-2 lg:col-span-1 lg:col-start-2' : ''}
           >
-            <MagneticWrapper strength={0.12}>
-              <div className="group relative flex flex-col items-center text-center rounded-3xl border border-slate-200 bg-white p-7 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-[#b78622]/40 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-[#f5b544]/40 dark:hover:bg-white/[0.04] hover:-translate-y-1 h-full">
+            <MagneticWrapper strength={0.12} className="h-full">
+              <div className="group relative flex flex-col items-center justify-center text-center rounded-3xl border border-slate-200 bg-white p-7 backdrop-blur-xl shadow-lg transition-all duration-300 hover:border-[#b78622]/40 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-[#f5b544]/40 dark:hover:bg-white/[0.04] hover:-translate-y-1 h-full">
                 {/* Member Image Frame */}
                 <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-white/15 dark:bg-white/[0.02] shadow-lg group-hover:scale-105 group-hover:border-[#b78622]/50 dark:group-hover:border-[#f5b544]/50 transition-all duration-400">
                   <Image
@@ -130,20 +127,12 @@ export default function OurTeam() {
                   <h3 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-[#b78622] dark:group-hover:text-[#f7c86e] transition-colors">
                     {member.name}
                   </h3>
-                  {member.focus && (
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-mono pt-1 max-w-[220px]">
-                      {member.focus}
-                    </p>
-                  )}
                 </div>
               </div>
             </MagneticWrapper>
           </div>
         ))}
       </motion.div>
-
-      {/* Structural Accent Bottom Line */}
-      <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </motion.section>
   );
 }

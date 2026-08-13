@@ -14,7 +14,7 @@ export const BG_DARK = '#0B0F19';
 
 // Reusable class strings
 export const sectionShell =
-  'relative mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-36 overflow-hidden';
+  'relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20 overflow-hidden';
 
 export const eyebrow =
   'inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-[#f5b544]';

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { Eye, Rocket, ArrowUpRight, Sparkles } from 'lucide-react';
 import { useHomeMode } from '@/context/HomeModeContext';

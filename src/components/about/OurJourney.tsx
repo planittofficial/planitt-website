@@ -1,19 +1,27 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
+  AnimatePresence,
   useReducedMotion,
+  LayoutGroup,
 } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
-import { sectionShell, eyebrow } from './about-shared';
+import {
+  Sparkles,
+  ChevronRight,
+  ChevronLeft,
+  Landmark,
+  BrainCircuit,
+  Award,
+  Bot,
+  GraduationCap,
+} from 'lucide-react';
+import { sectionShell, eyebrow, springSmooth, MagneticWrapper } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 3 — Our Journey (The Planitt Story)
-   Cinematic Scroll-Driven Timeline Experience
+   Interactive Storytelling Component with Autoplay Loop & Pause-on-Hover
    ───────────────────────────────────────────────────────────────────────────── */
 
 interface Milestone {
@@ -24,6 +32,8 @@ interface Milestone {
   description: string;
   metric: string;
   metricLabel: string;
+  icon: React.ElementType;
+  highlights: string[];
 }
 
 const milestones: Milestone[] = [
@@ -35,7 +45,9 @@ const milestones: Milestone[] = [
     description:
       'Planitt begins as a specialized financial advisory firm, bringing structured, data-driven wealth planning and disciplined asset management to individuals and growing families.',
     metric: '100+',
-    metricLabel: 'Initial Clients',
+    metricLabel: 'INITIAL CLIENTS',
+    icon: Landmark,
+    highlights: ['Wealth Planning', 'SIP Strategy', 'Risk Hedging'],
   },
   {
     index: '02',
@@ -44,8 +56,10 @@ const milestones: Milestone[] = [
     title: 'The Dual Engine Architecture',
     description:
       'Recognizing the urgent need for custom digital infrastructure, Planitt expands its capabilities to deliver technical services, cloud deployments, and enterprise software under expert leadership.',
-    metric: '2 Engines',
-    metricLabel: 'Fintech & Tech',
+    metric: '2 ENGINES',
+    metricLabel: 'FINTECH & TECH',
+    icon: BrainCircuit,
+    highlights: ['Technical Services', 'Cloud Deployments', 'Enterprise Code'],
   },
   {
     index: '03',
@@ -54,8 +68,10 @@ const milestones: Milestone[] = [
     title: 'Institutional Incubation & DPIIT Recognition',
     description:
       'Planitt receives official DPIIT recognition from the Government of India and incubates under RTMNU, validating our approach to technological and financial innovation.',
-    metric: '2 Certs',
+    metric: '2 CERTS',
     metricLabel: 'RTMNU & DPIIT',
+    icon: Award,
+    highlights: ['RTMNU Incubated', 'DPIIT Recognised', 'Govt Alliance'],
   },
   {
     index: '04',
@@ -65,7 +81,9 @@ const milestones: Milestone[] = [
     description:
       'Launch of the Planitt Recommendation System, deploying AI-driven forecasting and algorithmic execution bots across Stocks, Crypto, Forex, F&O, and IPOs.',
     metric: '99.9%',
-    metricLabel: 'Bot Uptime',
+    metricLabel: 'BOT UPTIME',
+    icon: Bot,
+    highlights: ['AI Signals', 'Algo Automation', 'Multi-Asset Bots'],
   },
   {
     index: '05',
@@ -75,496 +93,432 @@ const milestones: Milestone[] = [
     description:
       'Establishing Planitt Academy to empower thousands of students with practical masterclasses in algorithmic trading, personal finance management, and full-stack software development.',
     metric: '50L+',
-    metricLabel: 'Assets Managed',
+    metricLabel: 'ASSETS MANAGED',
+    icon: GraduationCap,
+    highlights: ['Planitt Academy', 'Fintech Mentorship', 'Ecosystem Scale'],
   },
 ];
 
-const CHAPTER_COUNT = milestones.length;
+const AUTOPLAY_DURATION = 4.5; // Seconds per milestone
 
-/* ── Background tint colors for progression (extremely subtle) ─────────── */
-const bgTints = [
-  'radial-gradient(ellipse at 50% 50%, rgba(245,181,68,0.015) 0%, transparent 70%)',
-  'radial-gradient(ellipse at 50% 50%, rgba(245,181,68,0.025) 0%, transparent 70%)',
-  'radial-gradient(ellipse at 40% 50%, rgba(245,181,68,0.03) 0%, transparent 70%)',
-  'radial-gradient(ellipse at 50% 50%, rgba(245,181,68,0.025) 0%, rgba(124,92,255,0.015) 50%, transparent 70%)',
-  'radial-gradient(ellipse at 50% 50%, rgba(245,181,68,0.035) 0%, rgba(124,92,255,0.02) 50%, transparent 70%)',
-];
+export default function OurJourney() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timerKey, setTimerKey] = useState(0);
+  const reducedMotion = useReducedMotion() ?? false;
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  const activeMilestone = milestones[activeIndex];
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   TimelineNode — A single dot on the spine
-   ───────────────────────────────────────────────────────────────────────────── */
-function TimelineNode({
-  isActive,
-  isPast,
-  reducedMotion,
-}: {
-  isActive: boolean;
-  isPast: boolean;
-  reducedMotion: boolean;
-}) {
-  return (
-    <div className="relative flex items-center justify-center" style={{ width: 20, height: 20 }}>
-      {/* Breathing halo — only on active node */}
-      {isActive && !reducedMotion && (
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 44,
-            height: 44,
-            background:
-              'radial-gradient(circle, rgba(245,181,68,0.35) 0%, transparent 70%)',
-            animation: 'timeline-glow-breathe 3.5s ease-in-out infinite',
-          }}
-        />
-      )}
+  // Advance to next milestone
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % milestones.length);
+    setTimerKey((prev) => prev + 1);
+  }, []);
 
-      {/* Outer ring */}
-      <div
-        className="relative z-10 rounded-full border-2 transition-all"
-        style={{
-          width: isActive ? 16 : 10,
-          height: isActive ? 16 : 10,
-          borderColor: isActive || isPast ? '#f5b544' : 'rgba(148,163,184,0.2)',
-          transitionDuration: '600ms',
-          transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        }}
-      >
-        {/* Inner fill */}
-        <div
-          className="absolute inset-[2px] rounded-full transition-all"
-          style={{
-            backgroundColor:
-              isActive ? '#f5b544' : isPast ? 'rgba(245,181,68,0.45)' : 'rgba(148,163,184,0.1)',
-            boxShadow: isActive
-              ? '0 0 12px rgba(245,181,68,0.6), 0 0 4px rgba(245,181,68,0.9)'
-              : 'none',
-            transitionDuration: '600ms',
-          }}
-        />
-      </div>
-    </div>
-  );
-}
+  // Go to previous milestone
+  const handlePrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + milestones.length) % milestones.length);
+    setTimerKey((prev) => prev + 1);
+  }, []);
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   ChapterCard — Content card for a milestone
-   ───────────────────────────────────────────────────────────────────────────── */
-function ChapterCard({
-  milestone,
-  isActive,
-  reducedMotion,
-}: {
-  milestone: Milestone;
-  isActive: boolean;
-  reducedMotion: boolean;
-}) {
-  const dur = reducedMotion ? 0.3 : 0.7;
-  const stagger = reducedMotion ? 0 : 0.1;
+  // Direct milestone selection (resets timer)
+  const selectMilestone = useCallback((index: number) => {
+    setActiveIndex(index);
+    setTimerKey((prev) => prev + 1);
+  }, []);
+
+  // Keyboard navigation support
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      selectMilestone((index + 1) % milestones.length);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      selectMilestone((index - 1 + milestones.length) % milestones.length);
+    }
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: dur, ease }}
-      className="relative"
+    <motion.section
+      id="our-journey"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      className={`${sectionShell} relative overflow-hidden`}
     >
-      {/* Warm ambient glow behind active card */}
+      {/* Subtle Atmospheric Gradient Aura */}
       <div
-        className="pointer-events-none absolute -inset-3 rounded-[24px] transition-opacity duration-700"
+        className="pointer-events-none absolute inset-0 -z-10 transition-opacity duration-1000"
         style={{
           background:
-            'radial-gradient(ellipse at 65% 15%, rgba(245,181,68,0.05) 0%, transparent 55%)',
-          opacity: isActive ? 1 : 0,
+            'radial-gradient(ellipse 70% 50% at 50% 45%, rgba(245, 181, 68, 0.04) 0%, rgba(11, 15, 25, 0) 70%)',
         }}
       />
 
-      <div
-        className="relative rounded-2xl border p-6 sm:p-8 transition-all duration-700"
-        style={{
-          borderColor: isActive
-            ? 'rgba(245,181,68,0.3)'
-            : 'rgba(148,163,184,0.1)',
-          backgroundColor: isActive
-            ? 'rgba(245,181,68,0.03)'
-            : 'rgba(148,163,184,0.02)',
-          boxShadow: isActive
-            ? '0 8px 32px rgba(245,181,68,0.05), 0 1px 2px rgba(0,0,0,0.15)'
-            : '0 1px 2px rgba(0,0,0,0.1)',
-          transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      {/* Top Hairline Accent Line */}
+      <div className="mb-12 h-px w-full bg-gradient-to-r from-transparent via-[#f5b544]/30 to-transparent" />
+
+      {/* HEADER DESIGN — Two-Column Composition */}
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
         }}
+        className="grid gap-8 md:grid-cols-12 md:items-end justify-between border-b border-slate-200 dark:border-white/[0.08] pb-10 mb-12 lg:mb-16"
       >
-        {/* Header Bar */}
-        <motion.div
-          initial={{ opacity: 0, x: -12 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: dur, delay: stagger, ease }}
-          className="flex items-center justify-between pb-4 mb-4 transition-all duration-700"
-          style={{
-            borderBottom: `1px solid ${isActive ? 'rgba(245,181,68,0.18)' : 'rgba(148,163,184,0.08)'}`,
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <span
-              className="text-2xl font-extrabold font-mono tracking-tight transition-colors duration-600"
-              style={{
-                color: isActive ? '#f5b544' : 'rgba(245,181,68,0.35)',
-              }}
-            >
-              {milestone.year}
-            </span>
-            <span
-              className="text-xs font-bold uppercase tracking-[0.2em] transition-opacity duration-600"
-              style={{
-                opacity: isActive ? 0.8 : 0.35,
-                color: 'rgb(148,163,184)',
-              }}
-            >
-              / {milestone.phase}
-            </span>
-          </div>
-
-          <motion.span
-            initial={{ opacity: 0, x: 8 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: stagger + 0.08, ease }}
-            className="text-xs font-mono transition-opacity duration-600"
-            style={{
-              opacity: isActive ? 0.7 : 0.25,
-              color: 'rgb(148,163,184)',
-            }}
-          >
-            CHAPTER {milestone.index}
-          </motion.span>
-        </motion.div>
-
-        {/* Title */}
-        <motion.h4
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: dur, delay: stagger * 2, ease }}
-          className="text-xl font-bold tracking-tight sm:text-2xl transition-all duration-600 text-slate-900 dark:text-white"
-          style={{
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {milestone.title}
-        </motion.h4>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: dur, delay: stagger * 3, ease }}
-          className="mt-3 text-sm sm:text-base leading-relaxed transition-opacity duration-600 text-slate-600 dark:text-slate-300"
-          style={{
-            opacity: isActive ? 0.9 : 0.35,
-          }}
-        >
-          {milestone.description}
-        </motion.p>
-
-        {/* Metric Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: dur, delay: stagger * 4, ease }}
-          className="pt-4 mt-4 flex items-center gap-2 transition-all duration-700"
-          style={{
-            borderTop: `1px solid ${isActive ? 'rgba(245,181,68,0.12)' : 'rgba(148,163,184,0.06)'}`,
-          }}
-        >
-          <span
-            className="text-lg font-extrabold font-mono transition-colors duration-600"
-            style={{
-              color: isActive ? '#f7c86e' : 'rgba(247,200,110,0.3)',
-            }}
-          >
-            {milestone.metric}
+        <div className="md:col-span-7">
+          <span className={eyebrow}>
+            <Sparkles className="h-3.5 w-3.5" /> 03 / OUR GROWTH JOURNEY
           </span>
-          <span
-            className="text-xs uppercase tracking-wider transition-opacity duration-600"
-            style={{
-              opacity: isActive ? 0.7 : 0.3,
-              color: 'rgb(148,163,184)',
-            }}
-          >
-            {milestone.metricLabel}
-          </span>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Main OurJourney Component
-   ───────────────────────────────────────────────────────────────────────────── */
-export default function OurJourney() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const reducedMotion = useReducedMotion() ?? false;
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  /* ── Scroll tracking over the entire timeline area ──────────────────── */
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 0.7', 'end 0.3'],
-  });
-
-  /* ── Progress line height: smooth 0→1 ────────────────────────────────── */
-  const progressScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  /* ── Detect active chapter from scroll position ─────────────────────── */
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const clamped = Math.max(0, Math.min(latest, 0.999));
-    const segment = 1 / CHAPTER_COUNT;
-    const idx = Math.min(
-      Math.floor(clamped / segment),
-      CHAPTER_COUNT - 1
-    );
-    if (idx !== activeIndex) setActiveIndex(idx);
-  });
-
-  /* ── Subtle parallax per card ────────────────────────────────────────── */
-  const parallaxY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    reducedMotion ? [0, 0] : [12, -12]
-  );
-
-  return (
-    <div ref={sectionRef} className="relative">
-      <motion.section
-        id="our-journey"
-        className={sectionShell}
-      >
-        {/* Background progression overlay */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 transition-all duration-1000"
-          style={{ background: bgTints[activeIndex] }}
-        />
-
-        {/* Top Divider */}
-        <div className="mb-12 h-px w-full bg-gradient-to-r from-transparent via-[#f5b544]/30 to-transparent" />
-
-        {/* Editorial Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-          <div>
-            <span className={eyebrow}>
-              <Sparkles className="h-3.5 w-3.5" /> 03 / Our Growth Journey
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl leading-[1.08]">
+            The Chronological{' '}
+            <span className="bg-gradient-to-r from-[#f5b544] via-[#f7c86e] to-[#d8b35c] bg-clip-text text-transparent">
+              Planitt Story.
             </span>
-            <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-              The Chronological{' '}
-              <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
-                Planitt Story.
-              </span>
-            </h2>
-          </div>
-          <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
+          </h2>
+        </div>
+
+        <div className="md:col-span-5">
+          <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400">
             From a focused advisory firm to an incubated dual-engine platform — tracing our milestones from inception to ecosystem scale.
           </p>
         </div>
+      </motion.div>
 
-        {/* ═════════════════════════════════════════════════════════════════
-            DESKTOP LAYOUT (lg+)
-            Left: sticky timeline spine   |   Right: scrolling chapter cards
-            ═════════════════════════════════════════════════════════════════ */}
-        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-0 items-start">
+      {/* MOBILE / COMPACT TAB SELECTOR (< lg) */}
+      <div className="lg:hidden mb-8">
+        <LayoutGroup id="mobile-timeline-tabs">
+          <div
+            role="tablist"
+            aria-label="Timeline Chapters Navigation"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200 dark:border-white/10"
+          >
+            {milestones.map((m, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={m.year}
+                  id={`timeline-mobile-tab-${idx}`}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`timeline-panel-${idx}`}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => selectMilestone(idx)}
+                  onKeyDown={(e) => handleKeyDown(e, idx)}
+                  onFocus={() => setIsPaused(true)}
+                  onBlur={() => setIsPaused(false)}
+                  className={`relative flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? 'text-slate-900 dark:text-white'
+                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="mobileActiveTabHighlight"
+                      className="absolute inset-0 z-0 rounded-xl bg-amber-500/15 dark:bg-amber-400/20 border border-amber-500/40 dark:border-amber-400/40"
+                      transition={springSmooth}
+                    />
+                  )}
+                  <span className={`relative z-10 font-mono ${isActive ? 'text-[#f5b544] font-extrabold' : ''}`}>
+                    {m.year}
+                  </span>
+                  <span className="relative z-10 uppercase tracking-wider text-[10px] opacity-80">
+                    {m.phase}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
+      </div>
 
-          {/* ─── LEFT COLUMN: Sticky Timeline Spine ─────────────────────── */}
-          <div className="lg:col-span-3 lg:sticky lg:top-28 self-start">
-            <div className="relative flex flex-col items-center" style={{ minHeight: 420 }}>
-              {/* Background spine track */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] rounded-full bg-slate-200 dark:bg-white/[0.06]" />
+      {/* DESKTOP INTERACTIVE TIMELINE EXPLORER (lg+) */}
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-center">
+        {/* LEFT TIMELINE NAVIGATION */}
+        <div
+          className="hidden lg:block lg:col-span-5 relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div
+            role="tablist"
+            aria-label="Timeline Navigation"
+            className="relative space-y-4 py-2 pl-2"
+          >
+            {/* Background Vertical Line Spine */}
+            <div className="absolute left-[31px] top-6 bottom-6 w-[2px] rounded-full bg-slate-200 dark:bg-white/[0.08]" />
 
-              {/* Gold progress line */}
-              <motion.div
-                className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] rounded-full origin-top"
-                style={{
-                  scaleY: progressScaleY,
-                  height: '100%',
-                  background:
-                    'linear-gradient(180deg, #f5b544 0%, #f7c86e 50%, rgba(245,181,68,0.25) 100%)',
-                  boxShadow: '0 0 8px rgba(245,181,68,0.3)',
-                }}
-              />
+            {milestones.map((m, idx) => {
+              const isActive = idx === activeIndex;
 
-              {/* Timeline nodes */}
-              {milestones.map((m, i) => {
-                const isActive = i === activeIndex;
-                const isPast = i < activeIndex;
+              return (
+                <button
+                  key={m.year}
+                  id={`timeline-tab-${idx}`}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`timeline-panel-${idx}`}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => selectMilestone(idx)}
+                  onKeyDown={(e) => handleKeyDown(e, idx)}
+                  onFocus={() => setIsPaused(true)}
+                  onBlur={() => setIsPaused(false)}
+                  className={`group relative flex w-full items-center gap-6 p-3 text-left transition-all duration-300 rounded-2xl cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                    isActive
+                      ? 'text-slate-900 dark:text-white'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {/* Timeline Node Container with Autoplay Progress Ring */}
+                  <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center">
+                    {/* Active Pulsing Halo */}
+                    {isActive && !reducedMotion && (
+                      <motion.div
+                        layoutId="activeTimelineHalo"
+                        className="absolute h-10 w-10 rounded-full bg-amber-400/20 dark:bg-[#f5b544]/25 blur-xs animate-pulse"
+                        transition={springSmooth}
+                      />
+                    )}
 
-                return (
-                  <div
-                    key={m.year}
-                    className="relative z-10 flex items-center w-full"
-                    style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {/* Year label — left of node */}
-                    <div className="flex-1 flex justify-end pr-4">
+                    {/* Circular Progress Ring Overlay on Active Node */}
+                    {isActive && (
+                      <svg className="absolute inset-0 h-10 w-10 -rotate-90 pointer-events-none">
+                        <circle
+                          cx="20"
+                          cy="20"
+                          r="16"
+                          fill="none"
+                          stroke="rgba(245, 181, 68, 0.2)"
+                          strokeWidth="2"
+                        />
+                        <motion.circle
+                          key={`progress-${activeIndex}-${timerKey}`}
+                          cx="20"
+                          cy="20"
+                          r="16"
+                          fill="none"
+                          stroke="#f5b544"
+                          strokeWidth="2"
+                          strokeDasharray={100.5}
+                          strokeDashoffset={100.5}
+                          initial={{ strokeDashoffset: 100.5 }}
+                          animate={{ strokeDashoffset: isPaused ? 100.5 : 0 }}
+                          transition={{
+                            duration: reducedMotion ? 0 : AUTOPLAY_DURATION,
+                            ease: 'linear',
+                          }}
+                          onAnimationComplete={handleNext}
+                          style={{
+                            animationPlayState: isPaused ? 'paused' : 'running',
+                          }}
+                        />
+                      </svg>
+                    )}
+
+                    {/* Timeline Dot Node */}
+                    <div
+                      className={`relative z-10 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                        isActive
+                          ? 'h-6 w-6 border-[#f5b544] bg-[#f5b544] shadow-[0_0_14px_rgba(245,181,68,0.7)] scale-110'
+                          : 'h-4 w-4 border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900 group-hover:border-amber-400/60 group-hover:scale-105'
+                      }`}
+                    >
+                      {isActive ? (
+                        <div className="h-2 w-2 rounded-full bg-slate-950" />
+                      ) : (
+                        <div className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-600 group-hover:bg-amber-400/80 transition-colors" />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Year & Phase Info */}
+                  <div className="flex flex-1 items-center justify-between transition-transform duration-300 group-hover:translate-x-1">
+                    <div className="flex items-center gap-4">
                       <span
-                        className="text-sm font-mono font-bold tracking-tight transition-all"
-                        style={{
-                          color: isActive
-                            ? '#f5b544'
-                            : isPast
-                            ? 'rgba(245,181,68,0.45)'
-                            : 'rgba(148,163,184,0.25)',
-                          transform: isActive ? 'scale(1.08)' : 'scale(1)',
-                          transitionDuration: '600ms',
-                          transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                        }}
+                        className={`font-mono text-xl sm:text-2xl font-extrabold tracking-tight transition-all duration-300 ${
+                          isActive
+                            ? 'text-[#f5b544] dark:text-[#f7c86e] scale-105'
+                            : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'
+                        }`}
                       >
                         {m.year}
                       </span>
-                    </div>
-
-                    {/* Node */}
-                    <TimelineNode
-                      isActive={isActive}
-                      isPast={isPast}
-                      reducedMotion={reducedMotion}
-                    />
-
-                    {/* Phase label — right of node */}
-                    <div className="flex-1 pl-4">
                       <span
-                        className="text-[10px] font-bold uppercase tracking-[0.18em] transition-all"
-                        style={{
-                          color: isActive
-                            ? 'rgb(148,163,184)'
-                            : 'rgba(148,163,184,0.25)',
-                          transitionDuration: '600ms',
-                        }}
+                        className={`text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
+                          isActive
+                            ? 'text-slate-900 dark:text-white font-semibold'
+                            : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-400'
+                        }`}
                       >
                         {m.phase}
                       </span>
                     </div>
+
+                    {/* Active Connector Arrow / Line */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTimelineConnector"
+                        className="hidden lg:flex items-center gap-1.5 text-[#f5b544]"
+                        transition={springSmooth}
+                      >
+                        <div className="h-[2px] w-6 bg-gradient-to-r from-[#f5b544] to-[#f7c86e] rounded-full shadow-[0_0_8px_rgba(245,181,68,0.5)]" />
+                        <ChevronRight className="h-4 w-4 stroke-[2.5]" />
+                      </motion.div>
+                    )}
                   </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* ─── RIGHT COLUMN: Scrolling Chapter Cards ──────────────────── */}
-          <div ref={cardsRef} className="lg:col-span-9 lg:pl-8 relative space-y-16">
-            {milestones.map((m, i) => {
-              const isActive = i === activeIndex;
-
-              return (
-                <div key={m.year} className="relative">
-                  {/* Horizontal connector line from spine area to card */}
-                  <div
-                    className="absolute -left-8 top-10 hidden lg:block"
-                    style={{ width: 32 }}
-                  >
-                    <div
-                      className="h-[1.5px] rounded-full transition-all origin-left"
-                      style={{
-                        backgroundColor: isActive
-                          ? 'rgba(245,181,68,0.45)'
-                          : 'rgba(148,163,184,0.08)',
-                        transform: isActive ? 'scaleX(1)' : 'scaleX(0.35)',
-                        boxShadow: isActive
-                          ? '0 0 6px rgba(245,181,68,0.15)'
-                          : 'none',
-                        transitionDuration: '700ms',
-                        transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                      }}
-                    />
-                  </div>
-
-                  <motion.div style={{ y: parallaxY }}>
-                    <ChapterCard
-                      milestone={m}
-                      isActive={isActive}
-                      reducedMotion={reducedMotion}
-                    />
-                  </motion.div>
-                </div>
+                </button>
               );
             })}
           </div>
         </div>
 
-        {/* ═════════════════════════════════════════════════════════════════
-            MOBILE LAYOUT (< lg): Left-edge timeline + full-width cards
-            ═════════════════════════════════════════════════════════════════ */}
-        <div className="lg:hidden relative pl-10 sm:pl-12">
-          {/* Vertical spine track */}
-          <div className="absolute left-[14px] sm:left-[18px] top-0 bottom-0 w-[2px] rounded-full bg-slate-200 dark:bg-white/[0.06]" />
+        {/* RIGHT CONTENT PANEL — Fixed Minimum Height Container to Prevent Layout Shift */}
+        <div
+          className="lg:col-span-7 relative min-h-[420px] flex flex-col justify-center"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div
+            id={`timeline-panel-${activeIndex}`}
+            role="tabpanel"
+            aria-labelledby={`timeline-tab-${activeIndex}`}
+            className="relative w-full"
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeMilestone.year}
+                initial={{
+                  opacity: 0,
+                  x: reducedMotion ? 0 : 16,
+                  filter: reducedMotion ? 'none' : 'blur(4px)',
+                }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  filter: 'blur(0px)',
+                }}
+                exit={{
+                  opacity: 0,
+                  x: reducedMotion ? 0 : -16,
+                  filter: reducedMotion ? 'none' : 'blur(4px)',
+                }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:shadow-2xl transition-colors duration-300"
+              >
+                {/* Background Accent Mesh Glow Node */}
+                <div
+                  className="pointer-events-none absolute -top-12 -right-12 h-64 w-64 rounded-full blur-[80px] opacity-20"
+                  style={{ backgroundColor: '#f5b544' }}
+                />
 
-          {/* Gold progress line — mobile */}
-          <motion.div
-            className="absolute left-[14px] sm:left-[18px] top-0 w-[2px] rounded-full origin-top"
-            style={{
-              scaleY: progressScaleY,
-              height: '100%',
-              background:
-                'linear-gradient(180deg, #f5b544 0%, #f7c86e 50%, rgba(245,181,68,0.25) 100%)',
-              boxShadow: '0 0 6px rgba(245,181,68,0.2)',
-            }}
-          />
-
-          <div className="space-y-10">
-            {milestones.map((m, i) => {
-              const isActive = i === activeIndex;
-              const isPast = i < activeIndex;
-
-              return (
-                <div key={m.year} className="relative">
-                  {/* Mobile node */}
-                  <div
-                    className="absolute top-7"
-                    style={{ left: -34 }}
-                  >
-                    <TimelineNode
-                      isActive={isActive}
-                      isPast={isPast}
-                      reducedMotion={reducedMotion}
-                    />
-                  </div>
-
-                  {/* Mobile horizontal connector */}
-                  <div
-                    className="absolute top-[29px]"
-                    style={{ left: -14, width: 14 }}
-                  >
+                {/* Top Meta Bar with Icon Frame — Identical to VisionMission & WhatWeDo */}
+                <motion.div
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.05 }}
+                  className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-6"
+                >
+                  <div className="flex items-center gap-4">
                     <div
-                      className="h-[1.5px] rounded-full transition-all origin-left"
-                      style={{
-                        backgroundColor: isActive
-                          ? 'rgba(245,181,68,0.35)'
-                          : 'rgba(148,163,184,0.08)',
-                        transform: isActive ? 'scaleX(1)' : 'scaleX(0.3)',
-                        transitionDuration: '600ms',
-                      }}
-                    />
+                      className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10"
+                      style={{ backgroundColor: 'rgba(245, 181, 68, 0.12)' }}
+                    >
+                      <activeMilestone.icon className="h-7 w-7 text-[#b78622] dark:text-[#f5b544]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500">
+                        CHAPTER {activeMilestone.index} / 05
+                      </span>
+                      <h3 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+                        {activeMilestone.phase} Phase
+                      </h3>
+                    </div>
                   </div>
 
-                  <ChapterCard
-                    milestone={m}
-                    isActive={isActive}
-                    reducedMotion={reducedMotion}
-                  />
+                  <span className="hidden sm:inline-flex text-xs font-mono font-semibold text-[#b78622] dark:text-[#f7c86e] border border-slate-200 dark:border-white/10 px-3.5 py-1 rounded-full bg-slate-50 dark:bg-white/[0.03]">
+                    EST. {activeMilestone.year}
+                  </span>
+                </motion.div>
+
+                {/* Headline & Description */}
+                <div className="mt-8 space-y-4">
+                  <motion.h4
+                    initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.1 }}
+                    className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white leading-snug sm:text-3xl"
+                  >
+                    {activeMilestone.title}
+                  </motion.h4>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.15 }}
+                    className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400"
+                  >
+                    {activeMilestone.description}
+                  </motion.p>
                 </div>
-              );
-            })}
+
+                {/* Bottom Bar — Metric Badge + Deliverables + Nav Controls */}
+                <motion.div
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.2 }}
+                  className="mt-10 pt-6 border-t border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+                >
+                  {/* Metric Display */}
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-3xl sm:text-4xl font-extrabold tracking-tight text-[#b78622] dark:text-[#f7c86e]">
+                      {activeMilestone.metric}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+                      {activeMilestone.metricLabel}
+                    </span>
+                  </div>
+
+                  {/* Highlights Tags & Nav Arrows */}
+                  <div className="flex items-center gap-3">
+                    <div className="hidden md:flex flex-wrap gap-2">
+                      {activeMilestone.highlights.map((tag) => (
+                        <MagneticWrapper key={tag} strength={0.12}>
+                          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 dark:border-white/10 dark:bg-white/[0.03] px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#f5b544]" />
+                            {tag}
+                          </span>
+                        </MagneticWrapper>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={handlePrev}
+                        aria-label="Previous Chapter"
+                        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/[0.08] cursor-pointer"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        aria-label="Next Chapter"
+                        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/[0.08] cursor-pointer"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
-      </motion.section>
-    </div>
+      </div>
+    </motion.section>
   );
 }

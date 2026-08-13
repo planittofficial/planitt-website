@@ -96,8 +96,8 @@ const tracks: { key: Track; label: string; icon: React.ElementType }[] = [
 ];
 
 export default function AboutTestimonials() {
-  const { homeMode, setHomeMode } = useHomeMode();
-  const activeTrack: Track = homeMode === 'technical' ? 'courses' : 'services';
+  const { setHomeMode } = useHomeMode();
+  const [activeTrack, setActiveTrack] = useState<Track>('courses');
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const testimonials = activeTrack === 'courses' ? coursesTestimonials : servicesTestimonials;
@@ -137,6 +137,7 @@ export default function AboutTestimonials() {
                   key={t.key}
                   type="button"
                   onClick={() => {
+                    setActiveTrack(t.key);
                     setHomeMode(t.key === 'courses' ? 'technical' : 'financial');
                     setActiveIndex(0);
                   }}
