@@ -19,7 +19,6 @@ import TradingAlgorithmsSection from './TradingAlgorithmsSection';
 import HowItWorksSection from './HowItWorksSection';
 import FaqSection from './FaqSection';
 import LearningJourneySection from './LearningJourneySection';
-import MarketTicker from './MarketTicker';
 import CinematicFooter from './CinematicFooter';
 import AboutPage from './about/AboutPage';
 
@@ -172,10 +171,8 @@ export default function LandingPage() {
           className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[110px_110px] opacity-[0.12]"
         />
 
-        {/* Fixed Market Ticker – stays visible below header while scrolling */}
-        <MarketTicker />
-        {/* Spacer: header + ticker */}
-        <div className="h-[96px] sm:h-[110px]" />
+        {/* Spacer for fixed header */}
+        <div className="pt-16 sm:pt-20" />
 
         <AboutPage />
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   motion,
   AnimatePresence,
@@ -21,7 +21,8 @@ import { sectionShell, eyebrow, springSmooth, MagneticWrapper } from './about-sh
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Section 3 — Our Journey (The Planitt Story)
-   Interactive Storytelling Component with Autoplay Loop & Pause-on-Hover
+   Calm, Premium Interactive Storytelling Timeline with 8s Display Duration,
+   Synchronized Progress Ring, and Exact Hover Pause & Resume
    ───────────────────────────────────────────────────────────────────────────── */
 
 interface Milestone {
@@ -99,15 +100,21 @@ const milestones: Milestone[] = [
   },
 ];
 
-const AUTOPLAY_DURATION = 4.5; // Seconds per milestone
+const DISPLAY_DURATION = 8; // 8 seconds display duration per milestone
 
 export default function OurJourney() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
-  const reducedMotion = useReducedMotion() ?? false;
 
+  const reducedMotion = useReducedMotion() ?? false;
   const activeMilestone = milestones[activeIndex];
+
+  // Manual milestone selection (resets 8s timer)
+  const selectMilestone = useCallback((index: number) => {
+    setActiveIndex(index);
+    setTimerKey((prev) => prev + 1);
+  }, []);
 
   // Advance to next milestone
   const handleNext = useCallback(() => {
@@ -121,11 +128,17 @@ export default function OurJourney() {
     setTimerKey((prev) => prev + 1);
   }, []);
 
-  // Direct milestone selection (resets timer)
-  const selectMilestone = useCallback((index: number) => {
-    setActiveIndex(index);
-    setTimerKey((prev) => prev + 1);
-  }, []);
+  // 8-Second Autoplay Loop Engine
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % milestones.length);
+      setTimerKey((prev) => prev + 1);
+    }, DISPLAY_DURATION * 1000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, activeIndex, timerKey]);
 
   // Keyboard navigation support
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
@@ -272,18 +285,19 @@ export default function OurJourney() {
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
-                  {/* Timeline Node Container with Autoplay Progress Ring */}
+                  {/* Timeline Node Container with 8s Synchronized Progress Ring */}
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center">
-                    {/* Active Pulsing Halo */}
+                    {/* Active Soft Pulse Halo */}
                     {isActive && !reducedMotion && (
                       <motion.div
                         layoutId="activeTimelineHalo"
-                        className="absolute h-10 w-10 rounded-full bg-amber-400/20 dark:bg-[#f5b544]/25 blur-xs animate-pulse"
-                        transition={springSmooth}
+                        className="absolute h-10 w-10 rounded-full bg-amber-400/20 dark:bg-[#f5b544]/25 blur-xs"
+                        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
                       />
                     )}
 
-                    {/* Circular Progress Ring Overlay on Active Node */}
+                    {/* Synchronized Circular Progress Ring Overlay */}
                     {isActive && (
                       <svg className="absolute inset-0 h-10 w-10 -rotate-90 pointer-events-none">
                         <circle
@@ -304,13 +318,11 @@ export default function OurJourney() {
                           strokeWidth="2"
                           strokeDasharray={100.5}
                           strokeDashoffset={100.5}
-                          initial={{ strokeDashoffset: 100.5 }}
-                          animate={{ strokeDashoffset: isPaused ? 100.5 : 0 }}
+                          animate={{ strokeDashoffset: isPaused ? undefined : 0 }}
                           transition={{
-                            duration: reducedMotion ? 0 : AUTOPLAY_DURATION,
+                            duration: isPaused ? 0 : DISPLAY_DURATION,
                             ease: 'linear',
                           }}
-                          onAnimationComplete={handleNext}
                           style={{
                             animationPlayState: isPaused ? 'paused' : 'running',
                           }}
@@ -375,7 +387,7 @@ export default function OurJourney() {
           </div>
         </div>
 
-        {/* RIGHT CONTENT PANEL — Fixed Minimum Height Container to Prevent Layout Shift */}
+        {/* RIGHT CONTENT PANEL — Fixed Stable Height Container */}
         <div
           className="lg:col-span-7 relative min-h-[420px] flex flex-col justify-center"
           onMouseEnter={() => setIsPaused(true)}
@@ -392,33 +404,30 @@ export default function OurJourney() {
                 key={activeMilestone.year}
                 initial={{
                   opacity: 0,
-                  x: reducedMotion ? 0 : 16,
-                  filter: reducedMotion ? 'none' : 'blur(4px)',
+                  x: reducedMotion ? 0 : 12,
                 }}
                 animate={{
                   opacity: 1,
                   x: 0,
-                  filter: 'blur(0px)',
                 }}
                 exit={{
                   opacity: 0,
-                  x: reducedMotion ? 0 : -16,
-                  filter: reducedMotion ? 'none' : 'blur(4px)',
+                  x: reducedMotion ? 0 : -12,
                 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 sm:p-12 backdrop-blur-xl shadow-xl dark:border-white/10 dark:bg-white/[0.02] dark:shadow-2xl transition-colors duration-300"
               >
-                {/* Background Accent Mesh Glow Node */}
+                {/* Subtle Ambient Glow Node */}
                 <div
                   className="pointer-events-none absolute -top-12 -right-12 h-64 w-64 rounded-full blur-[80px] opacity-20"
                   style={{ backgroundColor: '#f5b544' }}
                 />
 
-                {/* Top Meta Bar with Icon Frame — Identical to VisionMission & WhatWeDo */}
+                {/* Top Meta Bar with Icon Frame */}
                 <motion.div
-                  initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: 0.05 }}
+                  transition={{ duration: 0.4, delay: 0.05 }}
                   className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-6"
                 >
                   <div className="flex items-center gap-4">
@@ -446,18 +455,18 @@ export default function OurJourney() {
                 {/* Headline & Description */}
                 <div className="mt-8 space-y-4">
                   <motion.h4
-                    initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                    initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.1 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                     className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white leading-snug sm:text-3xl"
                   >
                     {activeMilestone.title}
                   </motion.h4>
 
                   <motion.p
-                    initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                    initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.15 }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
                     className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400"
                   >
                     {activeMilestone.description}
@@ -466,9 +475,9 @@ export default function OurJourney() {
 
                 {/* Bottom Bar — Metric Badge + Deliverables + Nav Controls */}
                 <motion.div
-                  initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: 0.2 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                   className="mt-10 pt-6 border-t border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-6"
                 >
                   {/* Metric Display */}
