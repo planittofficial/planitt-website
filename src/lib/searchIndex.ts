@@ -111,8 +111,14 @@ export const searchIndex: SearchItem[] = [
   },
   {
     title: "About Us",
-    description: "Learn more about Planitt, our mission, and our expert team",
-    url: "/main#about",
+    description: "Learn more about Planitt, our vision, mission, core values, and expert team",
+    url: "/about",
+    category: "Page",
+  },
+  {
+    title: "Vision, Mission & Core Values",
+    description: "Our vision for intelligent investing, our mission to empower wealth creation, and our core values: Integrity, Innovation, Compliance, Customer Centricity, and Teamwork",
+    url: "/about#vision-mission",
     category: "Page",
   },
   {

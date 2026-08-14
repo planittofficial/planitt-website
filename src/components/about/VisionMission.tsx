@@ -2,7 +2,17 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { Eye, Rocket, ArrowUpRight, Sparkles } from 'lucide-react';
+import {
+  Eye,
+  Rocket,
+  ArrowUpRight,
+  Sparkles,
+  ShieldCheck,
+  Lightbulb,
+  Scale,
+  HeartHandshake,
+  Users,
+} from 'lucide-react';
 import { useHomeMode } from '@/context/HomeModeContext';
 import {
   sectionShell,
@@ -14,8 +24,8 @@ import {
 } from './about-shared';
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Section 1 — Vision & Mission
-   Large Editorial Hero Composition with Interactive Dual-Axis Focal Engine
+   Section 1 — Vision, Mission & Core Values
+   Editorial Hero Composition with Interactive Dual-Axis Focal Engine & Values Grid
    ───────────────────────────────────────────────────────────────────────────── */
 
 type ActiveTab = 'vision' | 'mission';
@@ -32,30 +42,82 @@ interface Pillar {
   accent: string;
 }
 
+interface CoreValue {
+  index: string;
+  title: string;
+  tagline: string;
+  description: string;
+  icon: React.ElementType;
+  accent: string;
+}
+
 const pillars: Pillar[] = [
   {
     id: 'vision',
     index: '01',
-    badge: 'Our Core Vision',
+    badge: 'Our Vision',
     icon: Eye,
-    title: 'Architecting the Future of Wealth & Technology',
-    tagline: 'To be the most trusted dual-engine platform across financial guidance and technical delivery.',
+    title: 'Building a Trusted, Technology-Driven Financial Ecosystem',
+    tagline: 'Intelligent investing, wealth creation, and financial technology accessible to all.',
     description:
-      'We empower individuals with clear, goal-oriented wealth guidance while engineering modern, resilient technical solutions for growing enterprises. Our vision unites intelligence, integrity, and innovation.',
-    highlights: ['Goal-Oriented Guidance', 'Engineered Reliability', 'Unified Ecosystem'],
+      'To build a trusted, technology-driven financial ecosystem that makes intelligent investing, wealth creation, and financial technology accessible to individuals.',
+    highlights: ['Trusted Ecosystem', 'Intelligent Investing', 'Wealth Creation', 'Accessible FinTech'],
     accent: '#b78622',
   },
   {
     id: 'mission',
     index: '02',
-    badge: 'Our Daily Mission',
+    badge: 'Our Mission',
     icon: Rocket,
-    title: 'Delivering Practical Wealth Advisory & Digital Solutions',
-    tagline: 'To prioritize transparency, high-performance execution, and expert leadership in every project.',
+    title: 'Empowering Decisions & Building Long-Term Wealth',
+    tagline: 'Accessible financial solutions, technology-driven intelligence, and financial education.',
     description:
-      'We break down complex financial concepts into structured action plans while building scalable software, cloud infrastructure, and algorithmic tools under expert leadership.',
-    highlights: ['Transparent Advisory', 'Algorithmic Precision', 'End-to-End Delivery'],
+      'To empower individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and financial education helping them make better financial decisions and build long-term wealth.',
+    highlights: ['Accessible Solutions', 'Investment Intelligence', 'Financial Education', 'Long-Term Wealth'],
     accent: '#06b6d4',
+  },
+];
+
+const coreValues: CoreValue[] = [
+  {
+    index: '01',
+    title: 'Integrity',
+    tagline: 'Honesty & Transparency',
+    description: 'We act with honesty, transparency, and accountability in all interactions.',
+    icon: ShieldCheck,
+    accent: '#f5b544',
+  },
+  {
+    index: '02',
+    title: 'Innovation',
+    tagline: 'Creative Problem Solving',
+    description: 'We embrace technology and creative thinking to solve complex problems.',
+    icon: Lightbulb,
+    accent: '#06b6d4',
+  },
+  {
+    index: '03',
+    title: 'Compliance',
+    tagline: 'Ethical & Legal Standards',
+    description: 'We adhere to all applicable laws, regulations, and ethical standards.',
+    icon: Scale,
+    accent: '#8b5cf6',
+  },
+  {
+    index: '04',
+    title: 'Customer Centricity',
+    tagline: 'Trust & Satisfaction',
+    description: "Our customers' trust and satisfaction are our primary measure of success.",
+    icon: HeartHandshake,
+    accent: '#f43f5e',
+  },
+  {
+    index: '05',
+    title: 'Teamwork',
+    tagline: 'Collaboration & Respect',
+    description: 'We foster collaboration, diversity, and mutual respect within our workforce.',
+    icon: Users,
+    accent: '#10b981',
   },
 ];
 
@@ -216,7 +278,7 @@ export default function VisionMission() {
 
               {/* Floating Highlights Badges */}
               <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/[0.08] flex flex-wrap gap-2 sm:gap-3">
-                {activePillar.highlights.map((h, i) => (
+                {activePillar.highlights.map((h) => (
                   <MagneticWrapper key={h} strength={0.15}>
                     <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 dark:border-white/10 dark:bg-white/[0.03] px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:border-slate-300 hover:text-slate-900 dark:hover:border-white/20 dark:hover:text-white">
                       <span
@@ -232,6 +294,82 @@ export default function VisionMission() {
           </AnimatePresence>
         </motion.div>
       </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 1.B: Core Values Showcase
+          ───────────────────────────────────────────────────────────── */}
+      <motion.div variants={revealItem} className="mt-20">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <span className={eyebrow}>
+              <Sparkles className="h-3.5 w-3.5" /> Guiding Principles
+            </span>
+            <h3 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+              Our Core{' '}
+              <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">
+                Values
+              </span>
+            </h3>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+              The foundational pillars that guide our strategy, execution, and client relationships.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {coreValues.map((val) => (
+            <motion.div
+              key={val.title}
+              variants={revealItem}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-md backdrop-blur-xl transition-all duration-300 dark:border-white/10 dark:bg-white/[0.02] dark:shadow-xl hover:border-slate-300 dark:hover:border-white/20 hover:shadow-lg"
+            >
+              {/* Subtle top glow bar on hover */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(to right, ${val.accent}, transparent)`,
+                }}
+              />
+
+              {/* Background ambient glow */}
+              <div
+                className="pointer-events-none absolute -top-8 -right-8 h-28 w-28 rounded-full blur-[40px] opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                style={{ backgroundColor: val.accent }}
+              />
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <div
+                    className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10 transition-transform duration-300 group-hover:scale-105"
+                    style={{ backgroundColor: `${val.accent}15` }}
+                  >
+                    <val.icon className="h-5 w-5" style={{ color: val.accent }} />
+                  </div>
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 dark:text-slate-500">
+                    {val.index}
+                  </span>
+                </div>
+
+                <h4 className="mt-5 text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                  {val.title}
+                </h4>
+
+                <p
+                  className="mt-1 text-xs font-semibold uppercase tracking-wider"
+                  style={{ color: val.accent }}
+                >
+                  {val.tagline}
+                </p>
+
+                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  {val.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Structural Accent Bottom Line */}
       <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />

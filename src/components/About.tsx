@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Award, CheckCircle, Code2, Shield, Target } from 'lucide-react';
+import { CheckCircle, HeartHandshake, Lightbulb, Scale, ShieldCheck, Users } from 'lucide-react';
 
 type HomeMode = 'all' | 'financial' | 'technical';
 
@@ -39,57 +39,49 @@ const About = ({ mode = 'all' }: AboutProps) => {
 
     const intro = isTechnical
         ? {
-            lead: 'Planitt provides modern technical execution led by ',
+            lead: 'Planitt delivers technology-driven solutions led by ',
             name: 'Sarth Srivastava',
-            body: 'We help organizations build digital systems with reliable delivery in app, web, cloud, and automation.',
+            body: 'Empowering individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and reliable digital delivery.',
         }
         : isFinancial
             ? {
-                lead: 'Planitt provides trusted financial advisory led by ',
+                lead: 'Planitt provides trusted wealth guidance led by ',
                 name: 'Piyush Tembhekar',
-                body: 'We help individuals and families with wealth planning, protection, and long-term financial decisions.',
+                body: 'Empowering individuals and businesses with accessible financial solutions, investment intelligence, and education to build long-term wealth.',
             }
             : {
-                lead: 'Planitt combines financial advisory and technical execution led by ',
+                lead: 'Planitt empowers individuals and businesses led by ',
                 name: 'Piyush Tembhekar and Sarth Srivastava',
-                body: 'We help individuals, families, and organizations with practical financial guidance and reliable digital delivery.',
+                body: 'To empower individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and financial education helping them make better financial decisions and build long-term wealth.',
             };
 
-    const values = isTechnical
-        ? [
-            {
-                icon: Shield,
-                title: 'Trust & Transparency',
-                description: 'We maintain clarity across advisory, execution, and communication.',
-            },
-            {
-                icon: Code2,
-                title: 'Technical Excellence',
-                description: 'Modern engineering practices ensure quality, speed, and reliability.',
-            },
-            {
-                icon: Award,
-                title: 'Expert Leadership',
-                description: 'Our finance and technical leaders guide each engagement end-to-end.',
-            },
-        ]
-        : [
-            {
-                icon: Shield,
-                title: 'Trust & Transparency',
-                description: 'We maintain clarity across advisory, execution, and communication.',
-            },
-            {
-                icon: Target,
-                title: 'Goal-Oriented Planning',
-                description: 'Every solution is aligned to business and personal outcomes.',
-            },
-            {
-                icon: Award,
-                title: 'Expert Leadership',
-                description: 'Our finance and technical leaders guide each engagement end-to-end.',
-            },
-        ];
+    const values = [
+        {
+            icon: ShieldCheck,
+            title: 'Integrity',
+            description: 'We act with honesty, transparency, and accountability in all interactions.',
+        },
+        {
+            icon: Lightbulb,
+            title: 'Innovation',
+            description: 'We embrace technology and creative thinking to solve complex problems.',
+        },
+        {
+            icon: Scale,
+            title: 'Compliance',
+            description: 'We adhere to all applicable laws, regulations, and ethical standards.',
+        },
+        {
+            icon: HeartHandshake,
+            title: 'Customer Centricity',
+            description: "Our customers' trust and satisfaction are our primary measure of success.",
+        },
+        {
+            icon: Users,
+            title: 'Teamwork',
+            description: 'We foster collaboration, diversity, and mutual respect within our workforce.',
+        },
+    ];
 
     const profile = isTechnical
         ? {
