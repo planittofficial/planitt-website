@@ -274,16 +274,16 @@ export default function WhatWeDo() {
                 </p>
               </div>
 
-              <div className="mt-10 pt-6 border-t border-white/[0.08]">
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 mb-3">
+              <div className="mt-10 pt-6 border-t border-slate-200 dark:border-white/[0.08]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-3">
                   Core Highlights & Deliverables
                 </p>
                 <div className="flex flex-wrap gap-2.5">
                   {activeCap.tags.map((tag) => (
                     <MagneticWrapper key={tag} strength={0.12}>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-slate-200">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:text-slate-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 dark:hover:border-white/20 dark:hover:text-white px-4 py-2 text-xs font-semibold transition-colors duration-200">
                         <span
-                          className="h-1.5 w-1.5 rounded-full"
+                          className="h-1.5 w-1.5 rounded-full shrink-0"
                           style={{ backgroundColor: accentColor }}
                         />
                         {tag}

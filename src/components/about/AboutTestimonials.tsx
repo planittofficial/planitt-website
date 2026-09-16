@@ -114,7 +114,7 @@ export default function AboutTestimonials() {
       className={sectionShell}
     >
       {/* Editorial Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-white/[0.08] pb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-slate-200 dark:border-white/[0.08] pb-12">
         <div>
           <span className={eyebrow}>
             <Sparkles className="h-3.5 w-3.5" /> 06 / User Testimonials

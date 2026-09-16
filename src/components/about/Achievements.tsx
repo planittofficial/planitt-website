@@ -56,7 +56,7 @@ function AnimatedNumber({ stat }: { stat: StatSlot }) {
   return (
     <p
       ref={ref}
-      className="font-mono text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl bg-gradient-to-r from-[#f5b544] via-[#f7c86e] to-white bg-clip-text text-transparent"
+      className="font-mono text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl bg-gradient-to-r from-[#b78622] via-[#d97706] to-[#b78622] dark:from-[#f5b544] dark:via-[#f7c86e] dark:to-white bg-clip-text text-transparent"
     >
       {stat.prefix ?? ''}
       {displayValue}

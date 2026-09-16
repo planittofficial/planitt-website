@@ -19,10 +19,12 @@ export default function Header({ variant = 'main' }: HeaderProps) {
 
   const navItems = isLanding
     ? [
-        { name: 'Signals', href: '/#live-signals' },
-        { name: 'AI', href: '/#ai' },
-        { name: 'Markets', href: '/#showcase' },
-        { name: 'Academy', href: '/#academy' },
+        { name: 'What We Do', href: '/#what-we-do' },
+        { name: 'Journey', href: '/#our-journey' },
+        { name: 'Partners', href: '/#supporters' },
+        { name: 'Milestones', href: '/#achievements' },
+        { name: 'Recognition', href: '/#recognition' },
+        { name: 'Testimonials', href: '/#about-testimonials' },
         { name: 'Calculators', href: '/calculators' },
       ]
     : [
@@ -56,13 +58,13 @@ export default function Header({ variant = 'main' }: HeaderProps) {
             />
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
-            <nav className="flex items-center gap-8">
+          <div className="hidden items-center gap-6 lg:gap-8 md:flex">
+            <nav className="flex items-center gap-4 lg:gap-7 text-sm font-medium">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`nav-gradient-underline font-medium transition-colors ${
+                  className={`nav-gradient-underline transition-colors whitespace-nowrap ${
                     isLanding
                       ? 'text-gray-200 hover:text-white'
                       : 'text-gray-700 hover:text-[#b78622] dark:text-gray-300 dark:hover:text-zinc-300'
