@@ -30,9 +30,9 @@ const allMembers: TeamMember[] = [
     image: '/CEO_Photo.png',
   },
   {
-    name: 'Sarth Srivastava',
+    name: 'Parth Shende',
     role: 'CTO & CO-FOUNDER',
-    image: '/sarth_avatar.jpeg',
+    image: '/parth_bhai.png',
   },
   {
     name: 'Om Shrikhande',

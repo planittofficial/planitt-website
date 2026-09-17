@@ -40,7 +40,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
     const intro = isTechnical
         ? {
             lead: 'Planitt delivers technology-driven solutions led by ',
-            name: 'Sarth Srivastava',
+            name: 'Parth Shende',
             body: 'Empowering individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and reliable digital delivery.',
         }
         : isFinancial
@@ -51,7 +51,7 @@ const About = ({ mode = 'all' }: AboutProps) => {
             }
             : {
                 lead: 'Planitt empowers individuals and businesses led by ',
-                name: 'Piyush Tembhekar and Sarth Srivastava',
+                name: 'Piyush Tembhekar and Parth Shende',
                 body: 'To empower individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and financial education helping them make better financial decisions and build long-term wealth.',
             };
 
@@ -85,9 +85,9 @@ const About = ({ mode = 'all' }: AboutProps) => {
 
     const profile = isTechnical
         ? {
-            image: '/sarth_avatar.jpeg',
-            alt: 'Sarth Srivastava',
-            name: 'Sarth Srivastava',
+            image: '/parth_bhai.png',
+            alt: 'Parth Shende',
+            name: 'Parth Shende',
             meta: '',
             role: 'CTO',
             roleClass: 'text-[#0b6cb8] dark:text-[#8fd3ff]',
