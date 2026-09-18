@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Portfolio from "@/components/Portfolio";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
+import FinancialPlaybook from "@/components/FinancialPlaybook";
 import { useHomeMode } from "@/context/HomeModeContext";
 // import Blogs from "@/components/Blogs";
 
@@ -20,6 +21,7 @@ export default function Main() {
         {/* <Blogs /> */}     {/* Blog/Insights Section (temporarily hidden) */}
         <Portfolio mode={homeMode} />
         <About mode={homeMode} />
+        {homeMode === "financial" && <FinancialPlaybook />}
         <Testimonials mode={homeMode} />
         <Contact mode={homeMode} />
       </main>
