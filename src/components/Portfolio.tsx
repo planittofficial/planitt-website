@@ -59,57 +59,84 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             subtitle="A showcase of our high-performance websites and mobile applications."
                             accentColor="blue"
                             projects={[
-                                 {
-                                    
-                                    title: "Alvestt ↗",
+                                {
+                                    title: "Alvestt",
+                                    domain: "Web Platform",
+                                    year: "2026",
+                                    status: "Live",
                                     description:
-                                        "A stock market trading website built for our in-house product, Planitt Signals, focused on delivering real-time market insights and a seamless user experience for traders.",
+                                        "AI-powered market signals, algorithmic trading tools, and multi-asset investment intelligence platform.",
+                                    client: "In-House",
+                                    techStack: ["Next.js", "TypeScript", "Python", "FastAPI", "+2"],
                                     image: "/alvestt-homepage-dark.png",
                                     liveLink: "https://www.alvestt.com/",
-                                    tags: ["In-house", "Fintech", "Trading Platform"],
+                                    platformIcons: ["web"],
                                 },
                                 {
-                                    
-                                    title: "Planitt CRM ↗",
+                                    title: "Planitt CRM",
+                                    domain: "Web Development",
+                                    year: "2026",
+                                    status: "Completed",
                                     description:
-                                        "A customer relationship management website designed to streamline sales processes and enhance customer engagement.",
+                                        "Unified CRM workspace to streamline lead pipelines, team task allocations, and customer engagement.",
+                                    client: "In-House",
+                                    techStack: ["React", "Node.js", "PostgreSQL", "Tailwind", "+1"],
                                     image: "/Planitt-CRM.png",
                                     liveLink: "https://crm.planitt.in/",
-                                    tags: ["SaaS", "CRM", "Sales Automation"],
+                                    platformIcons: ["web"],
                                 },
                                 {
-                                    title: "Coffee Culture ↗",
+                                    title: "Coffee Culture",
+                                    domain: "Web Development",
+                                    year: "2025",
+                                    status: "Completed",
                                     description:
-                                        "A coffee shop website designed to showcase products, services, and events while providing an easy-to-use online ordering system.",
+                                        "Boutique cafe showcase website featuring signature menus, live event highlights, and online reservations.",
+                                    client: "Coffee Culture",
+                                    techStack: ["Next.js", "React", "Tailwind CSS", "SEO"],
                                     image: "/Coffee-Culture.jpg",
                                     liveLink: "https://coffeeculturenagpur.com/",
-                                    tags: ["Food & Beverage", "Online Ordering", "Cafe"],
+                                    platformIcons: ["web"],
                                 },
                                 {
-                                    title: "Capita Prime LLC ↗",
+                                    title: "Capita Prime LLC",
+                                    domain: "Web Development",
+                                    year: "2025",
+                                    status: "Completed",
                                     description:
-                                        "A real estate website built for Dubai customers, focused on presenting land-selling opportunities with a professional layout and lead-oriented experience.",
+                                        "Luxury real estate investment portal showcasing premier Dubai land acquisitions and high-net-worth deals.",
+                                    client: "Capita Prime Dubai",
+                                    techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "CRM"],
                                     image: "/CapitaPrime.png",
                                     liveLink: "https://capitaprimellc.netlify.app/",
-                                    tags: ["Real Estate", "Dubai Market", "Lead Generation"],
+                                    platformIcons: ["web"],
                                 },
                                 {
-                                    title: "Sawarnaratna ↗",
+                                    title: "Sawarnaratna",
+                                    domain: "E-commerce",
+                                    year: "2024",
+                                    status: "Completed",
                                     description:
-                                        "A dry fruit gifting website where customers can build their own custom gift hampers for friends and family through a simple, responsive shopping flow.",
+                                        "Custom luxury dry fruit gifting platform with interactive hamper builders and seamless checkout.",
+                                    client: "Sawarnaratna",
+                                    techStack: ["React", "Next.js", "E-commerce", "Stripe/UPI"],
                                     image: "/sawarnaratna.png",
                                     liveLink: "https://sawarnaratna.netlify.app/",
-                                    tags: ["E-commerce", "Gift Hampers", "Custom Orders"],
+                                    platformIcons: ["web"],
                                 },
                                 {
-                                    title: "Krypsm ↗",
+                                    title: "Krypsm",
+                                    domain: "Web Application",
+                                    year: "2024",
+                                    status: "Completed",
                                     description:
-                                        "A secure and intuitive cryptocurrency trading platform dashboard with real-time data visualization.",
+                                        "Cryptocurrency market intelligence terminal with real-time candlestick charts and automated portfolio tracking.",
+                                    client: "Krypsm Global",
+                                    techStack: ["React", "TypeScript", "Chart.js", "Web3", "+1"],
                                     image: "/Krypsm.png",
                                     liveLink: "https://krypsm.com/",
-                                    tags: ["Web App", "Fintech", "Dashboard"],
+                                    platformIcons: ["web"],
                                 },
-
                             ]}
                         />
 
@@ -120,31 +147,47 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             projects={[ // add new projects here
                                 {
                                     title: "Alvestt App",
+                                    domain: "App Development",
+                                    year: "2026",
+                                    status: "Live",
                                     description:
-                                        "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
+                                        "Cross-asset algorithmic trading and portfolio recommendation mobile application for retail traders.",
+                                    client: "In-House",
+                                    techStack: ["React Native", "Python", "FastAPI", "WebSockets"],
                                     image: "/alvest-without-bg.svg",
-                                    imageFit: "contain", // full logo
-                                    darkBg: true, // ✅ black background
-                                    tags: ["In-house", "Fintech", "Dashboard"],
+                                    liveLink: "https://play.google.com/store/apps/details?id=com.alvestt.alvesttapp&pcampaignid=web_share",
+                                    imageFit: "contain",
+                                    darkBg: true,
+                                    platformIcons: ["playstore", "appstore"],
                                 },
                                 {
                                     title: "Bhav App",
+                                    domain: "App Development",
+                                    year: "2025",
+                                    status: "Completed",
                                     description:
-                                        "Bhav App is mainly designed for jewelery shopkeepers, whose customers will connect with them through this app. Sellers can add products to their inventory and customers can send a purchase or sale request based on the product of their choice. The seller may subsequently review and accept or reject the request.",
+                                        "Secure mobile bullion tracking application with real-time and live market updates.",
+                                    client: "Mauryan Jewels",
+                                    techStack: ["React Native", "Node.js", "MongoDB", "Security", "+1"],
                                     image: "/bhav.png",
                                     liveLink: "https://play.google.com/store/apps/details?id=com.vipinsoni.bhav",
-                                    imageFit: "cover", // full logo
-                                    darkBg: true, // ✅ black background
-                                    tags: ["Client-Project", "Gold & Silver"],
+                                    imageFit: "cover",
+                                    darkBg: true,
+                                    platformIcons: ["playstore", "appstore"],
                                 },
                                 {
                                     title: "Investor Dashboard App",
+                                    domain: "App Development",
+                                    year: "2024",
+                                    status: "Completed",
                                     description:
-                                        "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
+                                        "Private mobile portal for investors to monitor portfolio balances, capital allocations, and yield metrics.",
+                                    client: "In-House",
+                                    techStack: ["React Native", "Node.js", "PostgreSQL", "Biometrics"],
                                     image: "/planitt-logo.png",
-                                    imageFit: "contain", // full logo
-                                    darkBg: true, // ✅ black background
-                                    tags: ["In-house", "Fintech", "Dashboard"],
+                                    imageFit: "contain",
+                                    darkBg: true,
+                                    platformIcons: ["playstore", "appstore"],
                                 },
                             ]}
                         />

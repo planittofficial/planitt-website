@@ -181,30 +181,47 @@ export default function AppDevPage() {
           projects={[ // add new projects here
             {
               title: "Alvestt App",
+              domain: "App Development",
+              year: "2026",
+              status: "Live",
               description:
-                "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
+                "Cross-asset algorithmic trading and portfolio recommendation mobile application for retail traders.",
+              client: "In-House",
+              techStack: ["React Native", "Python", "FastAPI", "WebSockets"],
               image: "/alvest-without-bg.svg",
-              imageFit: "contain", // full logo
-              darkBg: true, // ✅ black background
-              tags: ["In-house", "Fintech", "Dashboard"],
+              liveLink: "https://play.google.com/store/apps/details?id=com.alvestt.alvesttapp&pcampaignid=web_share",
+              imageFit: "contain",
+              darkBg: true,
+              platformIcons: ["playstore", "appstore"],
             },
             {
               title: "Bhav App",
+              domain: "App Development",
+              year: "2025",
+              status: "Completed",
               description:
-                "Bhav App is mainly designed for jewelery shopkeepers, whose customers will connect with them through this app. Sellers can add products to their inventory and customers can send a purchase or sale request based on the product of their choice. The seller may subsequently review and accept or reject the request.",
+                "Secure mobile bullion tracking application with real-time and live market updates.",
+              client: "Mauryan Jewels",
+              techStack: ["React Native", "Node.js", "MongoDB", "Security", "+1"],
               image: "/bhav.png",
-              imageFit: "cover", // full logo
-              darkBg: true, // ✅ black background
-              tags: ["Client-Project", "Gold & Silver"],
+              liveLink: "https://play.google.com/store/apps/details?id=com.vipinsoni.bhav",
+              imageFit: "cover",
+              darkBg: true,
+              platformIcons: ["playstore", "appstore"],
             },
             {
               title: "Investor Dashboard App",
+              domain: "App Development",
+              year: "2024",
+              status: "Completed",
               description:
-                "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
+                "Private mobile portal for investors to monitor portfolio balances, capital allocations, and yield metrics.",
+              client: "In-House",
+              techStack: ["React Native", "Node.js", "PostgreSQL", "Biometrics"],
               image: "/planitt-logo.png",
-              imageFit: "contain", // full logo
-              darkBg: true, // ✅ black background
-              tags: ["In-house", "Fintech", "Dashboard"],
+              imageFit: "contain",
+              darkBg: true,
+              platformIcons: ["playstore", "appstore"],
             },
           ]}
         />
