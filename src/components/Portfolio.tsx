@@ -61,16 +61,16 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             projects={[
                                  {
                                     
-                                    title: "Planitt Signals Website ↗",
+                                    title: "Alvestt ↗",
                                     description:
                                         "A stock market trading website built for our in-house product, Planitt Signals, focused on delivering real-time market insights and a seamless user experience for traders.",
-                                    image: "/trading-website.png",
+                                    image: "/alvestt-homepage-dark.png",
                                     liveLink: "https://www.alvestt.com/",
                                     tags: ["In-house", "Fintech", "Trading Platform"],
                                 },
                                 {
                                     
-                                    title: "Planitt CRM Website ↗",
+                                    title: "Planitt CRM ↗",
                                     description:
                                         "A customer relationship management website designed to streamline sales processes and enhance customer engagement.",
                                     image: "/Planitt-CRM.png",
@@ -78,7 +78,7 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     tags: ["SaaS", "CRM", "Sales Automation"],
                                 },
                                 {
-                                    title: "Coffee Culture Website ↗",
+                                    title: "Coffee Culture ↗",
                                     description:
                                         "A coffee shop website designed to showcase products, services, and events while providing an easy-to-use online ordering system.",
                                     image: "/Coffee-Culture.jpg",
@@ -86,7 +86,7 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     tags: ["Food & Beverage", "Online Ordering", "Cafe"],
                                 },
                                 {
-                                    title: "Capita Prime LLC Website ↗",
+                                    title: "Capita Prime LLC ↗",
                                     description:
                                         "A real estate website built for Dubai customers, focused on presenting land-selling opportunities with a professional layout and lead-oriented experience.",
                                     image: "/CapitaPrime.png",
@@ -94,7 +94,7 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     tags: ["Real Estate", "Dubai Market", "Lead Generation"],
                                 },
                                 {
-                                    title: "Sawarnaratna Website ↗",
+                                    title: "Sawarnaratna ↗",
                                     description:
                                         "A dry fruit gifting website where customers can build their own custom gift hampers for friends and family through a simple, responsive shopping flow.",
                                     image: "/sawarnaratna.png",
@@ -102,21 +102,14 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     tags: ["E-commerce", "Gift Hampers", "Custom Orders"],
                                 },
                                 {
-                                    title: "Krypsm Website ↗",
+                                    title: "Krypsm ↗",
                                     description:
                                         "A secure and intuitive cryptocurrency trading platform dashboard with real-time data visualization.",
                                     image: "/Krypsm.png",
                                     liveLink: "https://krypsm.com/",
                                     tags: ["Web App", "Fintech", "Dashboard"],
                                 },
-                                {
-                                    title: "ZeyNix Website ↗",
-                                    description:
-                                        "A premium e-commerce platform for fashion enthusiasts, featuring a seamless shopping experience and responsive design.",
-                                    image: "/Zeynix.png",
-                                    liveLink: "https://www.zeynix.in/",
-                                    tags: ["E-commerce", "React", "Next.js"],
-                                },
+
                             ]}
                         />
 
@@ -126,10 +119,10 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                             accentColor="indigo"
                             projects={[ // add new projects here
                                 {
-                                    title: "Investor Dashboard App",
+                                    title: "Alvestt App",
                                     description:
-                                        "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
-                                    image: "/planitt-logo.png",
+                                        "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
+                                    image: "/alvest-without-bg.svg",
                                     imageFit: "contain", // full logo
                                     darkBg: true, // ✅ black background
                                     tags: ["In-house", "Fintech", "Dashboard"],
@@ -145,10 +138,10 @@ const Portfolio = ({ mode = 'all' }: PortfolioProps) => {
                                     tags: ["Client-Project", "Gold & Silver"],
                                 },
                                 {
-                                    title: "Coming Soon",
+                                    title: "Investor Dashboard App",
                                     description:
-                                        "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
-                                    image: "/planitt-app-black.png",
+                                        "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
+                                    image: "/planitt-logo.png",
                                     imageFit: "contain", // full logo
                                     darkBg: true, // ✅ black background
                                     tags: ["In-house", "Fintech", "Dashboard"],

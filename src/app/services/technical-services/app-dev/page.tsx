@@ -180,10 +180,10 @@ export default function AppDevPage() {
           accentColor="indigo"
           projects={[ // add new projects here
             {
-              title: "Investor Dashboard App",
+              title: "Alvestt App",
               description:
-                "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
-              image: "/planitt-logo.png",
+                "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
+              image: "/alvest-without-bg.svg",
               imageFit: "contain", // full logo
               darkBg: true, // ✅ black background
               tags: ["In-house", "Fintech", "Dashboard"],
@@ -198,10 +198,10 @@ export default function AppDevPage() {
               tags: ["Client-Project", "Gold & Silver"],
             },
             {
-              title: "Coming Soon",
+              title: "Investor Dashboard App",
               description:
-                "A recommendation app that will recommend stocks, mutual funds, futures & options, forex and crypto.",
-              image: "/planitt-app-black.png",
+                "A private in-house mobile application built for our investors to track their portfolio, profits, growth analytics, and real-time performance insights. The platform focuses on security, scalability, and data transparency.",
+              image: "/planitt-logo.png",
               imageFit: "contain", // full logo
               darkBg: true, // ✅ black background
               tags: ["In-house", "Fintech", "Dashboard"],

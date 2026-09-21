@@ -49,10 +49,11 @@ export default function ProjectSection({
               href={project.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block h-72 rounded-2xl overflow-hidden
-                         border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800
+              className={`group relative block h-72 rounded-2xl overflow-hidden
+                         border border-gray-200 dark:border-gray-700
+                         ${project.darkBg ? "bg-black" : "bg-gray-100 dark:bg-gray-800"}
                          transition-all duration-300
-                         hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-gray-950/50"
+                         hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-gray-950/50`}
             >
               {/* Image */}
               <Image
