@@ -22,6 +22,15 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { error: 'Please enter a valid email address.' },
+                { status: 400 }
+            );
+        }
+
         // Validate resume
         if (!resume || resume.size === 0) {
             return NextResponse.json(
@@ -52,12 +61,45 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Verify SMTP configuration
+        if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+            console.error('SMTP configuration missing: SMTP_EMAIL or SMTP_PASSWORD is not set.');
+            return NextResponse.json(
+                { error: 'Email service is not configured. Please contact planittsolutions@gmail.com directly.' },
+                { status: 500 }
+            );
+        }
+
         // Convert the file to a buffer for attachment
         const resumeBuffer = Buffer.from(await resume.arrayBuffer());
 
-        // Configure the SMTP transporter
-        // Using Gmail SMTP — requires an App Password (not your regular Gmail password)
-        // See: https://support.google.com/accounts/answer/185833
+        // Escape HTML to prevent injection in email templates
+        const escapeHtml = (str: string) =>
+            str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+        const escapedName = escapeHtml(name);
+        const escapedEmail = escapeHtml(email);
+        const escapedPhone = escapeHtml(phone);
+        const escapedPosition = escapeHtml(position);
+        const escapedAbout = escapeHtml(about);
+        const escapedDuration = escapeHtml(duration);
+        const escapedLinkedin = escapeHtml(linkedin);
+        const escapedResumeName = escapeHtml(resume.name);
+
+        const submissionDate = new Date().toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+
+        // Configure the SMTP transporter (Gmail SMTP)
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -66,61 +108,58 @@ export async function POST(request: NextRequest) {
             },
         });
 
-        // Compose the email
-        const mailOptions = {
+        // 1. Internal notification email (sent to Planitt team with resume attached)
+        const internalMailOptions = {
             from: `"Planitt Careers" <${process.env.SMTP_EMAIL}>`,
             to: 'planittsolutions@gmail.com',
             replyTo: email,
-            subject: `New Job Application: ${position} — ${name}`,
+            subject: `New Job Application: ${escapedPosition} — ${escapedName}`,
             html: `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-                    <!-- Header -->
                     <div style="background: linear-gradient(135deg, #b78622, #d4a843); padding: 32px 24px; text-align: center;">
                         <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700;">📄 New Job Application</h1>
-                        <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0; font-size: 16px;">Position: ${position}</p>
+                        <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0; font-size: 16px;">Position: ${escapedPosition}</p>
                     </div>
 
-                    <!-- Body -->
                     <div style="padding: 32px 24px;">
                         <h2 style="color: #333; font-size: 18px; margin: 0 0 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 12px;">Applicant Details</h2>
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; width: 140px; vertical-align: top;">Full Name</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${name}</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${escapedName}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Email</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px;"><a href="mailto:${email}" style="color: #b78622; text-decoration: none;">${email}</a></td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px;"><a href="mailto:${escapedEmail}" style="color: #b78622; text-decoration: none;">${escapedEmail}</a></td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Phone</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px;"><a href="tel:${phone}" style="color: #b78622; text-decoration: none;">${phone}</a></td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px;"><a href="tel:${escapedPhone}" style="color: #b78622; text-decoration: none;">${escapedPhone}</a></td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">LinkedIn</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px;">${linkedin !== 'Not provided' ? `<a href="${linkedin}" style="color: #b78622; text-decoration: none;">${linkedin}</a>` : '<span style="color: #aaa;">Not provided</span>'}</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px;">${linkedin !== 'Not provided' ? `<a href="${escapedLinkedin}" style="color: #b78622; text-decoration: none;">${escapedLinkedin}</a>` : '<span style="color: #aaa;">Not provided</span>'}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Position</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${position}</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${escapedPosition}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Duration (Internship)</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${duration}</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; font-weight: 600;">${escapedDuration}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">About</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px; white-space: pre-wrap;">${about}</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px; white-space: pre-wrap;">${escapedAbout}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0; color: #888; font-size: 14px; vertical-align: top;">Resume</td>
-                                <td style="padding: 10px 0; color: #333; font-size: 14px;">📎 ${resume.name} (${(resume.size / 1024).toFixed(1)} KB)</td>
+                                <td style="padding: 10px 0; color: #333; font-size: 14px;">📎 ${escapedResumeName} (${(resume.size / 1024).toFixed(1)} KB)</td>
                             </tr>
                         </table>
                     </div>
 
-                    <!-- Footer -->
                     <div style="background: #f9f9f9; padding: 20px 24px; text-align: center; border-top: 1px solid #f0f0f0;">
                         <p style="color: #999; font-size: 12px; margin: 0;">This application was submitted via the Planitt Careers page.</p>
                         <p style="color: #999; font-size: 12px; margin: 4px 0 0;">You can reply directly to this email to contact the applicant.</p>
@@ -136,44 +175,44 @@ export async function POST(request: NextRequest) {
             ],
         };
 
-        // Send the internal team email
-        await transporter.sendMail(mailOptions);
-
-        // ── Candidate auto-reply ──────────────────────────────────────────────
+        // 2. Candidate auto-reply — "not hiring" notice + paid internship offer
         const candidateMailOptions = {
             from: `"Planitt Solutions" <${process.env.SMTP_EMAIL}>`,
             to: email,
-            subject: `Thank you for applying to Planitt Solutions — ${position}`,
+            replyTo: 'planittsolutions@gmail.com',
+            subject: `Thank you for applying to Planitt Solutions — ${escapedPosition}`,
             html: `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
 
                     <!-- Header -->
                     <div style="background: linear-gradient(135deg, #b78622, #d4a843); padding: 36px 28px; text-align: center;">
-                        <h1 style="color: #ffffff; margin: 0 0 8px; font-size: 26px; font-weight: 700;">Thank You for Applying!</h1>
-                        <p style="color: rgba(255,255,255,0.92); margin: 0; font-size: 15px;">We appreciate your interest in <strong>${position}</strong></p>
+                        <div style="color: #ffffff; font-size: 26px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 6px 0;">PLANITT</div>
+                        <div style="display: inline-block; background-color: rgba(255,255,255,0.22); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.5px;">Careers &amp; Talent</div>
+                        <h1 style="color: #ffffff; margin: 16px 0 6px; font-size: 22px; font-weight: 700;">Thank You for Applying!</h1>
+                        <p style="color: rgba(255,255,255,0.92); margin: 0; font-size: 15px;">We appreciate your interest in <strong>${escapedPosition}</strong></p>
                     </div>
 
                     <!-- Body -->
                     <div style="padding: 36px 28px;">
                         <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
-                            Dear <strong>${name}</strong>,
+                            Dear <strong>${escapedName}</strong>,
                         </p>
 
                         <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
-                            Thank you for showing interest in the <strong>${position}</strong> role at <strong>Planitt Solutions</strong>.
+                            Thank you for showing interest in the <strong>${escapedPosition}</strong> role at <strong>Planitt Solutions</strong>.
                             We truly value the time and effort you put into your application.
                         </p>
 
-                        <!-- Current Status Notice -->
+                        <!-- Current Hiring Status -->
                         <div style="background: #fff8e7; border-left: 4px solid #b78622; border-radius: 6px; padding: 16px 20px; margin: 0 0 24px;">
                             <p style="color: #7a5a10; font-size: 15px; font-weight: 600; margin: 0 0 6px;">📢 Current Hiring Status</p>
                             <p style="color: #5c4209; font-size: 14px; line-height: 1.6; margin: 0;">
-                                At this point in time, we are <strong>not actively hiring</strong> for the <strong>${position}</strong> role on a full-time basis.
+                                At this point in time, we are <strong>not actively hiring</strong> for the <strong>${escapedPosition}</strong> role on a full-time basis.
                                 We sincerely apologize for any inconvenience this may cause.
                             </p>
                         </div>
 
-                        <!-- Paid Internship Offer -->
+                        <!-- Paid Training + Internship Offer -->
                         <div style="background: linear-gradient(135deg, #f9f4e8, #fdf8ef); border: 1px solid #e9c978; border-radius: 10px; padding: 24px; margin: 0 0 24px;">
                             <h2 style="color: #b78622; font-size: 18px; font-weight: 700; margin: 0 0 12px;">🚀 Exciting Alternative — Paid Training + Internship Program</h2>
                             <p style="color: #444; font-size: 14px; line-height: 1.7; margin: 0 0 14px;">
@@ -197,7 +236,7 @@ export async function POST(request: NextRequest) {
                         <div style="background: #f4f4f4; border-radius: 8px; padding: 20px 24px; margin: 0 0 24px;">
                             <p style="color: #333; font-size: 15px; font-weight: 600; margin: 0 0 12px;">📬 Interested? Get in Touch!</p>
                             <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 12px;">
-                                For further details about the Paid Internship Program, fees, duration, and schedule,
+                                For further details about the Paid Internship Program — fees, duration, and schedule —
                                 please feel free to reach out to us:
                             </p>
                             <table style="border-collapse: collapse; width: 100%;">
@@ -220,6 +259,11 @@ export async function POST(request: NextRequest) {
                             We truly believe in nurturing talent and hope to work with you through this program.
                             Looking forward to hearing from you! 😊
                         </p>
+
+                        <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 24px 0 0;">
+                            Warm regards,<br>
+                            <strong style="color: #1a202c;">The Planitt Team</strong>
+                        </p>
                     </div>
 
                     <!-- Footer -->
@@ -234,17 +278,32 @@ export async function POST(request: NextRequest) {
             `,
         };
 
-        await transporter.sendMail(candidateMailOptions);
-        // ─────────────────────────────────────────────────────────────────────
+        // Send both emails concurrently
+        const [internalResult, candidateResult] = await Promise.allSettled([
+            transporter.sendMail(internalMailOptions),
+            transporter.sendMail(candidateMailOptions),
+        ]);
+
+        if (internalResult.status === 'rejected') {
+            console.error('Error sending internal application email:', internalResult.reason);
+            return NextResponse.json(
+                { error: 'Failed to send your application. Please try again later or email us directly at planittsolutions@gmail.com.' },
+                { status: 500 }
+            );
+        }
+
+        if (candidateResult.status === 'rejected') {
+            console.warn('Candidate auto-reply email delivery failed:', candidateResult.reason);
+        }
 
         return NextResponse.json(
-            { message: 'Application submitted successfully!' },
+            { message: 'Application submitted successfully! A confirmation email has also been sent to your inbox.' },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error sending application email:', error);
+        console.error('Error processing application submission:', error);
         return NextResponse.json(
-            { error: 'Failed to send your application. Please try again later or email us directly at planittsolutions@gmail.com.' },
+            { error: 'Failed to process your application. Please try again later or email us directly at planittsolutions@gmail.com.' },
             { status: 500 }
         );
     }

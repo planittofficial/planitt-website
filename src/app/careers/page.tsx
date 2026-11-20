@@ -859,7 +859,7 @@ export default function CareersPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-2">Thank You for Your Application!</h3>
-                            <p className="text-green-700 dark:text-green-400">We&apos;ve received your application and will be in touch soon.</p>
+                            <p className="text-green-700 dark:text-green-400">We&apos;ve received your application and sent a confirmation receipt to your email. Our team will review it and be in touch soon.</p>
                         </motion.div>
                     ) : (
                         <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-950/50 p-6 border border-transparent dark:border-gray-700">
