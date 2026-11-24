@@ -9,6 +9,12 @@ import TechnicalFaqFab from '@/components/TechnicalFaqFab';
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isLandingPage = pathname === '/';
+  const isErrorPage = pathname === '/';
+
+  // Show bare page with no chrome when the site is in maintenance / error mode
+  if (isErrorPage) {
+    return <>{children}</>;
+  }
 
   return (
     <>
