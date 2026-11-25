@@ -3,7 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { HomeModeProvider } from "@/context/HomeModeContext";
-import ConditionalLayout from "@/components/ConditionalLayout";
+import SiteUnreachable from "@/app/main.js";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children: _children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -42,13 +42,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300`}
+        className={`${inter.variable} ${poppins.variable} antialiased`}
       >
         <ThemeProvider>
           <HomeModeProvider>
-            <ConditionalLayout>
-              {children}
-            </ConditionalLayout>
+            <SiteUnreachable />
           </HomeModeProvider>
         </ThemeProvider>
       </body>
