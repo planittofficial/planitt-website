@@ -3,7 +3,10 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { HomeModeProvider } from "@/context/HomeModeContext";
-import SiteUnreachable from "@/app/main.js";
+import ComingSoonPopup from "@/components/ComingSoonPopup";
+import ConditionalLayout from "@/components/ConditionalLayout";
+import DarkModeSplashCursor from "@/components/DarkModeSplashCursor";
+import PremiumScrollProgress from "@/components/PremiumScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children: _children,
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -42,11 +45,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${poppins.variable} antialiased`}
+        className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300`}
       >
         <ThemeProvider>
           <HomeModeProvider>
-            <SiteUnreachable />
+            <DarkModeSplashCursor />
+            <PremiumScrollProgress />
+            <ComingSoonPopup />
+            <ConditionalLayout>
+              {children}
+            </ConditionalLayout>
           </HomeModeProvider>
         </ThemeProvider>
       </body>

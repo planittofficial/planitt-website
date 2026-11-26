@@ -1,5 +1,5 @@
-import SiteUnreachable from "@/app/main.js";
+import LandingPage from "@/components/LandingPage";
 
 export default function Home() {
-  return <SiteUnreachable />;
+  return <LandingPage />;
 }
