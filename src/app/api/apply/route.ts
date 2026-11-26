@@ -175,129 +175,115 @@ export async function POST(request: NextRequest) {
             ],
         };
 
-        // 2. Candidate auto-reply — "not hiring" notice + paid internship offer
-        const candidateMailOptions = {
-            from: `"Planitt Solutions" <${process.env.SMTP_EMAIL}>`,
-            to: email,
-            replyTo: 'planittsolutions@gmail.com',
-            subject: `Thank you for applying to Planitt Solutions — ${escapedPosition}`,
-            html: `
-                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        // ── COMMENTED OUT: Candidate auto-reply (not hiring + paid internship offer) ──
+        // To re-enable, uncomment the block below and update the send logic.
+        //
+        // const candidateMailOptions = {
+        //     from: `"Planitt Solutions" <${process.env.SMTP_EMAIL}>`,
+        //     to: email,
+        //     replyTo: 'planittsolutions@gmail.com',
+        //     subject: `Thank you for applying to Planitt Solutions — ${escapedPosition}`,
+        //     html: `
+        //         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        //
+        //             <!-- Header -->
+        //             <div style="background: linear-gradient(135deg, #b78622, #d4a843); padding: 36px 28px; text-align: center;">
+        //                 <div style="color: #ffffff; font-size: 26px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 6px 0;">PLANITT</div>
+        //                 <div style="display: inline-block; background-color: rgba(255,255,255,0.22); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.5px;">Careers &amp; Talent</div>
+        //                 <h1 style="color: #ffffff; margin: 16px 0 6px; font-size: 22px; font-weight: 700;">Thank You for Applying!</h1>
+        //                 <p style="color: rgba(255,255,255,0.92); margin: 0; font-size: 15px;">We appreciate your interest in <strong>${escapedPosition}</strong></p>
+        //             </div>
+        //
+        //             <!-- Body -->
+        //             <div style="padding: 36px 28px;">
+        //                 <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
+        //                     Dear <strong>${escapedName}</strong>,
+        //                 </p>
+        //                 <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
+        //                     Thank you for showing interest in the <strong>${escapedPosition}</strong> role at <strong>Planitt Solutions</strong>.
+        //                     We truly value the time and effort you put into your application.
+        //                 </p>
+        //
+        //                 <!-- Current Hiring Status -->
+        //                 <div style="background: #fff8e7; border-left: 4px solid #b78622; border-radius: 6px; padding: 16px 20px; margin: 0 0 24px;">
+        //                     <p style="color: #7a5a10; font-size: 15px; font-weight: 600; margin: 0 0 6px;">📢 Current Hiring Status</p>
+        //                     <p style="color: #5c4209; font-size: 14px; line-height: 1.6; margin: 0;">
+        //                         At this point in time, we are <strong>not actively hiring</strong> for the <strong>${escapedPosition}</strong> role on a full-time basis.
+        //                         We sincerely apologize for any inconvenience this may cause.
+        //                     </p>
+        //                 </div>
+        //
+        //                 <!-- Paid Training + Internship Offer -->
+        //                 <div style="background: linear-gradient(135deg, #f9f4e8, #fdf8ef); border: 1px solid #e9c978; border-radius: 10px; padding: 24px; margin: 0 0 24px;">
+        //                     <h2 style="color: #b78622; font-size: 18px; font-weight: 700; margin: 0 0 12px;">🚀 Exciting Alternative — Paid Training + Internship Program</h2>
+        //                     <p style="color: #444; font-size: 14px; line-height: 1.7; margin: 0 0 14px;">
+        //                         However, we do have an excellent opportunity for passionate learners like you! We offer a
+        //                         <strong>Paid Training + Internship Program</strong> where you will:
+        //                     </p>
+        //                     <ul style="color: #444; font-size: 14px; line-height: 1.8; margin: 0 0 14px; padding-left: 20px;">
+        //                         <li>📚 Receive <strong>in-depth, structured training</strong> on the relevant technology &amp; domain</li>
+        //                         <li>💼 Work on a <strong>real-life, live project</strong> under the guidance of experienced mentors</li>
+        //                         <li>🏆 Earn an official <strong>Completion Certificate</strong> upon successful completion</li>
+        //                         <li>🤝 Get an <strong>Offer Letter</strong> from Planitt Solutions</li>
+        //                         <li>🌱 Build a strong <strong>portfolio</strong> with hands-on industry experience</li>
+        //                     </ul>
+        //                     <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0;">
+        //                         This is a great way to gain real-world exposure, sharpen your skills, and position yourself
+        //                         for future full-time opportunities with us!
+        //                     </p>
+        //                 </div>
+        //
+        //                 <!-- Contact Section -->
+        //                 <div style="background: #f4f4f4; border-radius: 8px; padding: 20px 24px; margin: 0 0 24px;">
+        //                     <p style="color: #333; font-size: 15px; font-weight: 600; margin: 0 0 12px;">📬 Interested? Get in Touch!</p>
+        //                     <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 12px;">
+        //                         For further details about the Paid Internship Program — fees, duration, and schedule —
+        //                         please feel free to reach out to us:
+        //                     </p>
+        //                     <table style="border-collapse: collapse; width: 100%;">
+        //                         <tr>
+        //                             <td style="padding: 6px 0; color: #888; font-size: 14px; width: 60px; vertical-align: middle;">✉️ Email</td>
+        //                             <td style="padding: 6px 0; font-size: 14px;">
+        //                                 <a href="mailto:planittsolutions@gmail.com" style="color: #b78622; text-decoration: none; font-weight: 600;">planittsolutions@gmail.com</a>
+        //                             </td>
+        //                         </tr>
+        //                         <tr>
+        //                             <td style="padding: 6px 0; color: #888; font-size: 14px; vertical-align: middle;">📞 Call</td>
+        //                             <td style="padding: 6px 0; font-size: 14px;">
+        //                                 <a href="tel:+918605727484" style="color: #b78622; text-decoration: none; font-weight: 600;">+91 86057 27484</a>
+        //                             </td>
+        //                         </tr>
+        //                     </table>
+        //                 </div>
+        //
+        //                 <p style="color: #555; font-size: 14px; line-height: 1.7; margin: 0;">
+        //                     We truly believe in nurturing talent and hope to work with you through this program.
+        //                     Looking forward to hearing from you! 😊
+        //                 </p>
+        //                 <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 24px 0 0;">
+        //                     Warm regards,<br>
+        //                     <strong style="color: #1a202c;">The Planitt Team</strong>
+        //                 </p>
+        //             </div>
+        //
+        //             <!-- Footer -->
+        //             <div style="background: #f9f9f9; padding: 20px 28px; text-align: center; border-top: 1px solid #f0f0f0;">
+        //                 <p style="color: #aaa; font-size: 12px; margin: 0;">This is an automated response from Planitt Solutions.</p>
+        //                 <p style="color: #aaa; font-size: 12px; margin: 4px 0 0;">
+        //                     Planitt Solutions &bull; Nagpur &bull;
+        //                     <a href="mailto:planittsolutions@gmail.com" style="color: #b78622; text-decoration: none;">planittsolutions@gmail.com</a>
+        //                 </p>
+        //             </div>
+        //         </div>
+        //     `,
+        // };
+        // ── END COMMENTED OUT ────────────────────────────────────────────────────
 
-                    <!-- Header -->
-                    <div style="background: linear-gradient(135deg, #b78622, #d4a843); padding: 36px 28px; text-align: center;">
-                        <div style="color: #ffffff; font-size: 26px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 6px 0;">PLANITT</div>
-                        <div style="display: inline-block; background-color: rgba(255,255,255,0.22); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.5px;">Careers &amp; Talent</div>
-                        <h1 style="color: #ffffff; margin: 16px 0 6px; font-size: 22px; font-weight: 700;">Thank You for Applying!</h1>
-                        <p style="color: rgba(255,255,255,0.92); margin: 0; font-size: 15px;">We appreciate your interest in <strong>${escapedPosition}</strong></p>
-                    </div>
-
-                    <!-- Body -->
-                    <div style="padding: 36px 28px;">
-                        <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
-                            Dear <strong>${escapedName}</strong>,
-                        </p>
-
-                        <p style="color: #333; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
-                            Thank you for showing interest in the <strong>${escapedPosition}</strong> role at <strong>Planitt Solutions</strong>.
-                            We truly value the time and effort you put into your application.
-                        </p>
-
-                        <!-- Current Hiring Status -->
-                        <div style="background: #fff8e7; border-left: 4px solid #b78622; border-radius: 6px; padding: 16px 20px; margin: 0 0 24px;">
-                            <p style="color: #7a5a10; font-size: 15px; font-weight: 600; margin: 0 0 6px;">📢 Current Hiring Status</p>
-                            <p style="color: #5c4209; font-size: 14px; line-height: 1.6; margin: 0;">
-                                At this point in time, we are <strong>not actively hiring</strong> for the <strong>${escapedPosition}</strong> role on a full-time basis.
-                                We sincerely apologize for any inconvenience this may cause.
-                            </p>
-                        </div>
-
-                        <!-- Paid Training + Internship Offer -->
-                        <div style="background: linear-gradient(135deg, #f9f4e8, #fdf8ef); border: 1px solid #e9c978; border-radius: 10px; padding: 24px; margin: 0 0 24px;">
-                            <h2 style="color: #b78622; font-size: 18px; font-weight: 700; margin: 0 0 12px;">🚀 Exciting Alternative — Paid Training + Internship Program</h2>
-                            <p style="color: #444; font-size: 14px; line-height: 1.7; margin: 0 0 14px;">
-                                However, we do have an excellent opportunity for passionate learners like you! We offer a
-                                <strong>Paid Training + Internship Program</strong> where you will:
-                            </p>
-                            <ul style="color: #444; font-size: 14px; line-height: 1.8; margin: 0 0 14px; padding-left: 20px;">
-                                <li>📚 Receive <strong>in-depth, structured training</strong> on the relevant technology &amp; domain</li>
-                                <li>💼 Work on a <strong>real-life, live project</strong> under the guidance of experienced mentors</li>
-                                <li>🏆 Earn an official <strong>Completion Certificate</strong> upon successful completion</li>
-                                <li>🤝 Get an <strong>Offer Letter</strong> from Planitt Solutions</li>
-                                <li>🌱 Build a strong <strong>portfolio</strong> with hands-on industry experience</li>
-                            </ul>
-                            <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0;">
-                                This is a great way to gain real-world exposure, sharpen your skills, and position yourself
-                                for future full-time opportunities with us!
-                            </p>
-                        </div>
-
-                        <!-- Contact Section -->
-                        <div style="background: #f4f4f4; border-radius: 8px; padding: 20px 24px; margin: 0 0 24px;">
-                            <p style="color: #333; font-size: 15px; font-weight: 600; margin: 0 0 12px;">📬 Interested? Get in Touch!</p>
-                            <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 12px;">
-                                For further details about the Paid Internship Program — fees, duration, and schedule —
-                                please feel free to reach out to us:
-                            </p>
-                            <table style="border-collapse: collapse; width: 100%;">
-                                <tr>
-                                    <td style="padding: 6px 0; color: #888; font-size: 14px; width: 60px; vertical-align: middle;">✉️ Email</td>
-                                    <td style="padding: 6px 0; font-size: 14px;">
-                                        <a href="mailto:planittsolutions@gmail.com" style="color: #b78622; text-decoration: none; font-weight: 600;">planittsolutions@gmail.com</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; color: #888; font-size: 14px; vertical-align: middle;">📞 Call</td>
-                                    <td style="padding: 6px 0; font-size: 14px;">
-                                        <a href="tel:+918605727484" style="color: #b78622; text-decoration: none; font-weight: 600;">+91 86057 27484</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <p style="color: #555; font-size: 14px; line-height: 1.7; margin: 0;">
-                            We truly believe in nurturing talent and hope to work with you through this program.
-                            Looking forward to hearing from you! 😊
-                        </p>
-
-                        <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 24px 0 0;">
-                            Warm regards,<br>
-                            <strong style="color: #1a202c;">The Planitt Team</strong>
-                        </p>
-                    </div>
-
-                    <!-- Footer -->
-                    <div style="background: #f9f9f9; padding: 20px 28px; text-align: center; border-top: 1px solid #f0f0f0;">
-                        <p style="color: #aaa; font-size: 12px; margin: 0;">This is an automated response from Planitt Solutions.</p>
-                        <p style="color: #aaa; font-size: 12px; margin: 4px 0 0;">
-                            Planitt Solutions &bull; Nagpur &bull;
-                            <a href="mailto:planittsolutions@gmail.com" style="color: #b78622; text-decoration: none;">planittsolutions@gmail.com</a>
-                        </p>
-                    </div>
-                </div>
-            `,
-        };
-
-        // Send both emails concurrently
-        const [internalResult, candidateResult] = await Promise.allSettled([
-            transporter.sendMail(internalMailOptions),
-            transporter.sendMail(candidateMailOptions),
-        ]);
-
-        if (internalResult.status === 'rejected') {
-            console.error('Error sending internal application email:', internalResult.reason);
-            return NextResponse.json(
-                { error: 'Failed to send your application. Please try again later or email us directly at planittsolutions@gmail.com.' },
-                { status: 500 }
-            );
-        }
-
-        if (candidateResult.status === 'rejected') {
-            console.warn('Candidate auto-reply email delivery failed:', candidateResult.reason);
-        }
+        // Send only the internal team email (candidate auto-reply is disabled)
+        await transporter.sendMail(internalMailOptions);
 
         return NextResponse.json(
-            { message: 'Application submitted successfully! A confirmation email has also been sent to your inbox.' },
+            { message: 'Application submitted successfully!' },
             { status: 200 }
         );
     } catch (error) {
