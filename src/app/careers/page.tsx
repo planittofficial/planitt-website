@@ -62,13 +62,6 @@ const teamMembers: TeamMember[] = [
         image: '/shivam_profile.jpg', // Default image as requested
         portfolio: 'https://dev.netlify.app/',
     },
-    {
-        name: 'Harsh R. Meshram ',
-        role: 'Digital Marketer',
-        image: '/Harsh_profile.jpg', // Default image as requested
-        portfolio: 'https://harshrmeshram.vercel.app/',
-    },
-
 ];
 
 // Sample job data
