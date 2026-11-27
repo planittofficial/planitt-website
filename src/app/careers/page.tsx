@@ -31,12 +31,7 @@ interface TeamMember {
 
 // Team members data
 const teamMembers: TeamMember[] = [
-    {
-        name: 'Piyush Tembhekar',
-        role: 'CEO, Financial Distribution',
-        image: '/CEO_Photo.png',
-        portfolio: '#',
-    },
+    // Piyush Tembhekar is temporarily hidden from the public team section.
     {
         name: 'Parth Shende',
         role: 'CTO, Technical Delivery',
@@ -1083,5 +1078,4 @@ export default function CareersPage() {
         </div>
     );
 }
-
 

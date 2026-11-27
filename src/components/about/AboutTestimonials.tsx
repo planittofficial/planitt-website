@@ -82,7 +82,7 @@ const servicesTestimonials: Testimonial[] = [
   {
     id: 's3',
     quote:
-      'Piyush helped me start my SIP journey 3 years ago. I built a corpus through disciplined investing and structured guidance.',
+      'The Planitt advisory team helped me start my SIP journey 3 years ago. I built a corpus through disciplined investing and structured guidance.',
     highlightText: 'built a corpus through disciplined investing',
     name: 'Priya Sharma',
     role: 'SIP Wealth Advisory Client',

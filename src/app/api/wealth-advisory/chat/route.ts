@@ -307,7 +307,7 @@ const ceoPromotionBlock = {
   title: "Investment Support",
   lines: [
     "For the next step, if you want to invest, we can help you with the process.",
-    "Please contact our CEO, Piyush Tembhekar, for further assistance.",
+    "Please contact the Planitt advisory team for further assistance.",
     "Contact Number: +91 8605727484",
   ],
 };

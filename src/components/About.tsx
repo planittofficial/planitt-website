@@ -45,13 +45,13 @@ const About = ({ mode = 'all' }: AboutProps) => {
         }
         : isFinancial
             ? {
-                lead: 'Planitt provides trusted wealth guidance led by ',
-                name: 'Piyush Tembhekar',
+                lead: 'Planitt provides trusted wealth guidance through ',
+                name: 'a dedicated financial advisory team',
                 body: 'Empowering individuals and businesses with accessible financial solutions, investment intelligence, and education to build long-term wealth.',
             }
             : {
-                lead: 'Planitt empowers individuals and businesses led by ',
-                name: 'Piyush Tembhekar and Parth Shende',
+                lead: 'Planitt empowers individuals and businesses through ',
+                name: 'our financial and technology teams',
                 body: 'To empower individuals and businesses with accessible financial solutions, technology-driven investment intelligence, and financial education helping them make better financial decisions and build long-term wealth.',
             };
 
@@ -94,11 +94,11 @@ const About = ({ mode = 'all' }: AboutProps) => {
             description: 'Leads technical services delivery across apps, websites, cloud, and automation.',
         }
         : {
-            image: '/CEO_Photo.png',
-            alt: 'Piyush Tembhekar',
-            name: 'Piyush Tembhekar',
-            meta: 'ARN - 338883',
-            role: 'CEO, Financial Distribution',
+            image: null,
+            alt: 'Planitt Financial Team',
+            name: 'Planitt Financial Team',
+            meta: '',
+            role: 'Financial Distribution',
             roleClass: 'text-[#b78622] dark:text-[#e7c973]',
             description: 'Leads planning across wealth management, insurance, NPS, and long-term advisory.',
         };
@@ -175,13 +175,21 @@ const About = ({ mode = 'all' }: AboutProps) => {
                                 <div className="mx-auto flex w-full max-w-md flex-col rounded-2xl border border-gray-100 bg-white p-4 shadow-xl transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900 sm:p-6">
                                     <div className="mb-4 text-center">
                                         <div className="relative mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white shadow-xl transition-all duration-300 dark:border-gray-800 dark:bg-gray-800 sm:h-44 sm:w-44">
-                                            <Image
-                                                src={profile.image}
-                                                alt={profile.alt}
-                                                fill
-                                                className="object-cover"
-                                                priority
-                                            />
+                                            {profile.image ? (
+                                                <Image
+                                                    src={profile.image}
+                                                    alt={profile.alt}
+                                                    fill
+                                                    className="object-cover"
+                                                    priority
+                                                />
+                                            ) : (
+                                                <div
+                                                    role="img"
+                                                    aria-label={profile.alt}
+                                                    className="absolute inset-0 bg-gradient-to-br from-[#f5b544] via-[#d9a93c] to-[#8a6722]"
+                                                />
+                                            )}
                                         </div>
                                         <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white sm:text-xl">
                                             {profile.name}

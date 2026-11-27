@@ -24,7 +24,7 @@ const financialTestimonials: Testimonial[] = [
         name: 'Priya Sharma',
         role: 'School Teacher',
         location: 'Mumbai',
-        content: 'Piyush helped me start my SIP journey 3 years ago. I built a corpus through disciplined investing and structured guidance.',
+        content: 'The Planitt advisory team helped me start my SIP journey 3 years ago. I built a corpus through disciplined investing and structured guidance.',
         rating: 5,
         investment: 'Rs 10,000/month SIP',
     },
@@ -262,6 +262,5 @@ const Testimonials = ({ mode = 'all' }: TestimonialsProps) => {
 };
 
 export default Testimonials;
-
 
 

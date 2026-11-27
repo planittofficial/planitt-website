@@ -65,7 +65,7 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="space-y-4">
             <h4 className="font-heading text-lg font-semibold">
-              Contact Piyush Tembhekar
+              Contact Planitt
             </h4>
             <div className="flex gap-8">
               {/* Left Side - Contact Info */}
@@ -145,13 +145,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Planitt. All Rights Reserved. | CEO & Financial Distributor:{" "}
-            <a
-              href="/main#about"
-              className="text-gray-400 hover:text-[#f3cf72] transition-colors duration-200 cursor-pointer"
-            >
-              Piyush Tembhekar
-            </a>
+            &copy; {currentYear} Planitt. All Rights Reserved.
           </p>
         </div>
       </div>
@@ -160,5 +154,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-

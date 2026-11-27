@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, BarChart3, BookOpen, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { eyebrow, revealItem, revealSection, sectionShell } from './about/about-shared';
@@ -29,12 +28,12 @@ export default function FinancialPlaybook() {
           <span className={eyebrow}><BookOpen className="h-3.5 w-3.5" /> Financial Learning Desk</span>
           <h2 className="mt-4 max-w-2xl text-3xl font-extrabold leading-[1.05] tracking-[-0.04em] text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">Complete Stock Market &amp; <span className="bg-gradient-to-r from-[#f5b544] to-[#f7c86e] bg-clip-text text-transparent">Trading Mastery</span></h2>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">A practitioner-led program covering live markets, real charts, risk discipline and the tools used by modern traders.</p>
-          <div className="mt-6 flex flex-wrap items-center gap-3"><a href={whatsappLink(generalMessage)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-[#f5b544] px-4 py-2.5 text-sm font-bold text-[#0B0F19] transition hover:bg-[#f7c86e]"><MessageCircle className="h-4 w-4" /> Message Piyush</a><a href="#batches-pricing" className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:border-[#f5b544]/50 dark:text-white">See pricing <ArrowUpRight className="h-4 w-4" /></a></div>
-          <p className="mt-5 text-xs text-slate-500"><strong className="text-slate-900 dark:text-white">Piyush Tembhekar</strong> · Founder &amp; CEO, Planitt · 6+ years in markets</p>
+          <div className="mt-6 flex flex-wrap items-center gap-3"><a href={whatsappLink(generalMessage)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-[#f5b544] px-4 py-2.5 text-sm font-bold text-[#0B0F19] transition hover:bg-[#f7c86e]"><MessageCircle className="h-4 w-4" /> Message us</a><a href="#batches-pricing" className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:border-[#f5b544]/50 dark:text-white">See pricing <ArrowUpRight className="h-4 w-4" /></a></div>
+          <p className="mt-5 text-xs text-slate-500"><strong className="text-slate-900 dark:text-white">Planitt Advisory Desk</strong> · Practitioner-led market education</p>
         </motion.div>
 
         <motion.div variants={revealItem} className="relative mx-auto w-full max-w-[250px]">
-          <div className="overflow-hidden rounded-3xl border border-[#f5b544]/30 bg-[#111827] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"><Image src="/CEO_Photo.png" alt="Piyush Tembhekar" width={400} height={480} className="aspect-[5/6] w-full rounded-2xl object-cover object-top" priority /></div>
+          <div role="img" aria-label="Planitt financial advisory" className="aspect-[5/6] w-full rounded-3xl border border-[#f5b544]/30 bg-gradient-to-br from-[#f5b544] via-[#b78622] to-[#111827] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"><div className="h-full w-full rounded-2xl bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.25),transparent_45%)]" /></div>
           <div className="absolute -bottom-3 -left-5 flex h-16 w-16 -rotate-6 flex-col items-center justify-center rounded-full border border-[#8f6c22] bg-[#f5b544] text-center text-[#0B0F19] shadow-lg"><span className="font-mono text-lg font-bold leading-none">6+</span><span className="text-[7px] font-bold uppercase">years</span></div>
         </motion.div>
       </div>
